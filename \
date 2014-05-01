@@ -1,0 +1,181 @@
+<?php 
+ ini_set('display_errors', '1');
+require_once('../../../../config.php');
+
+require_once(FS_PATH . "php/mpdf/mpdf.php");
+$mpdf=new mPDF();
+
+$database = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_BASE);
+$projectID = 1;
+$css = "";
+$css .= "img {float:right; width:300px;margin-left:20px;}";
+$mpdf->WriteHTML($css,1);
+
+$mpdf->setHTMLHeader('{PAGENO}<div style="float:left;"><img src="http://csog.carney.com/media/logo.gif"></div>');
+$mpdf->setFooter('{PAGENO}');
+
+$html = "";
+$mpdf->WriteHTML($html,2);
+
+//----------Basics----------------
+$sql = "SELECT * FROM projects WHERE project_id = $projectID";
+$result = $database->query($sql);
+if($result->num_rows >= 1)
+{
+  $answers = $result->fetch_assoc();
+  print_r($answerS);
+
+}
+
+
+
+//----------Introduction----------
+
+$html = "";
+$html .= '<h2>Introduction</h2><h3>This community septic system owner’s guide will help you:</h3>';
+$html .= '<ol><li>understand the basic principles of how your septic system works,</li><li>learn how to operate your system efficiently and effectively,</li><li>know how to maintain the system to prevent costly repairs and water contamination,</li><li>resolve problems with the system, and</li><li>know where to go if you need more information or assistance.</li></ol>';
+$html .= '<h3>Health and Safety – Why We Need Good Wastewater Treatment</h3>';
+$html .= '<p><img src="'.WS_URL.'media/intro1.png">A wastewater system is professionally designed to treat wastewater for a specific home, business or group of properties. Proper treatment of wastewater recycles water back into the natural environment with reduced health risks to humans and animals and also prevents surface and groundwater contamination as shown in the figure.</p><p>Wastewater management involves:</p><ul><li>Collection and transport of wastewater from the source to a treatment process,</li><li>Removal of all or most of the waste products that are suspended and/or dissolved in the water,</li><li>Returning the water back to the environment, and</li><li>Returning the water back to the environment, and</li><li>Management of these processes to ensure that a wastewater system is fully functional.<li></ul><p><img src="'.WS_URL.'media/intro2.png">The primary goal of all wastewater management systems is to remove waste products from water and to safely return the water back into the environment. Every day, society generates a significant volume of wastewater because we depend on water to transport wastes away from our bodies, our clothes, and our homes. Once water comes in contact with waste products, the water becomes wastewater.  It contains pathogens (viruses and bacteria), solids, nutrients and other waste products we add into the system as demonstrated in the diagram.  This wastewater can impact the quality of ground and surface water resources. Used water does not simply go away. We must clean it before we can safely recycle it back into the natural environment. Proper handling and treatment of wastewater will protect our waters and ourselves from contamination.</p>';
+$html .= '<h3>Risks to Human and Animal Health</h3><p>It is unhealthy for humans, pets, and wildlife to drink or come in contact with surface or groundwater contaminated with wastewater.  Inadequate treatment of wastewater allows bacteria, viruses, and other disease-causing pathogens to enter surface and groundwater. Hepatitis, dysentery, and other diseases may result from pathogens in drinking water. Disease-causing organisms may make lakes or streams unsafe for recreation. Flies and mosquitoes that are attracted to and breed in wet areas where wastewater reaches the surface may also spread disease.</p><p>Inadequate treatment of wastewater can raise the nitrate levels in groundwater. High concentrations of nitrate in drinking water are a special risk to infants. Nitrate affects the ability of an infant’s blood to carry oxygen, a condition called methemoglobinemia (blue-baby syndrome).</p>';
+$html .= '<h3>Risks to the Environment</h3><p>A septic system that fails to fully treat wastewater also allows excess nutrients (phosphorus and nitrogen) to reach nearby lakes and streams, promoting algae and plant growth. Algal blooms and abundant weeds may make the lake unpleasant for swimming and boating, and can affect water quality for fish and wildlife habitat. 
+Many synthetic cleaning products, pharmaceuticals, and other chemicals used in the house can be toxic to humans, pets, and wildlife. If allowed to enter a septic system, these products may reach groundwater or nearby surface water.</p>';
+$html .= '<h3>Treatment Options</h3><p>There are two primary methods to treat and disperse wastewater back into the environment – centralized and decentralized.  It is easy to describe a centralized approach to wastewater management – all the community’s wastewater drains to a common collection network and is transferred to a centralized treatment and disposal facility.  With a decentralized approach, the wastewater treatment infrastructure is distributed across a community. This may be accomplished by building individual onsite septic systems, having small residential clusters of homes on shared systems, and/or by some combination of both to serve multiple wastewater management zones.  This guide will focus on YOUR decentralized septic system.</p><p><img src="'.WS_URL.'media/intro3.png">A properly designed, installed, operated and maintained septic system will provide economical and effective wastewater treatment.  Pathogens and solids are removed and destroyed by filtration and naturally occurring microscopic organisms. Nutrients are removed, absorbed by soil particles or taken up by plants.</p>';
+
+$mpdf->Bookmark("I. Introduction",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+
+//------Organization---------
+
+$sql = "SELECT * FROM answers_organization WHERE project_id = $projectID";
+$result = $database->query($sql);
+if($result->num_rows >= 1)
+{
+    $answers = $result->fetch_assoc();
+
+  $html = "";
+  $html .= '<h2>Organization of the System</h2>';
+  $html .= '<h3>4.1.1</h3><p>Every septic system is unique to both the user, history and site conditions.  Here is a summary of your general system information.</p>';
+  $html .= '<h3>4.1.2</h3><p>The number of homes or commercial properties hooked up to the septic system is '.$answers['4.1.2'].'.</p>';
+
+  if($answers['4.1.4'] == "Yes")
+  {
+    $html .= '<h3>4.1.5</h3><p>In the future it is anticipated that '.$answers['4.1.4.1'].' additional homes or commercial properties will be made to this system.  The system was either designed do deal with this addition or may need modifications due to the increased flow in the future.  Please contact your primary project contact under Additional Assistance for more information.</p>';
+  }
+
+  if($answers['4.1.8'] == "Yes")
+  {
+    $html .= '<h3>4.1.7</h3><p>Your system was designed for a maximum flow of '.$answers['4.1.7'].' gpd. Your average flows should be 70% of this value or less for system longevity.  Check with your septic system professional to determine your average flows.</p>';
+  } else
+  {
+    $html .= '<h3>4.1.8</h3><p>The design flow for this system is unknown.  The information could potentially be obtained from your regulatory authority or septic system professional identified in the Additional Assistance section of this guide.</p>';
+  }
+
+  $html .= '<h3>4.1.9</h3><p>There are '.$answers['4.1.9'].' people connected to this septic system.  If the number or type of user’s changes, you should inform your septic system professional to determine if changes in your system or management are needed.</p>';
+
+  if($answers['4.1.11'] == "Yes")
+  {
+    $html .= '<h3>4.1.11</h3><p>The year your system was constructed is unknown.  Contact your regulatory authority (under Additional Information) to determine the date of construction. </p>';
+  } else
+  {
+    $html .= '<h3>4.1.10</h3><p>Your system was constructed in '.$answers['4.1.10'].'.</p>';
+  }
+  $html .= '<h3>4.1.12</h3><p>Repairs were made to the system in '.$answers['4.1.12'].'.</p>';
+  /*$html .= '<h3>4.1.6</h3><p></p>';
+  $html .= '<h3>4.1.6</h3><p></p>';
+  $html .= '<h3>4.1.6</h3><p></p>';
+  $html .= '<h3>4.1.6</h3><p></p>';
+  $html .= '<h3>4.1.6</h3><p></p>';
+  html .= '<h3>4.1.6</h3><p></p>';
+  html .= '<h3>4.1.6</h3><p></p>';
+  html .= '<h3>4.1.6</h3><p></p>';
+  */
+} else
+{
+  $html = "<h2>Organization of the System</h2>";
+  $html .= "<p>This section has not been filled out yet.</p>";
+}
+$mpdf->Bookmark("II. Organization of the System",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>Section 5</h2>";
+
+$mpdf->Bookmark("III. Section 5",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>Section 6</h2>";
+
+$mpdf->Bookmark("IV. Section 6",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>V. The Wastewater Treatment System</h2>";
+
+$mpdf->Bookmark("V. The Wastewater Treatment System",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>Section 8</h2>";
+
+$mpdf->Bookmark("VI. Section 8",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>Tanks</h2>";
+
+$mpdf->Bookmark("VII. Tanks",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>Advanced Treatment Types</h2>";
+
+$mpdf->Bookmark("VIII. Advanced Treatment Types",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>Section 27</h2>";
+
+$mpdf->Bookmark("IX. Section 27",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>General Use & Operations</h2>";
+
+$mpdf->Bookmark("X. General Use & Operations",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>Maintenance</h2>";
+
+$mpdf->Bookmark("XI. Maintenance",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>Problems / Troubleshooting</h2>";
+
+$mpdf->Bookmark("XII. Problems / Troubleshooting",0);
+$mpdf->WriteHTML($html,2);
+$mpdf->AddPage();
+
+$html = "";
+$html .= "<h2>OPTIONAL: Additional Descriptions</h2>";
+
+$mpdf->Bookmark("XIII. OPTIONAL: Additional Descriptions",0);
+$mpdf->WriteHTML($html,2);
+
+
+$mpdf->Output();
+

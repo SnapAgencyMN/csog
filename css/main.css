@@ -1,0 +1,622 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
+
+body
+{
+  color:#5e3229;
+  font-family:'Lato', Helvetica, Arial, sans-serif;
+  font-size:14px;
+  line-height:1.2em;
+}
+
+a
+{
+  color:#5e3229;
+  text-decoration:none
+}
+
+/* Form Elements */
+input[type="checkbox"]
+{
+}
+
+label
+{
+  display:inline-block;
+  margin-bottom:5px;
+  min-width:100px;
+  padding:5px
+}
+
+input[type=text], 
+input[type=password],
+input[type=email],
+input[type=textbox]
+{
+  margin-bottom:5px;
+  min-width:264px;
+  height:35px;
+}
+
+.form-button
+{
+  background:#AEDEE7 !important
+}
+
+div.subquestion
+{
+  padding-left: 10px;
+  border-left: 1px dashed #000;
+}
+
+.add-question
+{
+  border:1px solid #bbb;
+  border-radius:5px;
+  color:#333;
+  display:block;
+  margin:20px 0 10px 0;
+  padding:5px;
+  width:118px;
+}
+ 
+/* End Form Elements */
+
+/* GENERIC ELEMENTS */
+
+.ui-tooltip {
+  background:#fff;
+  padding: 8px;
+  position: absolute;
+  z-index: 9999;
+  max-width: 300px;
+  border:1px solid #5e3229;
+}
+
+body .ui-tooltip {
+  border-width: 2px;
+}
+
+h2
+{
+    font-size:18px;
+    margin-bottom:10px;
+    line-height:1.2em;
+}
+
+h3
+{
+  font-size:15px;
+  margin-bottom:8px;
+}
+
+p
+{
+  margin-bottom:8px;
+}
+
+/* END GENERIC ELEMENTS */
+
+/* HEADER ELEMENTS */
+#header_wrapper
+{
+  background:url(../media/site-images/header_bg.png) -535px 0;
+  font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
+  font-weight:600;
+  min-height:210px;
+  width:100%;
+  position:fixed;
+  z-index:2;
+}
+/*
+.catPlus
+{
+background: url('/media/plus-minus.png') no-repeat;
+min-height: 20px;
+width: 17px;
+padding-right: 6px;
+display: inline-block;
+margin-bottom: -4px;
+background-position:0 0;
+}
+*/
+  #header_inner
+  {
+    margin:0 auto;
+    width:70%;
+  }
+
+    #header_title
+    {
+      display:block;
+      float:right;
+      font-size:30px;
+      margin:35px 130px 45px 0;
+    }
+
+    #header_nav
+    {
+      clear:both;
+      float:right;
+      margin-right:130px;
+      font-size:20px;
+    }
+
+      #header_nav li
+      {
+        float:left;
+      }
+
+/* END HEADER ELEMENTS */
+
+#body_wrapper
+{
+  margin:0 auto;
+  min-height:250px;
+  width:960px;
+  position: relative;
+  z-index: 1;
+  top: 230px;
+}
+  #content_wrapper
+  {
+    border-left:3px solid #5cd0e0;
+    float:left;
+    margin-left:15px;
+    width:700px;
+    padding:5px 15px;
+    position:relative;
+    min-height:85px;
+  }
+
+    #droplet
+    {
+      bottom:-30px;
+      left:-23px;
+      position:absolute;
+    }
+
+  .parent_section_header
+  {
+    padding:5px;
+    background: url('/media/plusmin.png') no-repeat 0 0;
+    padding-left: 22px;
+  }
+
+#footer_wrapper
+{
+  margin:0 auto;
+  min-height:200px;
+  width:1000px;
+  clear:both;
+}
+
+.clear
+{
+  clear:both;
+}
+/*----------------------*/
+
+#content_top
+{
+}
+
+    #welcome
+    {
+      margin-top:7px;
+      float:left;
+    }
+
+#login
+{
+  float:right;
+}
+
+  #login a
+  {
+    color:#fff;
+    display:block;
+    padding:8px;
+    border-radius:5px;
+    background:maroon;
+    text-decoration:none
+  }
+
+  #register_wrapper label {min-width:150px}
+
+.modify_wrapper {margin-bottom:20px;}
+.modify_wrapper label {min-width:150px}
+
+
+.formError
+{
+  text-align: right;
+  width: 420px;
+  padding-bottom: 10px;
+}
+
+/*----------------------*/
+
+#nav_wrapper
+  {
+    float:left;
+    width:200px;
+    min-height:10px;
+  }
+
+  #nav_wrapper h3, #nav_wrapper h4
+  {
+    border-bottom:1px solid #5E3229;
+    margin:0 0 10px;
+    padding:0 0 10px 3px;
+  }
+
+  #nav_wrapper ul
+  {
+    margin-bottom:10px;
+    list-style:none;
+  }
+
+ol#category_list
+{
+  font-size:13px;
+  list-style-type:none;
+  padding:0;
+  margin:0
+}
+  #nav_wrapper li
+  {
+    margin:5px 0;
+  }
+
+    #nav_wrapper li a {
+      display:block;
+      padding:5px;
+    }
+
+    #nav_wrapper a:visited {
+      color:#2e8b98;
+    }
+
+    #nav_wrapper a:hover {
+      color:#5e3229;
+      background-color:#ffbc6d
+    }
+
+
+/* LOGIN PAGE ---------------------*/
+#login_wrapper input
+{
+  margin-bottom:10px;
+}
+
+#login_wrapper label
+{
+  display:inline-block;
+  margin-bottom:3px;
+  padding:0
+}
+
+#login_wrapper a
+{
+  line-height:25px;
+}
+
+/* LOGIN PAGE ---------------------*/
+
+/* PROJECTS INDEX -----------------*/
+
+#projects_table li { padding:10px 0 10px 10px }
+.projects_tableProjectName:hover { color:#2e8b98; }
+#projects_message { height:100px; width:264px }
+#projects_submit { margin:10px 0 0 298px }
+
+/*---------------------*/
+
+/* CREATE NEW PROJECT -------------*/
+
+#new-project-form label { min-width:165px; }
+
+/* --------------------------------*/
+.question_header
+{
+  padding:5px 0;
+  background: url('/media/plusmin.png') no-repeat left transparent;
+  background-position: 0 0;
+  padding-left: 22px;
+}
+
+.question_header_open
+{
+  background: url('/media/Minus-Mark.png') no-repeat !important;
+}
+.question_set_row
+{
+  border-bottom:1px solid #ddd;
+  float:left;
+  padding:8px 0;
+  line-height:22px;
+  width:100%;
+}
+.question_set_row_repeat
+{
+  float:left;
+  padding:8px 0;
+  line-height:22px;
+  padding-top:10px;
+  width:100%;
+  display:none;
+}
+.hidden
+{
+  display:none;
+}
+.question_set_row_hint
+{
+  float:left;
+  width:40px;
+  min-height:10px;
+}
+.question_set_row_hint img
+{
+  width:18px;
+  height:18px
+}
+.question_set_row_title
+{
+  float:left;
+  min-width:55%;
+  width:55%;
+  min-height:2px;
+}
+.question_set_row_field
+{
+  float:left;
+}
+
+.question_set_wrapper
+{
+  background:#fafafa;
+  border-radius:5px;
+  margin:0 0 15px;
+  padding:10px;
+}
+  .question_set_wrapper label
+  {
+    padding:0;
+    min-width:0;
+  }
+
+.question_set_row_edit
+{
+  clear:both;
+  text-align:right;
+}
+
+/*--------------------*/
+#left_column
+{
+  float:left;
+  width:310px;
+}
+
+#right_column
+{
+  float:right;
+  width:390px;
+}
+
+.question_edit_title { margin:5px 0; }
+
+.question_edit_title,
+#question_edit_question_title, 
+#question_edit_category,
+#question_edit_template,
+#question_edit_question_priority
+{
+  width:95%;
+}
+
+.template_seperator
+{
+  padding-top:10px;
+  margin-bottom:10px;
+  border-bottom:1px solid #eee;
+}
+
+#question_edit_pdf_output
+{
+   width:100%;
+   height:200px;
+}
+.textarea_edit textarea
+{
+  width:100%;
+  height:200px;
+}
+#question_edit_pdf_values
+{
+  text-align:right;
+}
+#question_edit_hint
+{
+   width:385px;
+   height:100px;
+}
+.upload_frame
+{
+  height:80px;
+  width:250px;
+  overflow:hidden;
+}
+
+#file-upload-form-input{
+  margin:0 0 8px;
+}
+
+.question_edit_image
+{
+  width:50%;
+  padding-top:10px;
+}
+
+#homeLeftColumn
+{
+  width:420px;
+  float:left;
+  padding-right:25px;
+  padding-left:10px;
+}
+  
+#homeLeftColumn h2 { margin-bottom:20px }
+
+#homeLeftColumn ol
+{
+  list-style-type:decimal;
+  margin-left:0px;
+}
+#homeLeftColumn li
+{
+  list-style-type:decimal;
+  margin-left:20px;
+  padding:3px 0 3px 15px;
+}
+#homeRightColumn
+{
+  float:right;
+  margin-top:55px;
+  width:35%
+}
+
+  #homeRightColumn p
+  {
+    font-size:12px
+  }
+
+.line
+{
+  border-bottom:1px solid #5e3229;
+  width:100%;
+  margin-right:10px;
+  margin-bottom:10px;
+  padding-bottom:10px;
+}
+
+.bold
+{
+  font-weight:bold;
+}
+#headerLinks
+{
+  width:100%;
+  clear:both;
+  font-size:1.2em;
+  height:48px;
+  line-height:1.2em;
+  padding:28px 0 0;
+}
+
+#disclaimerLink
+{
+  float:left;
+}
+#resetPasswordVerifyForm
+{
+  width:500px;
+  display:block;
+}
+#resetPasswordVerifyForm label
+{
+  min-width:200px;
+}
+#headerProjectName
+{
+  padding-left:250px;
+}
+#headerInfo
+{
+  margin-right:130px;
+  float:right;
+}
+.activePage 
+{
+  background-color:#9adee8;
+  color:#5e3229;
+}
+.imageLightboxLink
+{
+  max-width:80px;max-height:60px;
+}
+.registerProject
+{
+  padding-left:180px;
+}
+.modifyUserLogoImage
+{
+  margin-left:170px;
+}
+.hintVerbose
+{
+  margin-left:15px;
+  margin-top:5px;
+  max-width:350px;
+}
+
+/* 
+	Web20 Table Style
+	written by Netway Media, http://www.netway-media.com
+*/
+table {
+  border-collapse: collapse;
+  border: 1px solid #666666;
+  font: normal 11px verdana, arial, helvetica, sans-serif;
+  color: #363636;
+  background: #f6f6f6;
+  text-align:left;
+  }
+caption {
+  text-align: center;
+  font: bold 16px arial, helvetica, sans-serif;
+  background: transparent;
+  padding:6px 4px 8px 0px;
+  color: #CC00FF;
+  text-transform: uppercase;
+}
+thead, tfoot {
+background:url(/img/bg1.png) repeat-x;
+text-align:left;
+height:30px;
+}
+thead th, tfoot th {
+padding:5px;
+}
+table a {
+color: #333333;
+text-decoration:none;
+}
+table a:hover {
+text-decoration:underline;
+}
+tr.odd {
+background: #f1f1f1;
+}
+tbody th, tbody td {
+padding:5px;
+}
+
+table tbody tr td select
+{
+    height:35px;
+}
+
+table tbody tr td input.order
+{
+    min-width:50px;
+    width:50px;
+    text-align: center;
+}
+
+.form_question
+{
+    float:right;
+    margin-right:10px;
+}
