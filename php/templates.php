@@ -1264,7 +1264,7 @@ function PdfOnlyQTemplate($hint="", $questionTitle="", $question="", $id="", $an
     <div class="clear"></div>
   <?php } ?>
 
-<?
+<?php
   return 1;
 }
 
@@ -1315,7 +1315,7 @@ function TwoRadioRemoteQTemplate($hint="", $questionTitle="", $question="", $id=
     </div>
     <div class="clear"></div>
     </form>
-<?
+<?php
   return 1;
 }
 
@@ -1360,7 +1360,7 @@ function TwoRadioQTemplate($hint="", $questionTitle="", $question="", $id="", $a
     </div>
     <div class="clear"></div>
     </form>
-<?
+<?php
   return 1;
 }
 
@@ -1417,7 +1417,7 @@ function ThreeRadioQTemplate($hint="", $questionTitle="", $question="", $id="", 
     </div>
     <div class="clear"></div>
     </form>
-<?
+<?php
   return 1;
 }
 
@@ -1463,7 +1463,7 @@ function ThreeRadioTwoQTemplate($hint="", $questionTitle="", $question="", $id="
     </div>
     <div class="clear"></div>
     </form>
-<?
+<?php
   return 1;
 }
 
@@ -1521,7 +1521,7 @@ function TankAlarmQTemplate($hint="", $questionTitle="", $question="", $id="", $
     </div>
     <div class="clear"></div>
     </form>
-<?
+<?php
   return 1;
 }
 
@@ -1551,7 +1551,7 @@ function TankAlarmYesQTemplate($hint="", $questionTitle="", $question="", $id=""
     </div>
     <div class="clear"></div>
 
-<?
+<?php
   return 1;
 }
 
@@ -1577,7 +1577,7 @@ function TwoRemoteCheckboxesPDFOnlyQTemplate($hint="", $questionTitle="", $quest
     <div class="clear"></div>
   <?php } ?>
 
-<?
+<?php
   return 1;
 }
 
@@ -1739,7 +1739,7 @@ function TextBoxQTemplate($hint="", $questionTitle="", $question="", $id="", $an
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
@@ -1794,7 +1794,7 @@ if($answers[0] == 0)
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
@@ -1819,7 +1819,7 @@ function TextBoxNoOutputQTemplate($hint="", $questionTitle="", $question="", $id
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
@@ -1899,7 +1899,7 @@ function FourColumnTableHeaderQTemplate($hint="", $questionTitle="", $question="
     <div class="clear"></div>
   <?php } ?>
 
-<?
+<?php
   return 1;
 }
 
@@ -1930,7 +1930,7 @@ function FourColumnTableContentQTemplate($hint="", $questionTitle="", $question=
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
@@ -1985,7 +1985,7 @@ if($answers[0] == 0)
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
@@ -2025,7 +2025,7 @@ function CheckboxQTemplate($hint="", $questionTitle="", $question="", $id="", $a
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
@@ -2065,7 +2065,7 @@ function CheckboxHintOnlyQTemplate($hint="", $questionTitle="", $question="", $i
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
@@ -2105,7 +2105,7 @@ function HintOnlyQTemplate($hint="", $questionTitle="", $question="", $id="", $a
     </div>
     <div class="clear"></div>
 
-<?
+<?php
   return 1;
 }
 
@@ -2156,7 +2156,7 @@ function ImageWithDescQTemplate($hint="", $questionTitle="", $question="", $id="
     </div>
     <div class="clear"></div>
 
-<?
+<?php
   return 1;
 }
 
@@ -2182,7 +2182,7 @@ function TwoColumnTableHeaderQTemplate($hint="", $questionTitle="", $question=""
     <div class="clear"></div>
   <?php } ?>
 
-<?
+<?php
   return 1;
 }
 
@@ -2209,7 +2209,7 @@ function TwoColumnTableContentQTemplate($hint="", $questionTitle="", $question="
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
@@ -2237,7 +2237,7 @@ function TwoColumnTableContentTwoQTemplate($hint="", $questionTitle="", $questio
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
@@ -2290,7 +2290,7 @@ function ConditionalImageWithDescQTemplate($hint="", $questionTitle="", $questio
     </div>
     <div class="clear"></div>
 
-<?
+<?php
   return 1;
 }
 
@@ -2338,7 +2338,7 @@ function ThreeColumnTableHeaderQTemplate($hint="", $questionTitle="", $question=
     <div class="clear"></div>
   <?php } ?>
 
-<?
+<?php
   return 1;
 }
 
@@ -2366,7 +2366,7 @@ function ThreeColumnTableContentQTemplate($hint="", $questionTitle="", $question
     <?php } ?>
   </div>
   <div class="clear"></div>
-<?
+<?php
   return 1;
 }
 
