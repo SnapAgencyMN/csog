@@ -35,6 +35,14 @@ class Sections {
 
     }
     
+    public function listParentSections()
+    {
+        $parents = $this->sectionsTable->find_by_attribute("`type`", 'parent');
+        
+        return $parents;
+
+    }
+    
     public function listChlidrenSectionsForUser($parentID, $userID)
     {   
         if ($parentID > 0 && $userID > 0)

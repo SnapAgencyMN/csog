@@ -1,5 +1,5 @@
 <?php
-    $sectionsTable = new DbObject($db, 'sections', false);
+    $sectionsClass = new Sections($db);
     
     require_once ("singleSection.php");
     

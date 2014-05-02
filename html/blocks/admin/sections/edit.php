@@ -1,6 +1,8 @@
 <?php
     $sectionsTable = new DbObject($db, 'sections', false);
-   
+    $sectionsClass = new Sections($db);
+
+    
     @$action = !empty($_GET['action'])? $_GET['action'] : $_POST['action'];
     @$sectionID = (int)$_GET['sectionID'] > 0 ? (int)$_GET['sectionID'] : (int)$_POST['sectionID'];
 

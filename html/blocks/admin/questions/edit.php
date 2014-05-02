@@ -21,6 +21,8 @@
         {
             $categoriesTable->data['title'] = $_POST['title'];
             $categoriesTable->data['sectionID'] = (int)$_POST['sectionID'];
+            $categoriesTable->data['type'] = $_POST['type'];
+            $categoriesTable->data['spawn_box_label'] = $_POST['spawn_box_label'];
             $categoriesTable->data['`order`'] = (int)$_POST['order'];
             
             if ($categoryID > 0)
@@ -108,7 +110,7 @@
         {
             echo "
                 <tr>
-                    <td><span style='font-weight:800;'>{$category['title']}</span></td>
+                    <td><span style='font-weight:800;'>{$category['title']}</span> (type: {$category['type']})</td>
                     <td>{$category['order']}</td>
                     <td>
                         <a href='/admin/categories/edit?sectionID={$sectionID}&amp;categoryID={$category['id']}'>Edit</a>

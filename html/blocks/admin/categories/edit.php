@@ -1,5 +1,8 @@
 <?php
 
+$categoriesClass = new Categories($db);
+$sectionsClass = new Sections($db);
+
 $categoriesTable = new DbObject($db, "question_categories", false);
 $sectionsTable = new DbObject($db, "sections", false);
 

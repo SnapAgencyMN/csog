@@ -2,13 +2,31 @@
 
     $title = "";
     $order = "";
+    $label = "";
+    $normalSelected = "";
+    $spawnSelected = "";
+    $operationsSelected = "";
     
     if (@$categoryID > 0)
     {
-        $info = $categoriesTable->find_by_id($categoryID);
+        $info = $categoriesClass->getDetails($categoryID);
         
         $title = $info['title'];
         $order = $info['order']; 
+        $label = $info['spawn_box_label'];
+        
+        switch ($info['type'])
+        {
+            case "normal":
+                $normalSelected = "selected='selected'";
+                break;
+            case "spawn":
+                $spawnSelected = "selected='selected'";
+                break;
+            case "operations":
+                $operationsSelected = "selected='selected'";
+                break;
+        }
     }
     
     echo "
@@ -26,12 +44,24 @@
                 <thead>
                     <tr>
                         <th scope='col'>Title</th>
+                        <th scope='col'>Type</th>
+                        <th scope='col'>Spawn label</th>
                         <th scope='col'>Section</th>
                         <th scope='col'>Order</th>
                     </tr>
                 </thead>
         ";
 
+        $typesDropdown = "
+            <select name='type'>
+                <option $normalSelected value='normal'>Normal</option>
+                <option $spawnSelected value='spawn'>Spawn</option>
+                <option $operationsSelected value='operations'>Operation & Maintainance</option
+            </select>
+        ";
+        
+        
+    
         $sections = $sectionsTable->fetchAll("WHERE `type` != 'parent' ORDER BY `order` ");
         $sectionsDropdown = "<select name='sectionID'>";
         
@@ -51,6 +81,8 @@
             <tbody>
                 <tr>
                     <td><input type='text' id='title' name='title' value='$title' /></td>
+                    <td>$typesDropdown</td>
+                    <td><input type='text' id='title' name='spawn_box_label' value='$label' /></td>
                     <td>$sectionsDropdown</td>
                     <td><input class='order' type='text' name='order' onclick='this.select();' value='$order' /></td>
                 </tr>

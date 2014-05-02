@@ -9,13 +9,13 @@
     
     if (@$sectionID > 0)
     {
-        $info = $sectionsTable->find_by_attribute("sectionID",$sectionID);
+        $info = $sectionsClass->getDetails($sectionID);
         
-        $title = $info[0]['title'];
-        $description = $info[0]['description'];
-        $type = $info[0]['type'];
-        $parentID = $info[0]['parentID'];
-        $order = $info[0]['order'];  
+        $title = $info['title'];
+        $description = $info['description'];
+        $type = $info['type'];
+        $parentID = $info['parentID'];
+        $order = $info['order'];  
         
         if ($type == "standalone")
             $standaloneSelected = 'selected="selected"';
@@ -48,7 +48,7 @@
 
         $parentsDropdown = "<select name='parentID' id='parentID' onchange='javascript:updateTableView(); return false;'>";
 
-        $parentSections = $sectionsTable->find_by_attribute("type", 'parent');
+        $parentSections = $sectionsClass->listParentSections();
 
         if (!empty($parentSections))
         {

@@ -77,6 +77,9 @@ if ($_SESSION['USER']['LoggedIn'] == true) {
                                 if (strstr($path[3], "edit?"))
                                     $page = FS_PATH . HTML_BLOCKS_DIR . "admin/categories/edit.php";
                                 
+                                if (strstr($path[3], "add?"))
+                                    $page = FS_PATH . HTML_BLOCKS_DIR . "admin/categories/add.php";
+                                
                                 break;
                     case "sections":
                             default:
