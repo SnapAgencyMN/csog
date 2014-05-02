@@ -50,7 +50,12 @@ if ($_SESSION['USER']['LoggedIn'] == true) {
                 case "view":
                     $projectID = $path[3];
                     if(isset($path[4]))
-                        $sectionID = $path[4];
+                    {
+                        if (strstr($path[4], "?"))
+                            $sectionID = substr($path[4], 0, strpos($path[4], "?"));
+                        else
+                            $sectionID = $path[4];
+                    }
                     else
                         $sectionID = 1;
                     

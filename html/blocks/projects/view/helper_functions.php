@@ -31,3 +31,13 @@ function printAnswer($answer)
             break;
     }
 }
+
+function isSelected($sectionID, $sectionsArray)
+{
+    foreach ($sectionsArray as $section)
+    {
+        if ($section['sectionID'] == $sectionID)
+            return true;
+    }
+    return false;
+}

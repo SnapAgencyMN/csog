@@ -2,15 +2,33 @@
 <ol id="category_list">
     
 <?php
-    $sectionsTable = new DbObject($db, 'sections', false);
-
-    $sections = $sectionsTable->fetchAll("WHERE `type` != 'child' ORDER BY `order`");
+    $sectionsClass = new Sections($db);
+    
+    $sections = $sectionsClass->listTopSections();
     
     $selectedSection = -1;
+    
     if (isset($path[4]) && $path[4] > 0)
         $selectedSection = $path[4];
     else
         $selectedSection = 1;
+    
+    if ($action == "save_parent_selection")
+    {
+        $parentID = getParameterNumber("parentID");
+        
+        if ($parentID > 0)
+        {
+            $sectionsClass->clearUserSectionsForParent($_SESSION['USER']['ID'], $parentID);
+
+            $selectionArray = getParameterArray("parentID_$parentID");
+
+            foreach ($selectionArray as $selectionID)
+            {
+                $sectionsClass->addUserSection($_SESSION['USER']['ID'], $selectionID, $parentID);
+            }
+        }
+    }
     
     foreach ($sections as $section)
     {
@@ -20,34 +38,25 @@
         }
         elseif($section['type'] == "parent")
         {
-            printParentSection ($section['sectionID']);
+            printParentSection ($section);
         }
     }
-    
-    function printParentSection($sectionID)
+  
+    function printParentSection($parent)
     {
-        global $sectionsTable, $selectedSection;
+        global $sectionsClass;
         
-        $result = $sectionsTable->find_by_attribute("sectionID", $sectionID);
-        $parentInfo = $result[0];
-        $children = $sectionsTable->find_by_attribute("parentID", $sectionID);
+        $children = $sectionsClass->listChlidrenSectionsForUser($parent['sectionID'], $_SESSION['USER']['ID']);
         
-        $result = $sectionsTable->find_by_attribute("sectionID", $selectedSection);
-        $currentSection = $result[0];
-        
-        $selected = "";
-        if ($currentSection['parentID'] == $parentInfo['sectionID'])
-            $selected = 'id="selectedParent"';
+        printSectionLink($parent);
         
         echo "</ol>";
-        echo "
-            <h5 $selected style='margin-bottom:5px' class='question_header'><a class='slidedown' href='#'>{$parentInfo['title']}</a></h5>
-        ";
-            
-        echo "<ol class='question_set_wrapper hidden'>";
+       
+        echo "<ol class='sublist'>";
         foreach ($children as $child)
         {
-            printSectionLink($child);
+            $details = $sectionsClass->getDetails($child['sectionID']);
+            printSectionLink($details);
         }
         echo "</ol>";
         echo "<ol>";

@@ -620,3 +620,18 @@ table tbody tr td input.order
     float:right;
     margin-right:10px;
 }
+
+.sublist
+{
+    margin-left:15px;
+}
+
+.question_answers
+{
+    clear:both;
+}
+
+.left 
+{
+    float:left;
+}

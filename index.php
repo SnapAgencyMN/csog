@@ -5,7 +5,7 @@ require_once("php/templates.php");
 require_once("libs/utils.php");
 require_once("libs/classes/db.php");
 require_once("libs/classes/dbObj.php");
-require_once("libs/classes/Session.php");
+require_once("libs/classes/sections.class.php");
 
 if (DEBUG) {
     ini_set('display_errors', '1');
@@ -36,6 +36,7 @@ $dbInfo = array(
  
 $db = new Db($dbInfo);
 //$session = new Session();
+$action = getParameterString("action");
 
 $database = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_BASE);
 if ($database->connect_errno) {

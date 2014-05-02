@@ -4,8 +4,8 @@ require_once("helper_functions.php");
 if (!isset($questionsTable))
     $questionsTable = new DbObject($db, 'questions2', false);
 
-if (!isset($sectionsTable))
-    $sectionsTable = new DbObject($db, "sections", false);
+if (!isset($sectionsClass))
+    $sectionsClass = new Sections($db);
 
 if (!isset($categoriesTable))
     $categoriesTable = new DbObject($db, "question_categories", false);
@@ -13,11 +13,14 @@ if (!isset($categoriesTable))
 if (!isset($answersTable))
     $answersTable = new DbObject($db, 'answers2', false);
 
-$sectionDetails = $sectionsTable->find_by_attribute("sectionID", $sectionID);
+$sectionDetails = $sectionsClass->getDetails($sectionID);
 $categories = $categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID ORDER BY `order`");
 
 // Print out section title
-echo "<h2>{$sectionDetails[0]['title']}</h2>";
+echo "<h2>{$sectionDetails['title']}</h2>";
+
+if ($sectionDetails['type'] == "parent")
+    require_once("parent_section.php");
 
 // Printing categories
 foreach ($categories as $category)

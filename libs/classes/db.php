@@ -69,6 +69,7 @@ class Db{
 			$output= "WOOOHOO, we don't know where did you get this address from but it certainly does not exist in this website.";
 			$output= "Database query failed:".mysqli_error(self::$connection) . "<br/><br/>";
 			$output.= "Last SQL query: ". self::$last_query;
+                        print_r($output);
 			Session::message($output,'error');
 		}
 	}
