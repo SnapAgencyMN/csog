@@ -1,7 +1,6 @@
 <?php
 
 require_once("config.php");
-require_once("php/templates.php");
 require_once("libs/utils.php");
 require_once("libs/classes/db.php");
 require_once("libs/classes/dbObj.php");
