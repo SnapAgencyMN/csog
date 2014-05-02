@@ -110,9 +110,9 @@ if ($DBresult->num_rows)
       $projectDate = date("d/m/Y", strtotime($projectDate));
     } 
 
-    echo '<li><a href="' . WS_URL . 'projects/view/' . $projectData['id'] . '/';
-    echo $startPage;
-    echo '/" class="projects_tableProjectName">' . $projectName . '</a> (' . $projectDate . ') | <a href="' . WS_URL . 'projects/clone/'.$projectData['id'].'/">Clone</a> | <a href="' . WS_URL . 'projects/edit/'.$projectData['id'].'/">Edit</a> | <a href="' . WS_URL . 'projects/delete/' . $projectData['id'] . '/">Delete</a></li>';
+    echo '<li><a href="' . WS_URL . 'projects/view/' . $projectData['id'].'"' ;
+    //echo $startPage;
+    echo ' class="projects_tableProjectName">' . $projectName . '</a> (' . $projectDate . ') | <a href="' . WS_URL . 'projects/clone/'.$projectData['id'].'/">Clone</a> | <a href="' . WS_URL . 'projects/edit/'.$projectData['id'].'/">Edit</a> | <a href="' . WS_URL . 'projects/delete/' . $projectData['id'] . '/">Delete</a></li>';
   }
   ?>
   </ul>
