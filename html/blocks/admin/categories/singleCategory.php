@@ -7,7 +7,7 @@
     $spawnSelected = "";
     $operationsSelected = "";
     
-    if (@$categoryID > 0)
+    if ($categoryID > 0)
     {
         $info = $categoriesClass->getDetails($categoryID);
         
@@ -62,7 +62,7 @@
         
         
     
-        $sections = $sectionsTable->fetchAll("WHERE `type` != 'parent' ORDER BY `order` ");
+        $sections = $sectionsClass->listNonParentSections();
         $sectionsDropdown = "<select name='sectionID'>";
         
         foreach ($sections as $section)

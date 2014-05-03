@@ -5,8 +5,6 @@
     if (!isset($categoriesClass))
         $categoriesClass = new Categories ($db);
     
-    $categoriesTable = new DbObject($db, "question_categories", false);
-    
     $action = getParameterString("action");
     $sectionID = getParameterNumber("sectionID");
     $questionID = getParameterNumber("questionID");

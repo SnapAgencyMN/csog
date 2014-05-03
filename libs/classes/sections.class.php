@@ -26,6 +26,13 @@ class Sections {
         return $sections;
     }
     
+    public function listNonParentSections()
+    {
+        $sections = $this->sectionsTable->fetchAll("WHERE `type` != 'parent' {$this->orderStr} ");
+        
+        return $sections;
+    }
+    
     public function listChildrenSections($parentID)
     {
         if ($parentID > 0)

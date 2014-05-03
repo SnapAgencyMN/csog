@@ -69,13 +69,6 @@
         else
             $parentsDropdown .= "<option value='-1'>No parent sections found</option>";
 
-        /*
-        $ordersSelection = "<select name='order'>";
-        $ordersOccupied = $sectionsTable->find_by_sql("SELECT `order` FROM sections WHERE `order` IS NOT NULL");
-
-        pr_out($ordersOccupied);
-        */
-
         echo "
             <tbody>
                 <tr>
