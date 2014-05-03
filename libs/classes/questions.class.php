@@ -1,7 +1,12 @@
 <?php
 /**
- * Sections class is used to manipulate with question elements.
- *
+ * Questions class is used to manipulate with question elements.
+ 
+Questions are the third element in the tree. A question stores an infinite number of answers. Questions can be of the two types:
+     - Title ( A title is just a header text, that can have a number of children questions)
+     - Question (A question with a set of answers)
+
+In addition, every question can be a parent and store a number of children questions.
  * @author mpak
  */
 class Questions {
@@ -34,16 +39,6 @@ class Questions {
             $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID {$this->orderStr}");
             
             return $questions;
-        }
-    }
-    
-    public function saveSpawnNumber($categoryID, $userID, $value)
-    {
-        if ($categoryID >0 && $userID > 0)
-        {
-           $sql = "INSERT INTO `{$this->categories_mapping_table}` (`categoryID`, `userID`, `number`) VALUES ($categoryID, $userID, $value) ON DUPLICATE KEY UPDATE `number` = $value";
-           
-           $this->db->query($sql);
         }
     }
     

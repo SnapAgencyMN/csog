@@ -7,6 +7,7 @@ require_once("libs/classes/dbObj.php");
 require_once("libs/classes/sections.class.php");
 require_once("libs/classes/categories.class.php");
 require_once("libs/classes/questions.class.php");
+require_once("libs/classes/answers.class.php");
 
 if (DEBUG) {
     ini_set('display_errors', '1');

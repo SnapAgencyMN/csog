@@ -1,7 +1,13 @@
 <?php
 /**
  * Sections class is used to manipulate with sections elements.
- *
+  Sections are the main element of the tree. Every section can have infinite number of question categories. Sections can be of the three types: standalone, child and parent. 
+     - If it is a standalone/child section, display its’ content. 
+     - If it is a parent section, prompt user to select for children sections that are relevant to his property
+          - Once selected, display child sections
+
+User story:
+User selects a dynamic section from the left hand-side menu. The page does not have any children underneath yet. 
  * @author mpak
  */
 class Sections {

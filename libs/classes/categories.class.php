@@ -1,7 +1,19 @@
 <?php
 /**
- * Sections class is used to manipulate with category elements.
- *
+ * Categories class is used to manipulate with category elements.
+
+Categories are the second element in the tree. They used to store question sets. Categories can be of the three types:
+     - Spawned based on user input (The number of these sections are specified by a user)
+     - Operation & Maintenance ( Are referenced further. Can be spawned. Need clarification around user story)
+     - Normal category, which is a simple set of questions 
+
+User story:
+If a user hits a spawned category, he is presented with a select drop down/input to enter the number of equipment that he posses. 
+ * Once filled in, the user clicks “Update” button underneath the input box which reloads the page and provides user with a number of sub-categories 
+ * that is equal to the number he has filled in.
+ 
+
+ * * The page reloads and the selected sections appear with an intend below the parent section. 
  * @author mpak
  */
 class Categories {

@@ -8,12 +8,16 @@
     $radioSelected = "";
     $checkboxSelected = "";
     $imageSelected = "";
+    $otherSelected = "";
+    $unknownSelected = "";
     
+    $basicSelected = "";
+    $triggerSelected = "";
+
     if (@$answerID > 0)
     {
-        $info = $answersTable->find_by_id($answerID);
+        $info = $answersClass->getDetails($answerID);
         
-        $fieldName = $info['fieldName'];
         $label = $info['label'];
         $pdfOutput = $info['pdfOutput'];
         $order = $info['order'];
@@ -32,6 +36,22 @@
             case "image":
                 $imageSelected = "selected='selected'";
                 break;
+            case "other":
+                $otherSelected = "selected='selected'";
+                break;
+            case "unknown":
+                $unknownSelected = "selected='selected'";
+                break;
+        }
+        
+        switch ($info['sub-type'])
+        {
+            case "basic":
+                $basicSelected = "selected='selected'";
+                break;
+            case "trigger":
+                $triggerSelected = "selected='selected'";
+                break;
         }
     }
     
@@ -41,8 +61,6 @@
             </div>
             <br />
         ";
-
-    $questionInfo = $questionsTable->find_by_id($questionID);
     
     $typeSelect = "
         <select name='type'>

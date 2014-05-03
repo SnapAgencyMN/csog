@@ -1,17 +1,12 @@
-<?php
-    if (!isset($questionsTable))
-        $questionsTable = new DbObject($db, 'questions2', false);
+<?php    
+    if(!isset($answersClass)) 
+        $answersClass = new Answers($db);
     
-    if(!isset($answersTable)) 
-        $answersTable = new DbObject($db, 'answers2', false);
-    
+    $action = getParameterString("action");
+    $questionID = getParameterNumber('questionID');
+    $answerID = getParameterNumber("answerID");
+    $sectionID = getParameterNumber('sectionID');
 
-    @$action = !empty($_GET['action'])? $_GET['action'] : $_POST['action'];
-    @$questionID = (int)$_GET['questionID'] > 0 ? (int)$_GET['questionID'] : (int)$_POST['questionID'];
-    @$answerID = (int)$_GET['answerID'] > 0 ? (int)$_GET['answerID'] : (int)$_POST['answerID'];
-    @$sectionID = (int)$_GET['sectionID'] > 0 ? (int)$_GET['sectionID'] : (int)$_POST['sectionID'];
-
-    
     if ($questionID <= 0 && $answerID <= 0)
     {
         out("Invalid parameters");
@@ -22,36 +17,23 @@
     {
         if ($action == 'save-answer')
         {
-            $answersTable->data['fieldName'] = $_POST['fieldName'];
-            $answersTable->data['label'] = $_POST['label'];
-            $answersTable->data['type'] = $_POST['type'];
-            $answersTable->data['pdfOutput'] = $_POST['pdfOutput'];
-            $answersTable->data['questionID'] = $questionID;
-            $answersTable->data['`order`'] = (int)$_POST['order'];
+            $label = getParameterString("label");
+            $type = getParameterString("type");
+            $pdf = getParameterString("pdfOutput");
+            $order = getParameterNumber('order');
             
-            if ($answerID > 0)
-            {
-                $answersTable->data['id'] = $answerID;
-                $id = $answersTable->update();
-            }
-            else
-                $id = $answersTable->create();
+            $answersClass->saveAnswer($label, $type, $pdf, $questionID, $order, $answerID);
         }
         if ($action == "delete-answer")
         {
-            if ($questionID > 0)
-            {
-                // TODO: if parent, make all children standalone
-                $answersTable->data['id'] = $answerID;
-                $result = $answersTable->delete();
-            }
+            $answersClass->deleteAnswer($answerID);
         }
         
         $action = "display-all";
     }
     else
     {        
-        if (!empty($answerID))
+        if ($answerID>0)
             $action = "display-one";
         else
             $action = "display-all";
@@ -59,8 +41,7 @@
     
     if ($action == "display-all")
     {
-        $answers  = $answersTable->fetchAll(" WHERE `questionID` = $questionID ORDER BY `order`");
-
+        $answers  = $answersClass->listParentAnswers($questionID);
 
         if (!empty($answers))
         {
@@ -74,9 +55,10 @@
                 <table>
                     <thead>
                         <tr>
-                            <th scope='col'>Field name</th>
+                            <th scope='col'>ID</th>
                             <th scope='col'>Label</th>
                             <th scope='col'>Type</th>
+                            <th scope='col'>Sub-type</th>
                             <th scope='col'>PDF Output</th>
                             <th scope='col'>Order</th>
                             <th scope='col'>Actions</th>
@@ -84,22 +66,19 @@
                     </thead>
                     <tbody>
             ";
+            
             foreach ($answers as $answer)
             {
-                echo "
-                    <tr>
-                        <td>{$answer['fieldName']}</td>
-                        <td>{$answer['label']}</td>
-                        <td>{$answer['type']}</td>
-                        <td>{$answer['pdfOutput']}</td>
-                        <td>{$answer['order']}</td>
-                        <td>
-                            <a href='/admin/answers/edit?questionID={$questionID}&amp;answerID={$answer['id']}&amp;sectionID=$sectionID'>Edit</a>
-                            <a href='/admin/questions/edit?action=delete-answer&amp;questionID={$questionID}&amp;answerID={$answer['id']}&amp;sectionID=$sectionID'>Delete</a>
-                        </td>
-                    </tr>
-                ";
-
+                printAnswerRow($answer);
+                $children = $answersClass->listChildren($answer['id']);
+                
+                if (!empty($children))
+                {
+                    foreach ($children as $child)
+                    {
+                        printAnswerRow($child, "15px");
+                    }
+                }
 
             }
 
@@ -116,5 +95,25 @@
     elseif ($action == "display-one")
     {
         require_once ("singleAnswer.php");
+    }
+    
+    function printAnswerRow($answer, $intent = "5px")
+    {
+        global $sectionID, $questionID;
+        
+        echo "
+            <tr>
+                <td style='padding-left:$intent'>{$answer['id']}</td>
+                <td style='padding-left:$intent'>{$answer['label']}</td>
+                <td style='padding-left:$intent'>{$answer['type']}</td>
+                <td style='padding-left:$intent'>{$answer['sub-type']}</td>
+                <td style='padding-left:$intent'>{$answer['pdfOutput']}</td>
+                <td style='padding-left:$intent'>{$answer['order']}</td>
+                <td style='padding-left:$intent'>
+                    <a href='/admin/answers/edit?questionID={$questionID}&amp;answerID={$answer['id']}&amp;sectionID=$sectionID'>Edit</a>
+                    <a href='/admin/questions/edit?action=delete-answer&amp;questionID={$questionID}&amp;answerID={$answer['id']}&amp;sectionID=$sectionID'>Delete</a>
+                </td>
+            </tr>
+        ";
     }
 ?>
