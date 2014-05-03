@@ -3,15 +3,23 @@
     $order = "";
     $hint = "";
     $categoryID = "";
+    $titleSelected = "";
+    $questionSelected = "";
     
     if (@$questionID > 0)
     {
-        $info = $questionsTable->find_by_id($questionID);
+        $info = $questionsClass->getDetails($questionID);
         
         $title = $info['title'];
         $order = $info['order']; 
         $hint = $info['hint'];
         $categoryID = $info['categoryID'];
+        
+        if ($info['type'] == "question")
+            $questionSelected = 'selected="selected"';
+        
+        if ($info['type'] == "title")
+            $titleSelected = 'selected="selected"';
     }
     
     echo "
@@ -30,12 +38,20 @@
                     <tr>
                         <th scope='col'>Title</th>
                         <th scope='col'>Hint</th>
+                        <th scope='col'>Type</th>
                         <th scope='col'>Category</th>
                         <th scope='col'>Order</th>
                     </tr>
                 </thead>
         ";
 
+        $typeDropdown = "
+            <select name='type'>
+                <option $questionSelected value='question'>Question</option>
+                <option $titleSelected value='title'>Title</option>
+            </select>
+        ";
+    
         $categories = $categoriesTable->fetchAll("WHERE `sectionID`='$sectionID' ORDER BY `order` ");
         $categoriesDropdown = "<select name='categoryID'>";
         
@@ -56,6 +72,7 @@
                 <tr>
                     <td><input type='text' id='title' name='title' value='$title' /></td>
                     <td><textarea rows='4' cols='50' name='hint'>$hint</textarea></td>
+                    <td>$typeDropdown</td>
                     <td>$categoriesDropdown</td>
                     <td><input class='order' type='text' name='order' onclick='this.select();' value='$order' /></td>
                 </tr>

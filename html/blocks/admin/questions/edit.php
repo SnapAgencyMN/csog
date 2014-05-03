@@ -1,12 +1,14 @@
 <?php
-    $questionsTable = new DbObject($db, 'questions2', false);
+    if (!isset($questionsClass))
+        $questionsClass = new Questions($db);
+    
     $sectionsTable = new DbObject($db, "sections", false);
     $categoriesTable = new DbObject($db, "question_categories", false);
     
-    @$action = !empty($_GET['action'])? $_GET['action'] : $_POST['action'];
-    @$sectionID = (int)$_GET['sectionID'] > 0 ? (int)$_GET['sectionID'] : (int)$_POST['sectionID'];
-    @$questionID = (int)$_GET['questionID'] > 0 ? (int)$_GET['questionID'] : (int)$_POST['questionID'];
-    @$categoryID = (int)$_GET['categoryID'] > 0 ? (int)$_GET['categoryID'] : (int)$_POST['categoryID'];
+    $action = getParameterString("action");
+    $sectionID = getParameterNumber("sectionID");
+    $questionID = getParameterNumber("questionID");
+    $categoryID = getParameterNumber("categoryID");
 
     
     if ($sectionID <= 0 && $questionID <= 0)
@@ -45,44 +47,31 @@
         
         if ($action == 'save')
         {
-            $questionsTable->data['title'] = $_POST['title'];
-            $questionsTable->data['hint'] = $_POST['hint'];
-            $questionsTable->data['categoryID'] = (int)$_POST['categoryID'];
-            $questionsTable->data['sectionID'] = (int)$_POST['sectionID'];
-            $questionsTable->data['`order`'] = (int)$_POST['order'];
+            $title = getParameterString("title");
+            $hint = getParameterString("hint");
+            $categoryID = getParameterNumber("categoryID");
+            $type = getParameterString("type");
+            $order = getParameterNumber("order");
             
-            if ($questionID > 0)
-            {
-                $questionsTable->data['id'] = $questionID;
-                $id = $questionsTable->update();
-            }
-            else
-                $id = $questionsTable->create();    
-            
+            $questionsClass->saveQuestion($title, $hint, $categoryID, $type, $order, $questionID);
         }
         if ($action == "delete")
         {
-            if ($questionID > 0)
-            {
-                // TODO: if parent, make all children standalone
-                $questionsTable->data['id'] = $questionID;
-            }
-            
-            $result = $questionsTable->delete();
+            $questionsClass->deleteQuestion($questionID);
         }
         
         $action = "display-all";
     }
-    
-    if (!empty($questionID))
-        $action = "display-one";
     else
-        $action = "display-all";
-    
+    {
+        if ($questionID > 0)
+            $action = "display-one";
+        else
+            $action = "display-all";
+    }
     
     if ($action == "display-all")
     {
-        $questions  = $questionsTable->fetchAll(" WHERE `sectionID` = $sectionID ORDER BY `order`");
         $categories = $categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID ORDER BY `order`");
         
         echo "
@@ -99,6 +88,7 @@
                 <thead>
                     <tr>
                         <th scope='col'>Title</th>
+                        <th scope='col'>Type</th>
                         <th scope='col'>Order</th>
                         <th scope='col'>Actions</th>
                     </tr>
@@ -110,11 +100,14 @@
         {
             echo "
                 <tr>
-                    <td><span style='font-weight:800;'>{$category['title']}</span> (type: {$category['type']})</td>
-                    <td>{$category['order']}</td>
+                    <td><span style='font-weight:800;'>{$category['title']}</span></td>
+                    <td><span style='font-weight:800;'>{$category['type']}</span></td>
+                    <td><span style='font-weight:800;'>{$category['order']}</span></td>
                     <td>
-                        <a href='/admin/categories/edit?sectionID={$sectionID}&amp;categoryID={$category['id']}'>Edit</a>
-                        <a href='/admin/questions/edit?action=delete-category&amp;sectionID={$sectionID}&amp;categoryID={$category['id']}'>Delete</a>
+                        <span style='font-weight:800;'>
+                            <a href='/admin/categories/edit?sectionID={$sectionID}&amp;categoryID={$category['id']}'>Edit</a>
+                            <a href='/admin/questions/edit?action=delete-category&amp;sectionID={$sectionID}&amp;categoryID={$category['id']}'>Delete</a>
+                        </span>
                     </td>
                 </tr>
             ";
@@ -134,9 +127,9 @@
     
     function printQuestions($categoryID)
     {
-        global $questionsTable, $sectionID;
+        global $questionsClass, $sectionID;
         
-        $questions = $questionsTable->fetchAll(" WHERE `categoryID`=$categoryID AND `sectionID` = $sectionID");
+        $questions = $questionsClass->listQuestions($categoryID);
         
         foreach ($questions as $question)
         {
@@ -144,6 +137,7 @@
             echo "
                 <tr>
                     <td style='padding-left:10px'>{$question['title']}</td>
+                    <td style='padding-left:10px'>{$question['type']}</td>
                     <td style='padding-left:10px'>{$question['order']}</td>
                     <td>
                         <a href='/admin/questions/edit?sectionID={$sectionID}&amp;questionID={$question['id']}'>Edit</a>
