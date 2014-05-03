@@ -1,48 +1,34 @@
 <?php
-    $sectionsTable = new DbObject($db, 'sections', false);
-    $sectionsClass = new Sections($db);
+    if (!isset($sectionsClass))
+        $sectionsClass = new Sections($db);
 
     
-    @$action = !empty($_GET['action'])? $_GET['action'] : $_POST['action'];
-    @$sectionID = (int)$_GET['sectionID'] > 0 ? (int)$_GET['sectionID'] : (int)$_POST['sectionID'];
+    $action = getParameterString("action");
+    $sectionID = getParameterNumber("sectionID");
 
     
     if (!empty($action))
     {
         if ($action == 'save')
         {
-            $sectionsTable->data['title'] = $_POST['title'];
-            $sectionsTable->data['description'] = $_POST['description'];
-            $sectionsTable->data['parentID'] = ((int)$_POST['parentID'] > 0) ? (int)$_POST['parentID'] : null;
-            $sectionsTable->data['`order`'] = (int)$_POST['order'];
-
-            $sectionsTable->data['type'] = $sectionsTable->data['parentID'] > 0 ? "child" : $_POST['type'];
+            $title = getParameterString("title");
+            $description = getParameterString("description");
+            $order = getParameterNumber("order");
+            $type = getParameterString("type");
+            $parentID = getParameterNumber("parentID");
             
-            if ($sectionID > 0)
-            {
-                $sectionsTable->data['sectionID'] = $sectionID;
-                $id = $sectionsTable->updateSection();
-            }
-            else
-                $id = $sectionsTable->create();    
-            
+            $sectionsClass->saveSection($title, $description, $order, $parentID, $type, $sectionID);
         }
         if ($action == "delete")
         {
-            if ($sectionID > 0)
-            {
-                // TODO: if parent, make all children standalone
-                $sectionsTable->data['sectionID'] = $sectionID;
-            }
-            
-            $result = $sectionsTable->deleteSection();
+            $sectionsClass->deleteSection($sectionID);
         }
         
         $action = "display-all";
     }
     else
     {        
-        if (!empty($sectionID))
+        if ($sectionID > 0)
             $action = "display-one";
         else
             $action = "display-all";
@@ -50,7 +36,7 @@
     
     if ($action == "display-all")
     {
-        $sections  = $sectionsTable->fetchAll(" WHERE `parentID` IS NULL OR `parentID` = 0 ORDER BY `order`");
+        $sections  = $sectionsClass->listTopSections();
 
         echo "
             <div class='submenu'>
@@ -103,13 +89,10 @@
     
     function printChildren($sectionID)
     {
-        global $sectionsTable;
+        global $sectionsClass;
         
-        $sections  = $sectionsTable->fetchAll(" WHERE `parentID` = $sectionID ORDER BY `order`");
-/*
-        $result = $sectionsTable->find_by_attribute ("sectionID", $sectionID);
-        $parentInfo = $result[0];
-  */      
+        $sections  = $sectionsClass->listChildrenSections($sectionID);
+
         foreach ($sections as $section)
         {
             echo "

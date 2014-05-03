@@ -83,5 +83,45 @@ class Sections {
         }
     }
     
+    public function saveSection($title, $description, $order, $parentID=0, $type="", $sectionID =0)
+    {
+        $this->sectionsTable->data['title'] = $title;
+        $this->sectionsTable->data['description'] = $description;
+        $this->sectionsTable->data['parentID'] = $parentID;
+        $this->sectionsTable->data['`order`'] = $order;
+
+        $this->sectionsTable->data['type'] = $parentID > 0 ? "child" : $type;
+
+        if ($sectionID > 0)
+        {
+            $this->sectionsTable->data['sectionID'] = $sectionID;
+            $id = $this->sectionsTable->updateSection();
+        }
+        else
+            $id = $this->sectionsTable->create();    
+    }
+    
+    public function deleteSection($sectionID)
+    {
+        if ($sectionID > 0)
+        {
+            $details = $this->getDetails($sectionID);
+            
+            // Making all children standalone if deleting parent category
+            if ($details['type'] == "parent")
+            {
+                $children = $this->listChildrenSections($parentID);
+                
+                foreach ($children as $child)
+                {
+                    $this->saveSection($child['title'], $child['description'], $child['order'], 0, 'standalone', $child['section']);
+                }
+            }
+
+            $this->sectionsTable->data['sectionID'] = $sectionID;
+            
+            $result = $this->sectionsTable->deleteSection();
+        }
+    }
     
 }
