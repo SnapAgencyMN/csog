@@ -59,4 +59,32 @@ class Categories {
            $this->db->query($sql);
         }
     }
+    
+    public function saveCategory($title, $sectionID, $type, $spawn_label, $order, $categoryID = 0)
+    {
+        $this->categoriesTable->data['title'] = $title;
+        $this->categoriesTable->data['sectionID'] = $sectionID;
+        $this->categoriesTable->data['type'] = $type;
+        $this->categoriesTable->data['spawn_box_label'] = $spawn_label;
+        $this->categoriesTable->data['`order`'] = $order;
+
+        if ($categoryID > 0)
+        {
+            $this->categoriesTable->data['id'] = $categoryID;
+            $id = $this->categoriesTable->update();
+        }
+        else
+            $id = $this->categoriesTable->create();
+        
+        return $id;
+    }
+    
+    public function deleteCategory($categoryID)
+    {
+        if ($categoryID > 0)
+        {
+            $this->categoriesTable->data['id'] = $categoryID;
+            $this->categoriesTable->delete();
+        }
+    }
 }

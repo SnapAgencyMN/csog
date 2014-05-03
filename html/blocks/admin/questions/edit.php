@@ -2,7 +2,9 @@
     if (!isset($questionsClass))
         $questionsClass = new Questions($db);
     
-    $sectionsTable = new DbObject($db, "sections", false);
+    if (!isset($categoriesClass))
+        $categoriesClass = new Categories ($db);
+    
     $categoriesTable = new DbObject($db, "question_categories", false);
     
     $action = getParameterString("action");
@@ -21,28 +23,18 @@
     {
         if ($action == "save-category")
         {
-            $categoriesTable->data['title'] = $_POST['title'];
-            $categoriesTable->data['sectionID'] = (int)$_POST['sectionID'];
-            $categoriesTable->data['type'] = $_POST['type'];
-            $categoriesTable->data['spawn_box_label'] = $_POST['spawn_box_label'];
-            $categoriesTable->data['`order`'] = (int)$_POST['order'];
+            $title = getParameterString("title");
+            $sectionID = getParameterNumber("sectionID");
+            $type = getParameterString('type');
+            $spawn_label = getParameterString("spawn_box_label");
+            $order = getParameterNumber("order");
             
-            if ($categoryID > 0)
-            {
-                $categoriesTable->data['id'] = $categoryID;
-                $id = $categoriesTable->update();
-            }
-            else
-                $id = $categoriesTable->create();
+            $categoriesClass->saveCategory($title, $sectionID, $type, $spawn_label, $order, $categoryID);
         }
         
         if ($action == "delete-category")
         {
-            if ($categoryID > 0)
-            {
-                $categoriesTable->data['id'] = $categoryID;
-                $categoriesTable->delete();
-            }
+            $categoriesClass->deleteCategory($categoryID);
         }
         
         if ($action == 'save')
@@ -72,7 +64,7 @@
     
     if ($action == "display-all")
     {
-        $categories = $categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID ORDER BY `order`");
+        $categories = $categoriesClass->listCategories($sectionID);
         
         echo "
             <div class='submenu'>

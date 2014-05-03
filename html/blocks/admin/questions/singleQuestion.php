@@ -52,7 +52,7 @@
             </select>
         ";
     
-        $categories = $categoriesTable->fetchAll("WHERE `sectionID`='$sectionID' ORDER BY `order` ");
+        $categories = $categoriesClass->listCategories($sectionID);
         $categoriesDropdown = "<select name='categoryID'>";
         
         foreach ($categories as $category)
