@@ -1,33 +1,48 @@
 <?php
 
-function printAnswer($answer)
+function printAnswer($answer, $type)
 {
     switch ($answer['type'])
     {
         case "text":
             echo "
-                <input type='text' name='{$answer['fieldName']}' id='answer_{$answer['id']}' class='textbox form_question' />
+                <input onblur='updateRow({$answer['questionID']})' type='text' name='".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='textbox form_question' />
             ";
             break;
         case "radio":
             echo "
-                <label class='form_question'>{$answer['label']}</label>
-                <input type='radio' name='{$answer['fieldName']}' id='answer_{$answer['id']}' class='form_question' />
+                <input onclick='updateRow({$answer['questionID']})' type='radio' name='radio_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question' />
+                <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;
         case "checkbox":
             echo "
-                <input type='checkbox' name='{$answer['fieldName']}' id='answer_{$answer['id']}' class='form_question checkbox' />
-                <label class='form_question'>{$answer['label']}</label>
+                <input onclick='updateRow({$answer['questionID']})' type='checkbox' name='checkbox_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
+                <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;
         case "image":
             echo "
-                <a href='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' data-lightbox='image-116'><img src='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' class='imageLightboxLink'>
+                <a class='right' href='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' data-lightbox='image-116'><img src='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' class='imageLightboxLink'>
                     <img src='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' class='imageLightboxLink'>
-                </a>
-                <iframe src='".WS_URL."html/blocks/fileupload.php?qID={$answer['answerID']}' class='upload_frame'></iframe>
+                </a><br />
+                <iframe class='right' style='width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?id=".$type."_{$answer['id']}' class='upload_frame'></iframe>
             ";
+            break;
+        case "unknown":
+            echo "
+                <input onclick='updateRow({$answer['questionID']})' type='checkbox' onclick='hideOtherAnswers({$answer['questionID']})' name='unknown_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
+                <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
+            ";
+            break;
+            break;
+        case "other":
+            echo "
+                <input onclick='updateRow({$answer['questionID']})' type='radio' name='other_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question' />
+                <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
+            ";
+                
+                // ECHO input box and reveal if radio selected
             break;
     }
 }
@@ -42,21 +57,32 @@ function isSelected($sectionID, $sectionsArray)
     return false;
 }
 
-function echoNormalCategory($category)
+function echoCategory($category, $type='normal')
 {
-    global $questionsTable, $answersTable;
+    global $questionsClass, $answersClass;
     
     echo "<h3 class='question_header'>{$category['title']}</h3>";
-
-    $questions = $questionsTable->fetchAll(" WHERE `categoryID` = {$category['id']} ORDER BY `order`");
+    
+    $questions = $questionsClass->listQuestions($category['id']);
 
     echo "<div class='question_set_wrapper hidden'>";
 
+    $titlePrinted = false;
+    $intent = "0px";
     foreach ($questions as $question)
     {
+        if ($question['type'] == "title")
+        {
+            $titlePrinted = true;
+            $intent = "0px";
+        }
+        
+        if($question['type'] == "question" && $titlePrinted)
+            $intent = "20px";
+        
         echo "
-            <div class='question_set_row'>
-                <div class='question_set_row_hint'>
+            <div class='question_set_row' id='question_row_{$question['id']}'>
+                <div style='padding-left:$intent' class='question_set_row_hint'>
                     <img src='".WS_URL."/media/hint.png' alt='Hint' title='{$question['hint']}'>
                 </div>
                 <div class='question_set_row_title'>
@@ -64,13 +90,21 @@ function echoNormalCategory($category)
                 </div>
         ";
 
-        $answers = $answersTable->fetchAll(" WHERE `questionID` = {$question['id']} ORDER BY `order`");
+        $answers = $answersClass->listAnswers($question['id']);
         echo "<div class='question_set_row_field'>";
         foreach ($answers as $answer)
         {
-            echo "<br />";
-            printAnswer($answer);
-            echo "<br />";
+            $divSuffix = "";
+            $divClass = "";
+            if ($answer['parentID'])
+            {
+                $divClass = "hidden child";
+                $divSuffix = "id='child_{$answer['parentID']}' category_type='$type'";
+            }
+            
+            echo "<div class='question_answers $divClass' $divSuffix>";
+            printAnswer($answer, $type);
+            echo "</div>";
         }
         echo "</div>
             </div>
@@ -124,6 +158,6 @@ HTML_STR;
                     
     for ($z = 0; $z < $selected; $z++)
     {
-        echoNormalCategory($category);
+        echoCategory($category, "spawn_$i");
     }
 }

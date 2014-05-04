@@ -10,9 +10,6 @@
     $imageSelected = "";
     $otherSelected = "";
     $unknownSelected = "";
-    
-    $basicSelected = "";
-    $triggerSelected = "";
 
     if (@$answerID > 0)
     {
@@ -43,16 +40,6 @@
                 $unknownSelected = "selected='selected'";
                 break;
         }
-        
-        switch ($info['sub-type'])
-        {
-            case "basic":
-                $basicSelected = "selected='selected'";
-                break;
-            case "trigger":
-                $triggerSelected = "selected='selected'";
-                break;
-        }
     }
     
     echo "
@@ -68,20 +55,17 @@
             <option $radioSelected value='radio'>Radio button</option>
             <option $checkboxSelected value='checkbox'>Checkbox</option>
             <option $imageSelected value='image'>Image</option>
-            <option $otherSelected value='image'>Other</option>
-            <option $unknownSelected value='image'>Unknown</option>
+            <option $otherSelected value='other'>Other</option>
+            <option $unknownSelected value='unknown'>Unknown</option>
         </select>
     ";
     
-    $subTypeSelect = "
-        <select name='sub-type'>
-            <option $basicSelected value='basic'>Basic</option>
-            <option $triggerSelected value='trigger'>Trigger</option>
-        </select>
-    ";
     
     $answersAvailable = $answersClass->listAnswers($questionID);
-    $parentSelect = "<select name='parentID'>";
+    $parentSelect = "
+        <select name='parentID'>
+            <option value='0'>No parent</option>
+    ";
     
     foreach ($answersAvailable as $answ)
     {
@@ -101,7 +85,6 @@
                     <tr>                        
                         <th scope='col'>Label</th>
                         <th scope='col'>Type</th>
-                        <th scope='col'>Sub-type</th>
                         <th scope='col'>Parent</th>
                         <th scope='col'>PDF Output</th>
                         <th scope='col'>Order</th>
@@ -114,7 +97,6 @@
                 <tr>
                     <td><input type='text' style='min-width:200px; width:200px;' name='label' value='$label' /></td>
                     <td>$typeSelect</td>
-                    <td>$subTypeSelect</td>
                     <td>$parentSelect</td>
                     <td><textarea rows='5' cols='50' name='pdfOutput'>$pdfOutput</textarea></td>
                     <td><input class='order' type='text' name='order' onclick='this.select();' value='$order' /></td>

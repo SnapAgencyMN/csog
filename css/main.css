@@ -364,13 +364,15 @@ ol#category_list
 .question_set_row_title
 {
   float:left;
-  min-width:55%;
-  width:55%;
+  min-width:50%;
+  width:50%;
   min-height:2px;
 }
 .question_set_row_field
 {
   float:left;
+  max-width:40%;
+  width:40%
 }
 
 .question_set_wrapper
@@ -634,4 +636,9 @@ table tbody tr td input.order
 .left 
 {
     float:left;
+}
+
+.right
+{
+    float:right;
 }

@@ -1,8 +1,8 @@
 <?php
 require_once("helper_functions.php");
 
-if (!isset($questionsTable))
-    $questionsTable = new DbObject($db, 'questions2', false);
+if (!isset($questionsClass))
+    $questionsClass = new Questions($db);
 
 if (!isset($sectionsClass))
     $sectionsClass = new Sections($db);
@@ -10,8 +10,8 @@ if (!isset($sectionsClass))
 if (!isset($categoriesClass))
     $categoriesClass = new Categories($db);
 
-if (!isset($answersTable))
-    $answersTable = new DbObject($db, 'answers2', false);
+if (!isset($answersClass))
+    $answersClass = new Answers($db);
 
 $sectionDetails = $sectionsClass->getDetails($sectionID);
 $categories = $categoriesClass->listCategories($sectionID); 
@@ -31,7 +31,7 @@ else
         switch ($category['type'])
         {
             case "normal":
-                echoNormalCategory($category);
+                echoCategory($category, 'normal');
                 break;
             case "spawn":
                 echoSpawnCategory($category);

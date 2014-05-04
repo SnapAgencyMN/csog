@@ -364,6 +364,7 @@ $(function() {
    
 
   /* Handles saving all non-file upload questions for main forms */
+  /*
   $('.form_question').change(function() {
     var question = this;
     var questionParent = $(this).closest('.question_set_row_field');
@@ -380,7 +381,7 @@ $(function() {
     var qID = qID[1];
 //    var qID = $(this).attr("name").slice(2,-3);
 
-    var pID = $('#projIdent').val().toString()
+    //var pID = $('#projIdent').val().toString()
 
     var questionID = $(this).attr("class").split(/\s+/);
     var textValues = $("input[name^='"+questionID[0]+"\\[']:not(:radio):not(:checkbox):not(:file)").map(function(){return $(this).val();}).get();
@@ -407,10 +408,50 @@ $(function() {
 
 
   });
-
+*/
 });
 
 function submitForm(id)
 {
     $("#"+id).submit();
+}
+
+function updateRow(id)
+{
+    $("#question_row_"+id+" .child").each(function( i ) {
+        
+        var id = $(this).attr('id');
+        var idArray = id.split("_");
+        var parentID = idArray[1];
+        
+        var categoryType = $(this).attr('category_type');
+        
+        var answer = $("#"+categoryType+"_"+parentID);
+        var answerType = answer.attr('type');     
+        
+        var display = false;
+        if (answerType == 'radio' || answerType == 'checkbox')
+        {
+            if (answer.is(':checked'))
+            {
+                var display = true;
+            }
+        }
+        else if(answerType == 'text')
+        {
+            if (answer.val() != "")
+            {
+                var display = true;
+            }
+        }
+        
+        if (display)
+        {
+            $(this).removeClass("hidden");
+        }
+        else
+        {
+            $(this).toggleClass("hidden");
+        }
+    });
 }

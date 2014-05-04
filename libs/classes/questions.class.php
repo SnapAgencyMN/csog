@@ -42,6 +42,16 @@ class Questions {
         }
     }
     
+    public function listQuestionsOfType($categoryID, $type='question')
+    {
+        if ($categoryID > 0)
+        {
+            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID {$this->orderStr} AND `type`='$type'");
+            
+            return $questions;
+        }
+    }
+    
     public function saveQuestion($title, $hint, $categoryID, $type, $order, $questionID=0)
     {
         $this->questionsTable->data['title'] = $title;

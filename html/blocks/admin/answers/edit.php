@@ -21,10 +21,9 @@
             $type = getParameterString("type");
             $pdf = getParameterString("pdfOutput");
             $order = getParameterNumber('order');
-            $subtype = getParameterString("sub-type");
             $parentID = getParameterNumber('parentID');
             
-            $answersClass->saveAnswer($label, $type, $subtype, $pdf, $parentID, $questionID, $order, $answerID);
+            $answersClass->saveAnswer($label, $type, $pdf, $parentID, $questionID, $order, $answerID);
         }
         if ($action == "delete-answer")
         {
@@ -60,7 +59,6 @@
                             <th scope='col'>ID</th>
                             <th scope='col'>Label</th>
                             <th scope='col'>Type</th>
-                            <th scope='col'>Sub-type</th>
                             <th scope='col'>PDF Output</th>
                             <th scope='col'>Order</th>
                             <th scope='col'>Actions</th>
@@ -108,7 +106,6 @@
                 <td style='padding-left:$intent'>{$answer['id']}</td>
                 <td style='padding-left:$intent'>{$answer['label']}</td>
                 <td style='padding-left:$intent'>{$answer['type']}</td>
-                <td style='padding-left:$intent'>{$answer['sub-type']}</td>
                 <td style='padding-left:$intent'>{$answer['pdfOutput']}</td>
                 <td style='padding-left:$intent'>{$answer['order']}</td>
                 <td style='padding-left:$intent'>
