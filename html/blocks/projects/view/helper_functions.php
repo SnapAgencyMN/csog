@@ -38,7 +38,7 @@ function printAnswer($answer, $type)
             break;
         case "other":
             echo "
-                <input onclick='updateRow({$answer['questionID']})' type='radio' name='other_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question' />
+                <input onclick='updateRow({$answer['questionID']})' type='checkbox' name='other_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
                 
@@ -83,7 +83,7 @@ function echoCategory($category, $type='normal')
         echo "
             <div class='question_set_row' id='question_row_{$question['id']}'>
                 <div style='padding-left:$intent' class='question_set_row_hint'>
-                    <img src='".WS_URL."/media/hint.png' alt='Hint' title='{$question['hint']}'>
+                    <img src='".WS_URL."/media/hint.png' alt='Hint' title=\"{$question['hint']}\">
                 </div>
                 <div class='question_set_row_title'>
                     {$question['title']}
@@ -99,10 +99,10 @@ function echoCategory($category, $type='normal')
             if ($answer['parentID'])
             {
                 $divClass = "hidden child";
-                $divSuffix = "id='child_{$answer['parentID']}' category_type='$type'";
+                $divSuffix = "id='child_{$answer['parentID']}'";
             }
             
-            echo "<div class='question_answers $divClass' $divSuffix>";
+            echo "<div class='question_answers {$answer['type']} $divClass' $divSuffix category_type='$type'>";
             printAnswer($answer, $type);
             echo "</div>";
         }
@@ -121,7 +121,7 @@ function echoSpawnCategory($category)
     $selected = $categoriesClass->getNumberOfSpawnBoxesForUser($category['id'], $_SESSION['USER']['ID']);
     $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='Please select {$category['spawn_box_label']} that you have'>";
     
-    $selectBox = "<select name='spawn_{$category['id']}'>";
+    $selectBox = "<select class='right' name='spawn_{$category['id']}'>";
     for ($i=1; $i<=10; $i++)
     {
         $slct = "";
@@ -146,10 +146,10 @@ function echoSpawnCategory($category)
                     </div>
                     <div class='question_set_row_field'>
                         <div class='question_answers'>
+                            <a class='right' href='#' style='margin-left:15px;' onclick="submitForm('spawn_category_{$category['id']}');return false;" >Update</a>
                             $selectBox
                         </div>
                     </div>    
-                    <a href='#' style='float:left;margin-left:15px;' onclick="submitForm('spawn_category_{$category['id']}');return false;" >Update</a>
                 </div>
             </form>
         </div>

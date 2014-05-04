@@ -69,11 +69,17 @@
     
     foreach ($answersAvailable as $answ)
     {
+        $selected = "";
+        if (@$parentID > 0)
+        {
+            if ($answ['id'] == $info['parentID'])
+                $selected = 'selected="selected"';
+        }
         $optionTitle = "(".$answ['id'].") ".$answ['type'];
         if (!empty($answ['label']))
             $optionTitle .= " - {$answ['label']}";
         
-        $parentSelect .= "<option value='{$answ['id']}'>$optionTitle</option>";
+        $parentSelect .= "<option $selected value='{$answ['id']}'>$optionTitle</option>";
     }
     $parentSelect .= "</select>";        
         

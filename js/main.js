@@ -418,6 +418,7 @@ function submitForm(id)
 
 function updateRow(id)
 {
+    // Reveal all children
     $("#question_row_"+id+" .child").each(function( i ) {
         
         var id = $(this).attr('id');
@@ -451,7 +452,26 @@ function updateRow(id)
         }
         else
         {
-            $(this).toggleClass("hidden");
+            $(this).addClass("hidden");
         }
     });
+    
+    // Check if unknown is used
+    if ($("#question_row_"+id+" .unknown").length > 0 )
+    {
+        var categoryType = $("#question_row_"+id+" .unknown").attr('category_type');
+
+        if ($("#question_row_"+id+" [name='unknown_"+categoryType+"_"+id+"']").is(":checked"))
+        {
+            $("#question_row_"+id+" div.question_answers:not(.unknown)").each(function( i ) {
+                $(this).addClass('hidden');
+            });
+        }
+        else
+        {
+            $("#question_row_"+id+" div.question_answers:not(.unknown)").each(function( i ) {
+                $(this).removeClass("hidden");
+            });
+        }
+    }
 }

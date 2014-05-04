@@ -9,10 +9,6 @@ Answers are the last element in the tree. They are used to prompt user for an in
      - Other-textfield (if used, additional text input of the same type is provided, label can be set to whatever)
      - Unknown (if checked, remove all other answers for this question) 
 
-In addition, every answer can be of a following sub-type
-     - Trigger (If trigger is selected, children questions are revealed)
-     - Basic
- *
  * @author mpak
  */
 class Answers {
@@ -72,7 +68,6 @@ class Answers {
     {
         $this->answersTable->data['label'] = $label;
         $this->answersTable->data['type'] = $type;
-        $this->answersTable->data['`sub-type`'] = $subtype;
         $this->answersTable->data['pdfOutput'] = $pdf;
         $this->answersTable->data['parentID'] = $parentID;
         $this->answersTable->data['questionID'] = $questionID;

@@ -28,11 +28,13 @@
             $order = getParameterNumber("order");
             
             $categoriesClass->saveCategory($title, $sectionID, $type, $spawn_label, $order, $categoryID);
+            $action = "display-all";
         }
         
         if ($action == "delete-category")
         {
             $categoriesClass->deleteCategory($categoryID);
+            $action = "display-all";
         }
         
         if ($action == 'save')
@@ -44,16 +46,16 @@
             $order = getParameterNumber("order");
             
             $questionsClass->saveQuestion($title, $hint, $categoryID, $type, $order, $questionID);
+            $action = "display-all";
         }
         if ($action == "delete")
         {
             $questionsClass->deleteQuestion($questionID);
+            $action = "display-all";
         }
-        
-        $action = "display-all";
     }
     
-    if ($action == "save-answer" || empty($answer))
+    if ($action == "save-answer" || empty($action))
     {
         if ($questionID > 0)
             $action = "display-one";
