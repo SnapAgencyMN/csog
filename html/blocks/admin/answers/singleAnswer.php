@@ -68,18 +68,41 @@
             <option $radioSelected value='radio'>Radio button</option>
             <option $checkboxSelected value='checkbox'>Checkbox</option>
             <option $imageSelected value='image'>Image</option>
+            <option $otherSelected value='image'>Other</option>
+            <option $unknownSelected value='image'>Unknown</option>
         </select>
     ";
     
+    $subTypeSelect = "
+        <select name='sub-type'>
+            <option $basicSelected value='basic'>Basic</option>
+            <option $triggerSelected value='trigger'>Trigger</option>
+        </select>
+    ";
+    
+    $answersAvailable = $answersClass->listAnswers($questionID);
+    $parentSelect = "<select name='parentID'>";
+    
+    foreach ($answersAvailable as $answ)
+    {
+        $optionTitle = "(".$answ['id'].") ".$answ['type'];
+        if (!empty($answ['label']))
+            $optionTitle .= " - {$answ['label']}";
+        
+        $parentSelect .= "<option value='{$answ['id']}'>$optionTitle</option>";
+    }
+    $parentSelect .= "</select>";        
+        
     echo "
         <h3> Answer details: </h3>
         <form action = '/admin/questions/edit' method='POST'>
             <table id='answersTable'>
                 <thead>
                     <tr>                        
-                        <th scope='col'>Field Name</th>
                         <th scope='col'>Label</th>
                         <th scope='col'>Type</th>
+                        <th scope='col'>Sub-type</th>
+                        <th scope='col'>Parent</th>
                         <th scope='col'>PDF Output</th>
                         <th scope='col'>Order</th>
                     </tr>
@@ -89,10 +112,11 @@
         echo "
             <tbody>
                 <tr>
-                    <td><input type='text' style='min-width:100px; width:100px;' name='fieldName' value='$fieldName' /></td>
-                    <td><input type='text' style='min-width:100px; width:100px;' name='label' value='$label' /></td>
+                    <td><input type='text' style='min-width:200px; width:200px;' name='label' value='$label' /></td>
                     <td>$typeSelect</td>
-                    <td><textarea rows='5' cols='100' name='pdfOutput'>$pdfOutput</textarea></td>
+                    <td>$subTypeSelect</td>
+                    <td>$parentSelect</td>
+                    <td><textarea rows='5' cols='50' name='pdfOutput'>$pdfOutput</textarea></td>
                     <td><input class='order' type='text' name='order' onclick='this.select();' value='$order' /></td>
                 </tr>
             </tbody>

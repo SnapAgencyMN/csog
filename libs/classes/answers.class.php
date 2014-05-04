@@ -68,11 +68,13 @@ class Answers {
         }
     }
     
-    public function saveAnswer($label, $type, $pdf, $questionID, $order, $answerID = 0)
+    public function saveAnswer($label, $type,  $subtype, $pdf, $parentID, $questionID, $order, $answerID = 0)
     {
         $this->answersTable->data['label'] = $label;
         $this->answersTable->data['type'] = $type;
+        $this->answersTable->data['`sub-type`'] = $subtype;
         $this->answersTable->data['pdfOutput'] = $pdf;
+        $this->answersTable->data['parentID'] = $parentID;
         $this->answersTable->data['questionID'] = $questionID;
         $this->answersTable->data['`order`'] = $order;
 

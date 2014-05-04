@@ -52,7 +52,8 @@
         
         $action = "display-all";
     }
-    else
+    
+    if ($action == "save-answer" || empty($answer))
     {
         if ($questionID > 0)
             $action = "display-one";

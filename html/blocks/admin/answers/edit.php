@@ -12,7 +12,7 @@
         out("Invalid parameters");
         die();
     }
-    
+
     if (!empty($action))
     {
         if ($action == 'save-answer')
@@ -21,8 +21,10 @@
             $type = getParameterString("type");
             $pdf = getParameterString("pdfOutput");
             $order = getParameterNumber('order');
+            $subtype = getParameterString("sub-type");
+            $parentID = getParameterNumber('parentID');
             
-            $answersClass->saveAnswer($label, $type, $pdf, $questionID, $order, $answerID);
+            $answersClass->saveAnswer($label, $type, $subtype, $pdf, $parentID, $questionID, $order, $answerID);
         }
         if ($action == "delete-answer")
         {
