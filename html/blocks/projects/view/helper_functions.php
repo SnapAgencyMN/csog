@@ -1,23 +1,23 @@
 <?php
 
-function printAnswer($answer, $type)
+function printAnswer($answer, $type, $i=0)
 {
     switch ($answer['type'])
     {
         case "text":
             echo "
-                <input onblur='updateRow({$answer['questionID']})' type='text' name='".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='textbox form_question' />
+                <input onblur='updateRow({$answer['questionID']}, \"$type\")' type='text' name='".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='textbox form_question' />
             ";
             break;
         case "radio":
             echo "
-                <input onclick='updateRow({$answer['questionID']})' type='radio' name='radio_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question' />
+                <input onclick='updateRow({$answer['questionID']}, \"$type\")' type='radio' name='radio_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question' />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;
         case "checkbox":
             echo "
-                <input onclick='updateRow({$answer['questionID']})' type='checkbox' name='checkbox_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
+                <input onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' name='checkbox_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;
@@ -31,18 +31,14 @@ function printAnswer($answer, $type)
             break;
         case "unknown":
             echo "
-                <input onclick='updateRow({$answer['questionID']})' type='checkbox' onclick='hideOtherAnswers({$answer['questionID']})' name='unknown_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
+                <input onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' onclick='hideOtherAnswers({$answer['questionID']})' name='unknown_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
-            break;
             break;
         case "other":
             echo "
-                <input onclick='updateRow({$answer['questionID']})' type='checkbox' name='other_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
-                <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
+                <input question_type='other' onblur='updateRow({$answer['questionID']}, \"$type\", $i)' type='text' name='other_".$i."_".$type."_{$answer['questionID']}' id='other_".$i."_".$type."_{$answer['id']}' value='{$answ['value']}' class='form_question checkbox' />
             ";
-                
-                // ECHO input box and reveal if radio selected
             break;
     }
 }
@@ -80,36 +76,100 @@ function echoCategory($category, $type='normal')
         if($question['type'] == "question" && $titlePrinted)
             $intent = "20px";
         
-        echo "
-            <div class='question_set_row' id='question_row_{$question['id']}'>
-                <div style='padding-left:$intent' class='question_set_row_hint'>
-                    <img src='".WS_URL."/media/hint.png' alt='Hint' title=\"{$question['hint']}\">
-                </div>
-                <div class='question_set_row_title'>
-                    {$question['title']}
-                </div>
-        ";
-
-        $answers = $answersClass->listAnswers($question['id']);
-        echo "<div class='question_set_row_field'>";
-        foreach ($answers as $answer)
-        {
-            $divSuffix = "";
-            $divClass = "";
-            if ($answer['parentID'])
+        if ($question['type'] == "other")
+        {            
+            $answers = $answersClass->listAnswers($question['id']);
+ 
+            foreach ($answers as $answer)
             {
-                $divClass = "hidden child";
-                $divSuffix = "id='child_{$answer['parentID']}'";
+                if ($answer['type'] == 'checkbox')
+                    $checkBoxID = $answer['id'];
+                elseif ($answer['type'] == "text")
+                    $textFieldID = $answer['id'];
             }
             
-            echo "<div class='question_answers {$answer['type']} $divClass' $divSuffix category_type='$type'>";
-            printAnswer($answer, $type);
-            echo "</div>";
+            $currentOthers = $answersClass->getUserAnswers($textFieldID);
+            
+            $i = 1;
+            foreach ($currentOthers as $answer)
+            {
+                echo "
+                    <div class='question_set_row' id='other_".$i."_".$type."_question_row_{$question['id']}'>
+                        <div style='padding-left:$intent' class='question_set_row_hint'>
+                            <img src='".WS_URL."/media/hint.png' alt='Hint' title=\"{$question['hint']}\">
+                        </div>
+                        <div class='question_set_row_title'>
+                            {$question['title']}
+                        </div>
+                        <div class='question_set_row_field'>
+                ";
+
+                echo "<div class='question_answers {$answer['type']}'  category_type='$type'>";
+
+                printAnswer($answer, $type, $i);
+
+                echo "</div>";
+                echo "</div>
+                    </div>
+                    <div class='clear'></div>
+                ";
+                $i++;
+            }
+            
+            echo "
+                <div class='question_set_row' id='other_".$i."_".$type."_question_row_{$question['id']}'>
+                    <div style='padding-left:$intent' class='question_set_row_hint'>
+                        <img src='".WS_URL."/media/hint.png' alt='Hint' title=\"{$question['hint']}\">
+                    </div>
+                    <div class='question_set_row_title'>
+                        {$question['title']}
+                    </div>
+                    <div class='question_set_row_field'>
+            ";
+                            
+            echo "
+                <input question_type='other' onclick='addNewOtherBox({$question['id']}, \"$type\", \"$intent\", \"".WS_URL."\", \"{$question['hint']}\", \"{$question['title']}\"); return false;' type='checkbox' name='other_".$i.$type."_{$question['id']}' id='other_".$i.$type."_$checkBoxID' class='form_question checkbox' />
+            ";
+            echo "</div>
+                </div>
+                <div class='clear'></div>
+            ";
         }
-        echo "</div>
-            </div>
-            <div class='clear'></div>
-        ";
+        else
+        {
+            echo "
+                <div class='question_set_row' id='$type"."_question_row_{$question['id']}'>
+                    <div style='padding-left:$intent' class='question_set_row_hint'>
+                        <img src='".WS_URL."/media/hint.png' alt='Hint' title=\"{$question['hint']}\">
+                    </div>
+                    <div class='question_set_row_title'>
+                        {$question['title']}
+                    </div>
+            ";
+
+            $answers = $answersClass->listAnswers($question['id']);
+            echo "<div class='question_set_row_field'>";
+            foreach ($answers as $answer)
+            {
+                $divSuffix = "";
+                $divClass = "";
+                if ($answer['parentID'])
+                {
+                    $divClass = "hidden child";
+                    $divSuffix = "id='child_{$answer['parentID']}'";
+                }
+
+                echo "<div class='question_answers {$answer['type']} $divClass' $divSuffix category_type='$type'>";
+                printAnswer($answer, $type);
+                echo "</div>";
+            }
+            
+            echo "</div>
+                </div>
+                <div class='clear'></div>
+            ";
+        }
+        
     }
     echo "</div>";
 }

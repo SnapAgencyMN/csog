@@ -118,6 +118,8 @@ class Sections {
     {
         if ($sectionID > 0)
         {
+            //TODO: Delete all categories for this section
+            
             $details = $this->getDetails($sectionID);
             
             // Making all children standalone if deleting parent category

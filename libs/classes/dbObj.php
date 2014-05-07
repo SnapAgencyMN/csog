@@ -192,4 +192,10 @@ class DbObject{
 		$result_set = self::$db->fetch_array(self::$db->query($sql));
 		return $result_set[0];
 	}
+        
+        public function clear_data()
+        {
+            unset($this->data);
+            $this->data = array();
+        }
 }

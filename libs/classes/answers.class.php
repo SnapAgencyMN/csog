@@ -66,6 +66,7 @@ class Answers {
     
     public function saveAnswer($label, $type,  $pdf, $parentID, $questionID, $order, $answerID = 0)
     {
+        $this->answersTable->clear_data();
         $this->answersTable->data['label'] = $label;
         $this->answersTable->data['type'] = $type;
         $this->answersTable->data['pdfOutput'] = $pdf;
@@ -91,5 +92,20 @@ class Answers {
             $this->answersTable->data['id'] = $answerID;
             $this->answersTable->delete();
         }
+    }
+    
+    public function deleteAllAnswers($questionID)
+    {
+        $answers = $this->listAnswers($questionID);
+        
+        foreach ($answers as $answer)
+        {
+            $this->deleteAnswer($answer['id']);
+        }
+    }
+    
+    public function getUserAnswers($answerID)
+    {
+        return (array());
     }
 }

@@ -95,6 +95,8 @@ class Categories {
     {
         if ($categoryID > 0)
         {
+            //TODO: Delete all questions for this category
+            
             $this->categoriesTable->data['id'] = $categoryID;
             $this->categoriesTable->delete();
         }

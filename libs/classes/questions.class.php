@@ -54,28 +54,57 @@ class Questions {
     
     public function saveQuestion($title, $hint, $categoryID, $type, $order, $questionID=0)
     {
+        include_once("libs/classes/answers.class.php");
+        $answersClass = new Answers($this->db);
+
+        
         $this->questionsTable->data['title'] = $title;
         $this->questionsTable->data['hint'] = $hint;
         $this->questionsTable->data['categoryID'] = $categoryID;
         $this->questionsTable->data['type'] = $type;
         $this->questionsTable->data['`order`'] = $order;
-
+        
         if ($questionID > 0)
         {
+            $data = $this->getDetails($questionID);
+            
+            $otherAnswersExist = false;
+            if ($data['type'] == "other")
+            {
+                if ($type != "other")
+                    $answersClass->deleteAllAnswers($questionID);
+                else
+                    $otherAnswersExist = true;
+            }
+            
             $this->questionsTable->data['id'] = $questionID;
             $id = $this->questionsTable->update();
         }
         else
-            $id = $this->questionsTable->create();    
+            $questionID = $this->questionsTable->create();  
+        
+        if ($type == "other" && !$otherAnswersExist)
+        {
+            $answersClass->saveAnswer("", "checkbox", "", 0, $questionID, 0);
+            $answersClass->saveAnswer("", "text", "", 0, $questionID, 1);
+        }
+        
+        unset($answersClass);
     }
     
     public function deleteQuestion($questionID)
     {
+        include_once("libs/classes/answers.class.php");
+        $answersClass = new Answers($this->db);
+        
         if ($questionID > 0)
         {
+            $answersClass->deleteAllAnswers($questionID);
+            
             $this->questionsTable->data['id'] = $questionID;
             
             $result = $this->questionsTable->delete();
         }
+        unset($answersClass);
     }
 }

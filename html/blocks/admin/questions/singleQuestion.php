@@ -5,6 +5,7 @@
     $categoryID = "";
     $titleSelected = "";
     $questionSelected = "";
+    $otherSelected = "";
     
     if (@$questionID > 0)
     {
@@ -20,6 +21,9 @@
         
         if ($info['type'] == "title")
             $titleSelected = 'selected="selected"';
+        
+        if ($info['type'] == "other")
+            $otherSelected = "selected='selected'";
     }
     
     echo "
@@ -49,6 +53,7 @@
             <select name='type'>
                 <option $questionSelected value='question'>Question</option>
                 <option $titleSelected value='title'>Title</option>
+                <option $otherSelected value='other'>Other</option>
             </select>
         ";
     

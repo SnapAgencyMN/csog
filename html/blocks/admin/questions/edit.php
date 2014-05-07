@@ -55,7 +55,7 @@
         }
     }
     
-    if ($action == "save-answer" || empty($action))
+    if ($action == "save-answer" || $action == "delete-answer" || empty($action))
     {
         if ($questionID > 0)
             $action = "display-one";
