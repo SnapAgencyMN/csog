@@ -457,19 +457,19 @@ function updateRow(id, type, otherID)
     });
     
     // Check if unknown is used
-    if ($("#question_row_"+id+" .unknown").length > 0 )
+    if ($("#"+type+"_question_row_"+id+" .unknown").length > 0 )
     {
-        var categoryType = $("#question_row_"+id+" .unknown").attr('category_type');
-
-        if ($("#question_row_"+id+" [name='unknown_"+categoryType+"_"+id+"']").is(":checked"))
+        var categoryType = $("#"+type+"_question_row_"+id+" .unknown").attr('category_type');
+        
+        if ($("#"+type+"_question_row_"+id+" [name='unknown_"+categoryType+"_"+id+"']").is(":checked"))
         {
-            $("#question_row_"+id+" div.question_answers:not(.unknown)").each(function( i ) {
+            $("#"+type+"_question_row_"+id+" div.question_answers:not(.unknown)").each(function( i ) {
                 $(this).addClass('hidden');
             });
         }
         else
         {
-            $("#question_row_"+id+" div.question_answers:not(.unknown)").each(function( i ) {
+            $("#"+type+"_question_row_"+id+" div.question_answers:not(.unknown)").each(function( i ) {
                 $(this).removeClass("hidden");
             });
         }
