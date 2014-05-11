@@ -104,9 +104,11 @@ class Answers {
         }
     }
     
-    public function getUserAnswers($answerID)
+    public function getUserAnswers($userID, $answerID)
     {
-        return (array());
+        echo "WHERE `userID`=$userID AND `answerID` = $answerID ORDER BY `spawn_sequenceID`, `other_sequenceID`";
+        $results = $this->answersMappingTable->fetchAll(" WHERE `userID`=$userID AND `answerID` = $answerID ORDER BY `spawn_sequenceID`, `other_sequenceID`");
+        return $results;
     }
     
     public function saveUserAnswer($userID, $answerID, $value, $spawn_sequenceID = 0, $other_sequenceID = 0)

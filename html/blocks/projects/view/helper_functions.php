@@ -37,7 +37,7 @@ function printAnswer($answer, $type, $i=0)
             break;
         case "other":
             echo "
-                <input div_type='$type' question_type='other' question_id='{$answer['questionID']}' onblur='updateRow({$answer['questionID']}, \"$type\", $i)' type='text' name='other_".$i."_".$type."_{$answer['questionID']}' id='other_".$i."_".$type."_{$answer['id']}' value='{$answer['value']}' class='form_question' />
+                <input div_type='$type' question_type='other' question_id='{$answer['questionID']}' onblur='updateRow({$answer['questionID']}, \"$type\", $i)' type='text' name='other_".$i."_".$type."_{$answer['id']}' id='other_".$i."_".$type."_{$answer['id']}' value='{$answer['value']}' class='form_question' />
             ";
             break;
     }
@@ -88,8 +88,8 @@ function echoCategory($category, $type='normal')
                     $textFieldID = $answer['id'];
             }
             
-            $currentOthers = $answersClass->getUserAnswers($textFieldID);
-
+            $currentOthers = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $textFieldID);
+            pr_out($currentOthers);
             $i = 1;
             foreach ($currentOthers as $answer)
             {
@@ -128,7 +128,7 @@ function echoCategory($category, $type='normal')
             ";
                             
             echo "
-                <input div_type='$type' question_type='other' question_id='{$question['id']}' onclick='addNewOtherBox({$question['id']}, \"$type\", \"$intent\", \"".WS_URL."\", \"{$question['hint']}\", \"{$question['title']}\"); return false;' type='checkbox' name='other_".$i."_".$type."_{$question['id']}' id='other_".$i."_".$type."_$checkBoxID' class='form_question checkbox' />
+                <input div_type='$type' question_type='other' question_id='{$question['id']}' onclick='addNewOtherBox({$question['id']}, \"$type\", \"$intent\", \"".WS_URL."\", \"{$question['hint']}\", \"{$question['title']}\", $checkBoxID, $textFieldID); return false;' type='checkbox' name='other_".$i."_".$type."_$checkBoxID' id='other_".$i."_".$type."_$checkBoxID' class='form_question checkbox' />
             ";
             echo "</div>
                 </div>

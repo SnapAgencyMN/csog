@@ -477,10 +477,9 @@ function updateRow(id, type, otherID)
     
     // Hide others that are not used
     if ($.type(otherID) != "undefined")
-    {
+    {   
         // Remove if input is empty
-        var input = $("#other_"+otherID+"_"+type+"_"+id);
-        var questionID = input.attr( "question_id" );
+        var input = $("#other_"+otherID+"_"+type+"_question_row_"+id+" input");
 
         if (input.val() === "")
         {
@@ -489,9 +488,12 @@ function updateRow(id, type, otherID)
         }
         
         //Recount all others left
-        $("input[question_id="+questionID+"][question_type='other'][div_type='"+type+"']").each(function( i ) {
+        $("input[question_id="+id+"][question_type='other'][div_type='"+type+"']").each(function( i ) {
+            var idString = $(this).attr("id");
+            var answerID = idString.split("_").pop();
+            
             var seqNum = i+1;
-            var newInput = "other_"+seqNum+"_"+type+"_"+id;
+            var newInput = "other_"+seqNum+"_"+type+"_"+answerID;
             $(this).attr("name", newInput);
             $(this).attr("id", newInput);
             $(this).attr("onblur", "updateRow("+id+", '"+type+"', "+seqNum+")");
@@ -502,13 +504,13 @@ function updateRow(id, type, otherID)
     }
 }
 
-function addNewOtherBox(questionID, type, intent, url, hint, title)
+function addNewOtherBox(questionID, type, intent, url, hint, title, checkboxID, txtID)
 {
     var numOfOthers = $("input[question_id="+questionID+"][question_type='other'][div_type='"+type+"']").size();
     
     // Change latest one to input
     var div = $("input[question_id="+questionID+"][question_type='other'][div_type='"+type+"']").last().parent();
-    var newInput = "<input div_type='"+type+"' question_type='other' question_id='"+questionID+"' onblur=\"updateRow("+questionID+", '"+type+"', "+numOfOthers+")\" type='text' name='other_"+numOfOthers+"_"+type+"_"+questionID+"' id='other_"+numOfOthers+"_"+type+"_"+questionID+"' class='form_question' />";
+    var newInput = "<input div_type='"+type+"' question_type='other' question_id='"+questionID+"' onblur=\"updateRow("+questionID+", '"+type+"', "+numOfOthers+")\" type='text' name='other_"+numOfOthers+"_"+type+"_"+txtID+"' id='other_"+numOfOthers+"_"+type+"_"+txtID+"' class='form_question' />";
     div.html(newInput);
 
     // Add new checkbox one
@@ -519,7 +521,7 @@ function addNewOtherBox(questionID, type, intent, url, hint, title)
     newCheckbox += "</div>";
     newCheckbox += "<div class='question_set_row_title'>"+title+"</div>";
     newCheckbox += "<div class='question_set_row_field'>";
-    newCheckbox += "<input div_type='"+type+"' question_type='other' question_id='"+questionID+"' onclick=\"addNewOtherBox("+questionID+", '"+type+"', '"+intent+"', '"+url+"', '"+hint+"', '"+title+"'); return false;\" type='checkbox' name='other_"+newSeqNum+"_"+type+"_"+questionID+"' id='other_"+newSeqNum+"_"+type+"_"+questionID+"' class='form_question checkbox' />"
+    newCheckbox += "<input div_type='"+type+"' question_type='other' question_id='"+questionID+"' onclick=\"addNewOtherBox("+questionID+", '"+type+"', '"+intent+"', '"+url+"', '"+hint+"', '"+title+"', "+checkboxID+", "+txtID+"); return false;\" type='checkbox' name='other_"+newSeqNum+"_"+type+"_"+checkboxID+"' id='other_"+newSeqNum+"_"+type+"_"+checkboxID+"' class='form_question checkbox' />"
     newCheckbox += "</div></div><div class='clear'></div>";
     div.parent().parent().append(newCheckbox);
     
