@@ -13,16 +13,35 @@ foreach ($_POST as $key => $value)
         $formattedValue = array();
         foreach ($keyArr as $part)
         {
+            // Determine section type
             if ($part == "normal")
                 $type = "normal";
             
             if ($part == "spawn")
                 $type = "spawn";
         }
+        $inputType = $keyArr[0];
+        
+        
+        if ($inputType == "radio")
+        {
+            $spawnID = ($type == "spawn") ? $keyArr[2] : 0;
+            
+            $questionID = end($keyArr);
+            $answersClass->clearUserSelection($_SESSION['USER']['ID'], $questionID, $inputType, $spawnID);
+            $answerDetails = $answersClass->getDetailsByLabel($value, $questionID);
+            $formattedValue['answerID'] = $answerDetails[0]['id'];
+            $formattedValue['value'] = 'on';
+        }
+        else
+        {
+            $formattedValue['answerID'] = end($keyArr);
+            $formattedValue['value'] = $value;
+        }
+        
         
         $formattedValue['type'] = $type;
-        $formattedValue['answerID'] = end($keyArr);
-        $formattedValue['value'] = $value;
+        
         
         if (count($keyArr) == 4)
         {

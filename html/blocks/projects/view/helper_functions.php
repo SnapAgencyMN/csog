@@ -13,14 +13,24 @@ function printAnswer($answer, $type, $value=null)
             }
             else
             {
+                if (!empty($value[0]))
+                    $value = $value[0]['value'];
+                else
+                    $value = "";
+                
                 echo "
-                    <input div_type='$type' onblur='updateRow({$answer['questionID']}, \"$type\")' type='text' name='text_".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='textbox form_question' />
+                    <input div_type='$type' onblur='updateRow({$answer['questionID']}, \"$type\")' type='text' name='text_".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' value='$value' class='textbox form_question' />
                 ";
             }
             break;
         case "radio":
+            if (!empty($value[0]) && $value[0]['value'] == "on")
+                    $value = "checked";
+                else
+                    $value = "";
+            
             echo "
-                <input div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\")' type='radio' name='radio_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question' />
+                <input div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\")' type='radio' name='radio_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' value='{$answer['label']}' class='form_question' $value />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;
@@ -162,6 +172,8 @@ function echoCategory($category, $type='normal')
             echo "<div class='question_set_row_field'>";
             foreach ($answers as $answer)
             {
+                $value = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $answer['id']);
+                
                 $divSuffix = "";
                 $divClass = "";
                 if ($answer['parentID'])
@@ -171,7 +183,7 @@ function echoCategory($category, $type='normal')
                 }
 
                 echo "<div class='question_answers {$answer['type']} $divClass' $divSuffix category_type='$type'>";
-                printAnswer($answer, $type);
+                printAnswer($answer, $type, $value);
                 echo "</div>";
             }
             

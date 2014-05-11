@@ -34,11 +34,22 @@ class Answers {
         return $details;
     }
     
-    public function listAnswers($questionID)
+    public function getDetailsByLabel($label, $questionID)
+    {
+        $results = $this->answersTable->fetchAll(" WHERE `label` = '$label' AND `questionID` = $questionID");
+        
+        return $results;
+    }
+    
+    public function listAnswers($questionID, $type="")
     {
         if ($questionID > 0)
         {
-            $answers = $this->answersTable->fetchAll(" WHERE `questionID` = $questionID {$this->orderStr}");
+            $suffix = "";
+            if (!empty($type))
+                $suffix .= "AND `type` = '$type' ";
+            
+            $answers = $this->answersTable->fetchAll(" WHERE `questionID` = $questionID $suffix {$this->orderStr}");
             
             return $answers;
         }
@@ -61,6 +72,15 @@ class Answers {
             $answers = $this->answersTable->fetchAll(" WHERE `parentID` = $answerID {$this->orderStr}");
             
             return $answers;
+        }
+    }
+    
+    public function clearUserSelection($userID, $questionID, $type="", $spawnID = 0)
+    {
+        $answers = $this->listAnswers($questionID, $type);
+        foreach ($answers as $answer)
+        {
+            $this->deleteUserAnswer($userID, $answer['id'], $spawnID);
         }
     }
     
@@ -91,6 +111,20 @@ class Answers {
         {
             $this->answersTable->data['id'] = $answerID;
             $this->answersTable->delete();
+        }
+    }
+    
+    public function deleteUserAnswer($userID, $answerID, $spawnID)
+    {
+        if ($userID > 0)
+        {
+            $userAnswers = $this->getUserAnswers($userID, $answerID, $spawnID);
+            
+            foreach ($userAnswers as $userAnswer)
+            {
+                $this->answersMappingTable->data['id'] = $userAnswer['id'];
+                $this->answersMappingTable->delete();
+            }
         }
     }
     
