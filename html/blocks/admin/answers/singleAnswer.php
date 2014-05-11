@@ -8,7 +8,6 @@
     $radioSelected = "";
     $checkboxSelected = "";
     $imageSelected = "";
-    $otherSelected = "";
     $unknownSelected = "";
 
     if (@$answerID > 0)
@@ -33,9 +32,6 @@
             case "image":
                 $imageSelected = "selected='selected'";
                 break;
-            case "other":
-                $otherSelected = "selected='selected'";
-                break;
             case "unknown":
                 $unknownSelected = "selected='selected'";
                 break;
@@ -55,7 +51,6 @@
             <option $radioSelected value='radio'>Radio button</option>
             <option $checkboxSelected value='checkbox'>Checkbox</option>
             <option $imageSelected value='image'>Image</option>
-            <option $otherSelected value='other'>Other</option>
             <option $unknownSelected value='unknown'>Unknown</option>
         </select>
     ";

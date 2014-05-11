@@ -78,8 +78,11 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
     }
 }
 
-include(FS_PATH . "html/blocks/header.php");
-include(FS_PATH . "html/blocks/body.php");
-include(FS_PATH . "html/blocks/footer.php");
+if ($_SERVER['SCRIPT_NAME'] != "/ajaxHandler.php")
+{
+    include(FS_PATH . "html/blocks/header.php");
+    include(FS_PATH . "html/blocks/body.php");
+    include(FS_PATH . "html/blocks/footer.php");
+}
 
 //pr_out($_SESSION);

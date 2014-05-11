@@ -21,9 +21,9 @@ class Answers {
     public function __construct($db) {
         $this->db = $db;
         $this->table_name = "answers2";
-        $this->answers_mapping_table = "user_answers";
+        $this->answers_mapping_table_name = "user_answers";
         $this->answersTable = new DbObject($this->db, $this->table_name,false);
-        $this->answersMappingTable = new DbObject($this->db, $this->answers_mapping_table, false);
+        $this->answersMappingTable = new DbObject($this->db, $this->answers_mapping_table_name, false);
     }
    
     public function getDetails($answerID)
@@ -107,5 +107,18 @@ class Answers {
     public function getUserAnswers($answerID)
     {
         return (array());
+    }
+    
+    public function saveUserAnswer($userID, $answerID, $value, $spawn_sequenceID = 0, $other_sequenceID = 0)
+    {
+        if (!empty($value))
+        {
+            $value = $this->db->escape($value);
+            $sql = "INSERT INTO `{$this->answers_mapping_table_name}` (`userID`, `answerID`, `spawn_sequenceID`, `other_sequenceID`, `value`) VALUES ($userID, $answerID, $spawn_sequenceID, $other_sequenceID, \"$value\") ON DUPLICATE KEY UPDATE `value`=\"$value\"";
+
+            $id = $this->answersMappingTable->insert_by_sql($sql);
+
+            return $id;
+        }
     }
 }

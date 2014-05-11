@@ -74,6 +74,13 @@ class Db{
 		}
 	}
 
+        public function escape($value){		
+		if(self::$real_escape_string_exists){ 
+			return mysqli_real_escape_string(self::$connection, $value); 
+		}	    
+		return addslashes($value);	
+	}
+        
 	public static function escape_value($value){		
 		if(self::$real_escape_string_exists){ 
 			return mysqli_real_escape_string(self::$connection, $value); 

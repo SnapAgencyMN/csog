@@ -6,7 +6,7 @@ function printAnswer($answer, $type, $i=0)
     {
         case "text":
             echo "
-                <input onblur='updateRow({$answer['questionID']}, \"$type\")' type='text' name='".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='textbox form_question' />
+                <input onblur='updateRow({$answer['questionID']}, \"$type\")' type='text' name='text_".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='textbox form_question' />
             ";
             break;
         case "radio":
@@ -37,7 +37,7 @@ function printAnswer($answer, $type, $i=0)
             break;
         case "other":
             echo "
-                <input question_type='other' onblur='updateRow({$answer['questionID']}, \"$type\", $i)' type='text' name='other_".$i."_".$type."_{$answer['questionID']}' id='other_".$i."_".$type."_{$answer['id']}' value='{$answ['value']}' class='form_question checkbox' />
+                <input div_type='$type' question_type='other' question_id='{$answer['questionID']}' onblur='updateRow({$answer['questionID']}, \"$type\", $i)' type='text' name='other_".$i."_".$type."_{$answer['questionID']}' id='other_".$i."_".$type."_{$answer['id']}' value='{$answer['value']}' class='form_question' />
             ";
             break;
     }
@@ -79,7 +79,7 @@ function echoCategory($category, $type='normal')
         if ($question['type'] == "other")
         {            
             $answers = $answersClass->listAnswers($question['id']);
- 
+
             foreach ($answers as $answer)
             {
                 if ($answer['type'] == 'checkbox')
@@ -89,7 +89,7 @@ function echoCategory($category, $type='normal')
             }
             
             $currentOthers = $answersClass->getUserAnswers($textFieldID);
-            
+
             $i = 1;
             foreach ($currentOthers as $answer)
             {
@@ -128,7 +128,7 @@ function echoCategory($category, $type='normal')
             ";
                             
             echo "
-                <input question_type='other' onclick='addNewOtherBox({$question['id']}, \"$type\", \"$intent\", \"".WS_URL."\", \"{$question['hint']}\", \"{$question['title']}\"); return false;' type='checkbox' name='other_".$i.$type."_{$question['id']}' id='other_".$i.$type."_$checkBoxID' class='form_question checkbox' />
+                <input div_type='$type' question_type='other' question_id='{$question['id']}' onclick='addNewOtherBox({$question['id']}, \"$type\", \"$intent\", \"".WS_URL."\", \"{$question['hint']}\", \"{$question['title']}\"); return false;' type='checkbox' name='other_".$i."_".$type."_{$question['id']}' id='other_".$i."_".$type."_$checkBoxID' class='form_question checkbox' />
             ";
             echo "</div>
                 </div>
@@ -181,7 +181,7 @@ function echoSpawnCategory($category)
     $selected = $categoriesClass->getNumberOfSpawnBoxesForUser($category['id'], $_SESSION['USER']['ID']);
     $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='Please select {$category['spawn_box_label']} that you have'>";
     
-    $selectBox = "<select class='right' name='spawn_{$category['id']}'>";
+    $selectBox = "<select class='right' name='spawn_{$category['id']}' id='spawn_{$category['id']}'>";
     for ($i=1; $i<=10; $i++)
     {
         $slct = "";
@@ -192,8 +192,9 @@ function echoSpawnCategory($category)
     }
     $selectBox .= "</select>";
     
+    $host = WS_URL;
     echo <<<HTML_STR
-        <div class='question_set_wrapper' style='display:block; float:left; width:100%;'>
+        <div class='question_set_wrapper' style='display:block; float:left; width:100%;' id='cat_{$category['id']}'>
             <form method='post' id='spawn_category_{$category['id']}'>
                 <input type='hidden' name='action' value='save_spawn_input'/> 
                 <input type='hidden' name='categoryID' value='{$category['id']}'/> 
@@ -206,18 +207,17 @@ function echoSpawnCategory($category)
                     </div>
                     <div class='question_set_row_field'>
                         <div class='question_answers'>
-                            <a class='right' href='#' style='margin-left:15px;' onclick="submitForm('spawn_category_{$category['id']}');return false;" >Update</a>
+                            <a class='right' href='#' style='margin-left:15px;' onclick="updateSpawn('{$category['id']}', '$host');return false;" >Update</a>
                             $selectBox
                         </div>
                     </div>    
                 </div>
-            </form>
         </div>
         <div class='clear'></div>
 HTML_STR;
                     
     for ($z = 0; $z < $selected; $z++)
     {
-        echoCategory($category, "spawn_$i");
+        echoCategory($category, "spawn_$z");
     }
 }

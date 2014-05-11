@@ -115,6 +115,16 @@ class DbObject{
 		}
 	}
 
+        public function insert_by_sql($sql)
+        {
+            if(Db::query($sql)) {
+                    $id = Db::insert_id();
+                    return $id;
+            } else {
+                    return false;
+            }
+        }
+        
 	public function update() {
 		$class_name=get_called_class();
 		foreach($this->data as $key => $value){

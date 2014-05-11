@@ -34,9 +34,28 @@ class Sections {
     
     public function listNonParentSections()
     {
-        $sections = $this->sectionsTable->fetchAll("WHERE `type` != 'parent' {$this->orderStr} ");
+        $returnArr = array();
         
-        return $sections;
+        $topLevelSections = $this->listTopSections();
+        
+        foreach ($topLevelSections as $section)
+        {
+            if ($section['type'] == 'standalone')
+                $returnArr[] = $section;
+            elseif ($section['type'] == "parent")
+            {
+                $children = $this->listChildrenSections($section['sectionID']);
+                
+                foreach ($children as $child)
+                {
+                    $returnArr[] = $child;
+                }
+            }
+        }
+        
+        ///$sections = $this->sectionsTable->fetchAll("WHERE `type` != 'parent' {$this->orderStr} ");
+        
+        return $returnArr;
     }
     
     public function listChildrenSections($parentID)
@@ -136,6 +155,21 @@ class Sections {
             $this->sectionsTable->data['sectionID'] = $sectionID;
             
             $result = $this->sectionsTable->deleteSection();
+        }
+    }
+    
+    public function getNextSectionID($currentSectionID)
+    {
+        $return = false;
+        $sections = $this->listNonParentSections();
+        
+        foreach ($sections as $section)
+        {
+            if ($return)
+                return $section['sectionID'];
+            
+            if ($section['sectionID'] == $currentSectionID)
+                $return = true;
         }
     }
     
