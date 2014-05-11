@@ -70,7 +70,7 @@
                     <td>
                         <a href='/admin/sections/edit?sectionID={$section['sectionID']}'>Edit</a>
                         <a href='/admin/questions/edit?sectionID={$section['sectionID']}'>Manage questions</a>
-                        <a href='/admin/sections/edit?action=delete&apm;sectionID={$section['sectionID']}'>Delete</a>
+                        <a href='/admin/sections/edit?action=delete&amp;sectionID={$section['sectionID']}'>Delete</a>
                     </td>
                 </tr>
             ";
