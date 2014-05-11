@@ -1,23 +1,32 @@
 <?php
 
-function printAnswer($answer, $type, $i=0)
-{
+function printAnswer($answer, $type, $value=null)
+{    
     switch ($answer['type'])
     {
         case "text":
-            echo "
-                <input onblur='updateRow({$answer['questionID']}, \"$type\")' type='text' name='text_".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='textbox form_question' />
-            ";
+            if (!empty($value['other_sequenceID']))
+            {
+                echo "
+                    <input div_type='$type' question_type='other' question_id='{$answer['questionID']}' onblur=\"updateRow({$answer['questionID']}, '$type', {$value['other_sequenceID']})\" type='text' name='other_{$value['other_sequenceID']}_".$type."_{$answer['id']}' id='other_{$value['other_sequenceID']}_".$type."_{$answer['id']}' value='{$value['value']}' class='form_question' />
+                ";
+            }
+            else
+            {
+                echo "
+                    <input div_type='$type' onblur='updateRow({$answer['questionID']}, \"$type\")' type='text' name='text_".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='textbox form_question' />
+                ";
+            }
             break;
         case "radio":
             echo "
-                <input onclick='updateRow({$answer['questionID']}, \"$type\")' type='radio' name='radio_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question' />
+                <input div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\")' type='radio' name='radio_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question' />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;
         case "checkbox":
             echo "
-                <input onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' name='checkbox_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
+                <input div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' name='checkbox_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;
@@ -26,18 +35,13 @@ function printAnswer($answer, $type, $i=0)
                 <a class='right' href='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' data-lightbox='image-116'><img src='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' class='imageLightboxLink'>
                     <img src='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' class='imageLightboxLink'>
                 </a><br />
-                <iframe class='right' style='width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?id=".$type."_{$answer['id']}' class='upload_frame'></iframe>
+                <iframe div_type='$type' class='right' style='width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?id=".$type."_{$answer['id']}' class='upload_frame'></iframe>
             ";
             break;
         case "unknown":
             echo "
-                <input onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' onclick='hideOtherAnswers({$answer['questionID']})' name='unknown_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
+                <input div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' onclick='hideOtherAnswers({$answer['questionID']})' name='unknown_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
-            ";
-            break;
-        case "other":
-            echo "
-                <input div_type='$type' question_type='other' question_id='{$answer['questionID']}' onblur='updateRow({$answer['questionID']}, \"$type\", $i)' type='text' name='other_".$i."_".$type."_{$answer['id']}' id='other_".$i."_".$type."_{$answer['id']}' value='{$answer['value']}' class='form_question' />
             ";
             break;
     }
@@ -87,9 +91,16 @@ function echoCategory($category, $type='normal')
                 elseif ($answer['type'] == "text")
                     $textFieldID = $answer['id'];
             }
+            $spawnID = 0;
+            if ($type != "normal"){
+                $spawnArr = explode("_", $type);
+                $spawnID = array_pop ($spawnArr);
+            }
+                
             
-            $currentOthers = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $textFieldID);
-            pr_out($currentOthers);
+            $currentOthers = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $textFieldID, $spawnID);
+            $answerDetails = $answersClass->getDetails($textFieldID);
+
             $i = 1;
             foreach ($currentOthers as $answer)
             {
@@ -104,9 +115,9 @@ function echoCategory($category, $type='normal')
                         <div class='question_set_row_field'>
                 ";
 
-                echo "<div class='question_answers {$answer['type']}'  category_type='$type'>";
+                echo "<div class='question_answers {$answerDetails['type']}'  category_type='$type'>";
 
-                printAnswer($answer, $type, $i);
+                printAnswer($answerDetails, $type, $answer);
 
                 echo "</div>";
                 echo "</div>
