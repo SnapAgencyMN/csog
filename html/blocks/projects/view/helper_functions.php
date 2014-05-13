@@ -42,10 +42,10 @@ function printAnswer($answer, $type, $value=null)
             break;
         case "image":
             echo "
-                <a class='right' href='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' data-lightbox='image-116'><img src='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' class='imageLightboxLink'>
-                    <img src='".WS_URL."media/uploads/139628533653399f98999a2.jpeg' class='imageLightboxLink'>
+                <a class='right' href='".WS_URL."media/uploads/{$value[0]['value']}' data-lightbox='image-116'>
+                    <img src='".WS_URL."media/uploads/{$value[0]['value']}' class='imageLightboxLink'>
                 </a><br />
-                <iframe div_type='$type' class='right' style='width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?id=".$type."_{$answer['id']}' class='upload_frame'></iframe>
+                <iframe div_type='$type' id='iframe_$type"."_{$answer['id']}'  class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?userID={$_SESSION['USER']['ID']}&answerID={$answer['id']}&amp;type=".$type."' class='upload_frame'></iframe>
             ";
             break;
         case "unknown":
@@ -90,6 +90,14 @@ function echoCategory($category, $type='normal')
         if($question['type'] == "question" && $titlePrinted)
             $intent = "20px";
         
+        $spawnID = 0;
+        if ($type != "normal"){
+            $spawnArr = explode("_", $type);
+            $spawnID = array_pop ($spawnArr);
+        }
+
+        
+        // PRINT QUESTION OF OTHER TYPE
         if ($question['type'] == "other")
         {            
             $answers = $answersClass->listAnswers($question['id']);
@@ -101,12 +109,6 @@ function echoCategory($category, $type='normal')
                 elseif ($answer['type'] == "text")
                     $textFieldID = $answer['id'];
             }
-            $spawnID = 0;
-            if ($type != "normal"){
-                $spawnArr = explode("_", $type);
-                $spawnID = array_pop ($spawnArr);
-            }
-                
             
             $currentOthers = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $textFieldID, $spawnID);
             $answerDetails = $answersClass->getDetails($textFieldID);
@@ -156,7 +158,7 @@ function echoCategory($category, $type='normal')
                 <div class='clear'></div>
             ";
         }
-        else
+        else // PRINT ALL OTHER QUESTIONS
         {
             echo "
                 <div class='question_set_row' id='$type"."_question_row_{$question['id']}'>
@@ -172,13 +174,16 @@ function echoCategory($category, $type='normal')
             echo "<div class='question_set_row_field'>";
             foreach ($answers as $answer)
             {
-                $value = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $answer['id']);
+                $value = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $answer['id'], $spawnID);
                 
                 $divSuffix = "";
                 $divClass = "";
                 if ($answer['parentID'])
                 {
-                    $divClass = "hidden child";
+                    $parentValue = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $answer['parentID'], $spawnID);
+                    $hidden = (empty($parentValue[0])) ? "hidden" : "";
+                    
+                    $divClass = "$hidden child";
                     $divSuffix = "id='child_{$answer['parentID']}'";
                 }
 

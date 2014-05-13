@@ -1,3 +1,9 @@
+var _userID;
+var _answerID;
+var _spawnID;
+var _type;
+var _host;
+
 $(function() {
   /* Section Slider for Questions. */
   $('.question_header').click(function() {
@@ -409,6 +415,23 @@ $(function() {
 
   });
 */
+$("iframe").on("load", function () {
+    $.ajax({
+        url: _host+"ajaxHandler.php",
+        data:"action=load_image&userID=" + _userID + "&answerID="+ _answerID +"&spawnID="+ _spawnID,
+        dataType: "text",
+        success: function(data, textStatus, jqXHR){
+            var newImage= "<a class='right' href='"+_host+"media/uploads/"+data.trim()+"' data-lightbox='image-116'><img src='"+_host+"media/uploads/"+data.trim()+"' class='imageLightboxLink'></a>";
+
+            var elem = $("#iframe_"+_type+"_"+_answerID).parent().find("a");
+            $("#iframe_"+_type+"_"+_answerID).parent().find("a").replaceWith(newImage);
+        },
+        error:function(err){
+            alert(err);
+        }
+    });
+})
+
 });
 
 function submitForm(id)
@@ -541,4 +564,20 @@ function updateSpawn(categoryID, host)
             alert(err);
         }
     });
+}
+
+function uploadImage(userID, answerID, spawnID, host)
+{   
+    var type = 'normal';
+    if (spawnID > 0 )
+        type = 'spawn_'+spawnID
+    
+    _userID = userID;
+    _answerID = answerID;
+    _spawnID = spawnID;
+    _type = type;
+    _host = host;
+
+    var form = $("#iframe_"+type+"_"+answerID).contents().find('#uploadForm');
+    form.submit();
 }
