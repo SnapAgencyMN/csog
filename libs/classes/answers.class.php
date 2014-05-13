@@ -75,12 +75,12 @@ class Answers {
         }
     }
     
-    public function clearUserSelection($userID, $questionID, $type="", $spawnID = 0)
+    public function clearUserSelection($userID, $projectID, $questionID, $type="", $spawnID = 0)
     {
         $answers = $this->listAnswers($questionID, $type);
         foreach ($answers as $answer)
         {
-            $this->deleteUserAnswer($userID, $answer['id'], $spawnID);
+            $this->deleteUserAnswer($userID, $projectID, $answer['id'], $spawnID);
         }
     }
     
@@ -114,11 +114,11 @@ class Answers {
         }
     }
     
-    public function deleteUserAnswer($userID, $answerID, $spawnID)
+    public function deleteUserAnswer($userID, $projectID, $answerID, $spawnID)
     {
         if ($userID > 0)
         {
-            $userAnswers = $this->getUserAnswers($userID, $answerID, $spawnID);
+            $userAnswers = $this->getUserAnswers($userID, $projectID, $answerID, $spawnID);
             
             foreach ($userAnswers as $userAnswer)
             {
@@ -138,18 +138,18 @@ class Answers {
         }
     }
     
-    public function getUserAnswers($userID, $answerID, $spawnID = 0)
+    public function getUserAnswers($userID, $projectID, $answerID, $spawnID = 0)
     {
-        $values = $this->answersMappingTable->fetchAll(" WHERE `userID`=$userID AND `answerID` = $answerID AND `spawn_sequenceID` = $spawnID ORDER BY `other_sequenceID`");
+        $values = $this->answersMappingTable->fetchAll(" WHERE `projectID` = $projectID AND `userID`=$userID AND `answerID` = $answerID AND `spawn_sequenceID` = $spawnID ORDER BY `other_sequenceID`");
         return $values;
     }
     
-    public function saveUserAnswer($userID, $answerID, $value, $spawn_sequenceID = 0, $other_sequenceID = 0)
+    public function saveUserAnswer($userID, $projectID, $answerID, $value, $spawn_sequenceID = 0, $other_sequenceID = 0)
     {
         if (!empty($value))
         {
             $value = $this->db->escape($value);
-            $sql = "INSERT INTO `{$this->answers_mapping_table_name}` (`userID`, `answerID`, `spawn_sequenceID`, `other_sequenceID`, `value`) VALUES ($userID, $answerID, $spawn_sequenceID, $other_sequenceID, \"$value\") ON DUPLICATE KEY UPDATE `value`=\"$value\"";
+            $sql = "INSERT INTO `{$this->answers_mapping_table_name}` (`userID`, `projectID`,  `answerID`, `spawn_sequenceID`, `other_sequenceID`, `value`) VALUES ($userID, $projectID, $answerID, $spawn_sequenceID, $other_sequenceID, \"$value\") ON DUPLICATE KEY UPDATE `value`=\"$value\"";
 
             $id = $this->answersMappingTable->insert_by_sql($sql);
 

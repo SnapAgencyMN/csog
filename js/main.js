@@ -1,3 +1,4 @@
+var _projectID;
 var _userID;
 var _answerID;
 var _spawnID;
@@ -418,7 +419,7 @@ $(function() {
 $("iframe").on("load", function () {
     $.ajax({
         url: _host+"ajaxHandler.php",
-        data:"action=load_image&userID=" + _userID + "&answerID="+ _answerID +"&spawnID="+ _spawnID,
+        data:"action=load_image&userID=" + _userID + "&answerID="+ _answerID +"&spawnID="+ _spawnID + "&projectID="+_projectID,
         dataType: "text",
         success: function(data, textStatus, jqXHR){
             var newImage= "<a class='right' href='"+_host+"media/uploads/"+data.trim()+"' data-lightbox='image-116'><img src='"+_host+"media/uploads/"+data.trim()+"' class='imageLightboxLink'></a>";
@@ -482,9 +483,13 @@ function updateRow(id, type, otherID)
     // Check if unknown is used
     if ($("#"+type+"_question_row_"+id+" .unknown").length > 0 )
     {
-        var categoryType = $("#"+type+"_question_row_"+id+" .unknown").attr('category_type');
+        var unknownInput = $("#"+type+"_question_row_"+id+" .unknown");
         
-        if ($("#"+type+"_question_row_"+id+" [name='unknown_"+categoryType+"_"+id+"']").is(":checked"))
+        var categoryType = unknownInput.attr('category_type');
+        var idString = $("#"+type+"_question_row_"+id+" .unknown input").attr("id");
+        var answerID = idString.split("_").pop();
+        
+        if ($("#"+type+"_question_row_"+id+" [name='unknown_"+categoryType+"_"+answerID+"']").is(":checked"))
         {
             $("#"+type+"_question_row_"+id+" div.question_answers:not(.unknown)").each(function( i ) {
                 $(this).addClass('hidden');
@@ -566,12 +571,13 @@ function updateSpawn(categoryID, host)
     });
 }
 
-function uploadImage(userID, answerID, spawnID, host)
+function uploadImage(projectID, userID, answerID, spawnID, host)
 {   
     var type = 'normal';
     if (spawnID > 0 )
         type = 'spawn_'+spawnID
     
+    _projectID = projectID;
     _userID = userID;
     _answerID = answerID;
     _spawnID = spawnID;
@@ -581,3 +587,9 @@ function uploadImage(userID, answerID, spawnID, host)
     var form = $("#iframe_"+type+"_"+answerID).contents().find('#uploadForm');
     form.submit();
 }
+
+$( document ).ready(function() {
+    $("input[action='click']").each(function( i ) {
+        $(this).click()
+    });
+});

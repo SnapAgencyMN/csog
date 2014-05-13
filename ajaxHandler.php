@@ -19,11 +19,12 @@ if ($action == "load_image")
 {
     $answersClass = new Answers($db);
     
+    $projectID = getParameterNumber('projectID');
     $userID = getParameterNumber("userID");
     $answerID = getParameterNumber("answerID");
     $spawnID = getParameterNumber("spawnID");
     
-    $value = $answersClass->getUserAnswers($userID, $answerID, $spawnID);
+    $value = $answersClass->getUserAnswers($userID, $projectID, $answerID, $spawnID);
     
     echo $value[0]['value'];
 }

@@ -1,7 +1,9 @@
 <?php
 
 function printAnswer($answer, $type, $value=null)
-{    
+{
+    global $projectID;
+    
     switch ($answer['type'])
     {
         case "text":
@@ -35,22 +37,37 @@ function printAnswer($answer, $type, $value=null)
             ";
             break;
         case "checkbox":
+            if (!empty($value[0]) && $value[0]['value'] == "on")
+                    $value = "checked";
+                else
+                    $value = "";
+            
             echo "
-                <input div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' name='checkbox_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
+                <input $value div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' name='checkbox_".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;
         case "image":
+            if (!empty($value[0]))
+                    $value = WS_URL."media/uploads/{$value[0]['value']}";
+                else
+                    $value = "";
+            
             echo "
-                <a class='right' href='".WS_URL."media/uploads/{$value[0]['value']}' data-lightbox='image-116'>
-                    <img src='".WS_URL."media/uploads/{$value[0]['value']}' class='imageLightboxLink'>
+                <a class='right' href='$value' data-lightbox='image-116'>
+                    <img src='$value' class='imageLightboxLink'>
                 </a><br />
-                <iframe div_type='$type' id='iframe_$type"."_{$answer['id']}'  class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?userID={$_SESSION['USER']['ID']}&answerID={$answer['id']}&amp;type=".$type."' class='upload_frame'></iframe>
+                <iframe div_type='$type' id='iframe_$type"."_{$answer['id']}'  class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?userID={$_SESSION['USER']['ID']}&answerID={$answer['id']}&amp;type=".$type."&amp;projectID=$projectID' class='upload_frame'></iframe>
             ";
             break;
         case "unknown":
+            if (!empty($value[0]) && $value[0]['value'] == "on")
+                    $value = "action='click'";
+                else
+                    $value = "";
+            
             echo "
-                <input div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' onclick='hideOtherAnswers({$answer['questionID']})' name='unknown_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
+                <input $value div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\")' type='checkbox' onclick='hideOtherAnswers({$answer['questionID']})' name='unknown_".$type."_{$answer['id']}' id='".$type."_{$answer['id']}' class='form_question checkbox' />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;
@@ -69,7 +86,7 @@ function isSelected($sectionID, $sectionsArray)
 
 function echoCategory($category, $type='normal')
 {
-    global $questionsClass, $answersClass;
+    global $questionsClass, $answersClass, $projectID;
     
     echo "<h3 class='question_header'>{$category['title']}</h3>";
     
@@ -95,7 +112,6 @@ function echoCategory($category, $type='normal')
             $spawnArr = explode("_", $type);
             $spawnID = array_pop ($spawnArr);
         }
-
         
         // PRINT QUESTION OF OTHER TYPE
         if ($question['type'] == "other")
@@ -110,7 +126,7 @@ function echoCategory($category, $type='normal')
                     $textFieldID = $answer['id'];
             }
             
-            $currentOthers = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $textFieldID, $spawnID);
+            $currentOthers = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $projectID, $textFieldID, $spawnID);
             $answerDetails = $answersClass->getDetails($textFieldID);
 
             $i = 1;
@@ -174,13 +190,12 @@ function echoCategory($category, $type='normal')
             echo "<div class='question_set_row_field'>";
             foreach ($answers as $answer)
             {
-                $value = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $answer['id'], $spawnID);
-                
+                $value = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $projectID, $answer['id'], $spawnID);
                 $divSuffix = "";
                 $divClass = "";
                 if ($answer['parentID'])
                 {
-                    $parentValue = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $answer['parentID'], $spawnID);
+                    $parentValue = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $projectID, $answer['parentID'], $spawnID);
                     $hidden = (empty($parentValue[0])) ? "hidden" : "";
                     
                     $divClass = "$hidden child";

@@ -28,7 +28,7 @@ foreach ($_POST as $key => $value)
             $spawnID = ($type == "spawn") ? $keyArr[2] : 0;
             
             $questionID = end($keyArr);
-            $answersClass->clearUserSelection($_SESSION['USER']['ID'], $questionID, $inputType, $spawnID);
+            $answersClass->clearUserSelection($_SESSION['USER']['ID'], $projectID, $questionID, $inputType, $spawnID);
             $answerDetails = $answersClass->getDetailsByLabel($value, $questionID);
             $formattedValue['answerID'] = $answerDetails[0]['id'];
             $formattedValue['value'] = 'on';
@@ -70,6 +70,6 @@ foreach ($saveArray as $saveValue)
     $spawnSeq = empty($saveValue['spawn_seqID']) ? 0 : $saveValue['spawn_seqID'];
     $otherSeq = empty($saveValue['other_seqID']) ? 0 : $saveValue['other_seqID'];
     
-    $answersClass->saveUserAnswer($_SESSION['USER']['ID'], $saveValue['answerID'], $saveValue['value'], $spawnSeq, $otherSeq);
+    $answersClass->saveUserAnswer($_SESSION['USER']['ID'], $projectID, $saveValue['answerID'], $saveValue['value'], $spawnSeq, $otherSeq);
 }
 

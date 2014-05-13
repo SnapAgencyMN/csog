@@ -19,6 +19,7 @@ $answersClass = new Answers($db);
 
 $userID = getParameterNumber("userID");    
 $answerID = getParameterNumber("answerID");
+$projectID = getParameterNumber('projectID');
 $type = getParameterString("type");
 $action = getParameterString("action", 'display_form');
 
@@ -50,7 +51,7 @@ if ($action == "save_form")
         $filenamesave = uniqid(time()) . "." . $extension; 
         move_uploaded_file($_FILES["file"]["tmp_name"],FS_PATH . "media/uploads/" . $filenamesave);
         
-        $answersClass->saveUserAnswer($userID, $answerID, $filenamesave, $spawnID);
+        $answersClass->saveUserAnswer($userID, $projectID, $answerID, $filenamesave, $spawnID);
     }
     else
     {

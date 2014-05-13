@@ -110,9 +110,16 @@ if ($DBresult->num_rows)
       $projectDate = date("d/m/Y", strtotime($projectDate));
     } 
 
-    echo '<li><a href="' . WS_URL . 'projects/view/' . $projectData['id'].'"' ;
+    echo '<li><a href="' . WS_URL . 'projects/view/' . $projectData['id'].'" class="projects_tableProjectName">' . $projectName . '</a> (' . $projectDate . ')' ;
+    echo "<br />";
+    echo "<a href='".WS_URL."projects/edit/{$projectData['id']}'>Edit project description</a>";
+    echo "<br />";
+    echo "<a href='".WS_URL."projects/clone/{$projectData['id']}'>Duplicate this project</a>";
+    echo "<br />";
+    echo "<a href='".WS_URL."projects/delete/{$projectData['id']}'>Delete this project</a>";
+    
     //echo $startPage;
-    echo ' class="projects_tableProjectName">' . $projectName . '</a> (' . $projectDate . ') | <a href="' . WS_URL . 'projects/clone/'.$projectData['id'].'/">Clone</a> | <a href="' . WS_URL . 'projects/edit/'.$projectData['id'].'/">Edit</a> | <a href="' . WS_URL . 'projects/delete/' . $projectData['id'] . '/">Delete</a></li>';
+    //echo '   | <a href="' . WS_URL . 'projects/clone/'.$projectData['id'].'/">Clone</a> | <a href="' . WS_URL . 'projects/edit/'.$projectData['id'].'/">Edit</a> | <a href="' . WS_URL . 'projects/delete/' . $projectData['id'] . '/">Delete</a></li>';
   }
   ?>
   </ul>
@@ -122,7 +129,10 @@ if ($DBresult->num_rows)
 }
 ?>
   <br /><br />
-  <h2>Would you like to <a href="<?php echo WS_URL?>projects/new/">create a new project?</a></h2>
+  <h2><a href="<?php echo WS_URL ?>projects/new/">Click here to create a new project.</a></h2>
+  <p>
+      We recommend you create a project template for commonly answered questions and duplicate it as a new project starting point. Name it something relevant, for example, “Project Template”. This will eliminate some redundancy for each new guide you create.
+  </p>
   <br /><br /><br />
   <h2>Contact a Site Administrator</h2>
   <form id="contact-form-projects" method="post">
