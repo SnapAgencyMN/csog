@@ -109,6 +109,7 @@ class Answers {
     {
         if ($answerID > 0)
         {
+            $this->answersMappingTable->clear_data();
             $this->answersTable->data['id'] = $answerID;
             $this->answersTable->delete();
         }
@@ -122,6 +123,7 @@ class Answers {
             
             foreach ($userAnswers as $userAnswer)
             {
+                $this->answersMappingTable->clear_data();
                 $this->answersMappingTable->data['id'] = $userAnswer['id'];
                 $this->answersMappingTable->delete();
             }
@@ -159,5 +161,18 @@ class Answers {
 
             return $id;
         }
+    }
+    
+    public function clearAll($userID, $projectID, $answerID)
+    {
+        $ids = $this->answersMappingTable->fetchAll(" WHERE `projectID` = $projectID AND `userID` = $userID AND `answerID` = $answerID ");
+        
+        foreach ($ids as $id)
+        {
+            $this->answersMappingTable->clear_data();
+            $this->answersMappingTable->data['id'] = $id['id'];
+            $this->answersMappingTable->delete();
+        }
+        
     }
 }

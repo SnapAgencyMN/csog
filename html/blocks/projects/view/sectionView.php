@@ -24,6 +24,7 @@ require_once("actions.php");
 echo "
     <h2>{$sectionDetails['title']}</h2>
     <form action='".WS_URL."projects/view/$projectID/$nextSectionID' id='mainPage' method='POST'>
+        <input type='hidden' name='save_sectionID' value='$sectionID' />
 ";
 
 if ($sectionDetails['type'] == "parent")
