@@ -112,6 +112,19 @@ function printAnswers($answer, $spawnID, $otherID)
             $pdfOutput = str_replace("%ID=$answerID%", $id_value[0]['value'], $pdfOutput);
         }
     }
+    
+    preg_match_all("%SELF%", $pdfOutput, $selfRef);
+
+    if (count($selfRef) > 0 )
+    {
+        foreach ($selfRef[0] as $self)
+        {
+            $answerID = $answer['id'];
+            $id_value = $answersClass->getUserAnswers($userID, $projectID, $answerID, $spawnID, $otherID);
+            
+            $pdfOutput = str_replace("%SELF%", $id_value[0]['value'], $pdfOutput);
+        }
+    }
     $html .= "<div class='content'>".$pdfOutput."</div>";
 }
 

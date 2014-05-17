@@ -435,6 +435,19 @@ $("iframe").on("load", function () {
 
 });
 
+var deleteList = $('input[type="submit"],a').filter(function() {
+    var reg = /delete/i;
+    var name = $(this).attr('name');
+    var value = $(this).val();
+    var href = $(this).attr('href');
+    var text = $(this).text();
+    return reg.test(name) || reg.test(value) || reg.test(href) || reg.test(text);
+});
+
+deleteList.click(function() {
+    return confirm('Are you sure you want to continue with this action?');
+});
+
 function submitForm(id)
 {
     $("#"+id).submit();
@@ -442,8 +455,15 @@ function submitForm(id)
 
 function updateRow(id, type, otherID)
 {
+    if ($.type(otherID) != "undefined" && otherID > 0)
+    {   
+        prefix = "other_"+otherID+"_";
+    }
+    else
+        prefix = "";
+    
     // Reveal all children
-    $("#"+type+"_question_row_"+id+" .child").each(function( i ) {
+    $("#"+prefix+type+"_question_row_"+id+" .child").each(function( i ) {
         
         var id = $(this).attr('id');
         var idArray = id.split("_");
@@ -451,7 +471,7 @@ function updateRow(id, type, otherID)
         
         var categoryType = $(this).attr('category_type');
         
-        var answer = $("#"+categoryType+"_"+parentID);
+        var answer = $("#"+prefix+categoryType+"_"+parentID);
         var answerType = answer.attr('type');     
         
         var display = false;
@@ -503,42 +523,48 @@ function updateRow(id, type, otherID)
         }
     }
     
-    // Hide others that are not used
-    if ($.type(otherID) != "undefined")
+    // Add extra other that is not used
+    if ($.type(otherID) != "undefined" && otherID > 0)
     {   
-        // Remove if input is empty
-        var input = $("#other_"+otherID+"_"+type+"_question_row_"+id+" input[type='text']");
-
-        if (input.val() === "")
-        {
-            input.parent().parent().next().remove();
-            input.parent().parent().remove();
+        var availableOther = false;
+        var intent = "0px";
+        
+        //alert("input[question_id="+id+"][question_type='other'][type='checkbox'][div_type='"+type+"']");
+        $("input[question_id="+id+"][question_type='other'][type='checkbox'][div_type='"+type+"']").each(function( i ) {
+            if ($(this).parent().parent().parent().parent().find(".title").size())
+                intent = "20px";
             
-            //Recount all others left
-            $("input[question_id="+id+"][question_type='other'][div_type='"+type+"']").each(function( i ) {
-                var idString = $(this).attr("id");
-                var answerID = idString.split("_").pop();
-
-                var seqNum = i+1;
-                var newInput = "other_"+seqNum+"_"+type+"_"+answerID;
-                $(this).attr("name", newInput);
-                $(this).attr("id", newInput);
-                $(this).attr("onblur", "updateRow("+id+", '"+type+"', "+seqNum+")");
-
-                $(this).parent().parent().attr('id',"other_"+seqNum+"_"+type+"_question_row_"+id);
-            });
-        }
+            if (!$(this).is(':checked'))
+                availableOther = true;
+        });
+        
+        if (!availableOther)
+            addNewOtherBox(id, type, intent);
     }
 }
 
-function addNewOtherBox(questionID, type, intent, url, hint, title, checkboxID, txtID)
+function addNewOtherBox(questionID, type, intent)
 {
     var numOfOthers = $("input[question_id="+questionID+"][question_type='other'][div_type='"+type+"']").size();
+    var otherID = numOfOthers+1;
+
+    $.ajax({
+        url: "/ajaxHandler.php",
+        data:"action=load_other_question_row&questionID=" + questionID + "&type="+type+"&otherID="+otherID+"&intent="+intent,
+        dataType: "text",
+        success: function(data, textStatus, jqXHR){
+            var div = $("#other_"+numOfOthers+"_"+type+"_question_row_"+questionID);
+            div.parent().append(data.trim());
+        },
+        error:function(err){
+            alert(err);
+        }
+    });
     
-    // Change latest one to input
-    var div = $("input[question_id="+questionID+"][question_type='other'][div_type='"+type+"']").last().parent();
-    var newInput = "<input div_type='"+type+"' question_type='other' question_id='"+questionID+"' onblur=\"updateRow("+questionID+", '"+type+"', "+numOfOthers+")\" type='text' name='other_"+numOfOthers+"_"+type+"_"+txtID+"' id='other_"+numOfOthers+"_"+type+"_"+txtID+"' class='textbox form_question' />";
-    div.html(newInput);
+    
+    /*
+    var numOfOthers = $("input[question_id="+questionID+"][question_type='other'][div_type='"+type+"']").size();
+    
 
     // Add new checkbox one
     var newSeqNum = numOfOthers+1;
@@ -551,6 +577,7 @@ function addNewOtherBox(questionID, type, intent, url, hint, title, checkboxID, 
     newCheckbox += "<input div_type='"+type+"' question_type='other' question_id='"+questionID+"' onclick=\"addNewOtherBox("+questionID+", '"+type+"', '"+intent+"', '"+url+"', '"+hint+"', '"+title+"', "+checkboxID+", "+txtID+"); return false;\" type='checkbox' name='other_"+newSeqNum+"_"+type+"_"+checkboxID+"' id='other_"+newSeqNum+"_"+type+"_"+checkboxID+"' class='form_question checkbox' />"
     newCheckbox += "</div></div><div class='clear'></div>";
     div.parent().parent().append(newCheckbox);
+    */
     
 }
 

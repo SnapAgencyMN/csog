@@ -57,7 +57,7 @@ class Questions {
         include_once("libs/classes/answers.class.php");
         $answersClass = new Answers($this->db);
 
-        
+        $this->questionsTable->clear_data();
         $this->questionsTable->data['title'] = $title;
         $this->questionsTable->data['hint'] = $hint;
         $this->questionsTable->data['categoryID'] = $categoryID;
@@ -90,6 +90,7 @@ class Questions {
         }
         
         unset($answersClass);
+        return $questionID;
     }
     
     public function deleteQuestion($questionID)

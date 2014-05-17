@@ -10,6 +10,9 @@
     $imageSelected = "";
     $unknownSelected = "";
 
+    $idHTMLHeader = "";
+    $idHTMLValue = "";
+    
     if (@$answerID > 0)
     {
         $info = $answersClass->getDetails($answerID);
@@ -36,6 +39,9 @@
                 $unknownSelected = "selected='selected'";
                 break;
         }
+        
+        $idHTMLHeader = "<th scope='col'>ID</th>";
+        $idHTMLValue = "<td><h3>$answerID</h3></td>";
     }
     
     echo "
@@ -83,7 +89,8 @@
         <form action = '/admin/questions/edit' method='POST'>
             <table id='answersTable'>
                 <thead>
-                    <tr>                        
+                    <tr>                    
+                        $idHTMLHeader
                         <th scope='col'>Label</th>
                         <th scope='col'>Type</th>
                         <th scope='col'>Parent</th>
@@ -96,6 +103,7 @@
         echo "
             <tbody>
                 <tr>
+                    $idHTMLValue
                     <td><input type='text' style='min-width:200px; width:200px;' name='label' value='$label' /></td>
                     <td>$typeSelect</td>
                     <td>$parentSelect</td>
