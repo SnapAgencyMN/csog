@@ -49,7 +49,7 @@
               {
                 $name = $result->fetch_assoc();
                 $projectOk = $name['name'];
-                echo "<a href='".WS_URL."projects/view/".$path[3]."/print/' target='blank'>Print PDF</a>";
+                echo "<a href='".WS_URL."projects/print/$path[3]' target='blank'>Print PDF</a>";
               }
             }
             ?><br />

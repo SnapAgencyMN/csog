@@ -15,31 +15,31 @@ if (isset($_POST['deleteConfirm']) && $_POST['deleteConfirm'] == 1)
 
 if (isset($_POST['createProjectSubmit']) && $_POST['createProjectSubmit'] == 1)
 {
-  $projectName = $_POST['projectName'];
-  $date = $_POST['date'];
-  $parcelIDNumber = $_POST['parcelIDNumber'];
-  $projectAddress = $_POST['projectAddress'];
-  $city = $_POST['projectCity'];
-  $state = $_POST['projectState'];
-  $zip = $_POST['projectZip'];
-  $gps = $_POST['gps'];
-  $latitude = $_POST['latitude'];
-  $longitude = $_POST['longitude'];
-  $systemStreetAddress = $_POST['systemStreetAddress'];
-  $webAddress = $_POST['webAddress'];
-  $other = $_POST['other'];
-  $mailingAddress = $_POST['mailingAddress'];
-  $userID = $_SESSION['USER']['ID'];
-  $image = "";
-  $easement_description = $_POST['easement_description'];
-  $contact_phone = $_POST['phone_number'];
-  $contact_name = $_POST['name'];
-  $contact_address = $_POST['contact_address'];
-  $contact_city = $_POST['contact_city'];
-  $contact_state = $_POST['contact_state'];
-  $contact_zip = $_POST['contact_zip'];
-  $contact_email = $_POST['email'];
-  $easement = $_POST['easement'];
+  @$projectName = $_POST['projectName'];
+  @$date = $_POST['date'];
+  @$parcelIDNumber = $_POST['parcelIDNumber'];
+  @$projectAddress = $_POST['projectAddress'];
+  @$city = $_POST['projectCity'];
+  @$state = $_POST['projectState'];
+  @$zip = $_POST['projectZip'];
+  @$gps = $_POST['gps'];
+  @$latitude = $_POST['latitude'];
+  @$longitude = $_POST['longitude'];
+  @$systemStreetAddress = $_POST['systemStreetAddress'];
+  @$webAddress = $_POST['webAddress'];
+  @$other = $_POST['other'];
+  @$mailingAddress = $_POST['mailingAddress'];
+  @$userID = $_SESSION['USER']['ID'];
+  @$image = "";
+  @$easement_description = $_POST['easement_description'];
+  @$contact_phone = $_POST['phone_number'];
+  @$contact_name = $_POST['name'];
+  @$contact_address = $_POST['contact_address'];
+  @$contact_city = $_POST['contact_city'];
+  @$contact_state = $_POST['contact_state'];
+  @$contact_zip = $_POST['contact_zip'];
+  @$contact_email = $_POST['email'];
+  @$easement = $_POST['easement'];
 
   $allowedExts = array("gif", "jpeg", "jpg", "png");
   $temp = explode(".", $_FILES["projectLogo"]["name"]);

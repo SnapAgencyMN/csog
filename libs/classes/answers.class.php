@@ -138,9 +138,13 @@ class Answers {
         }
     }
     
-    public function getUserAnswers($userID, $projectID, $answerID, $spawnID = 0)
+    public function getUserAnswers($userID, $projectID, $answerID, $spawnID = 0, $otherID = 0)
     {
-        $values = $this->answersMappingTable->fetchAll(" WHERE `projectID` = $projectID AND `userID`=$userID AND `answerID` = $answerID AND `spawn_sequenceID` = $spawnID ORDER BY `other_sequenceID`");
+        $otherSQL = "";
+        if ($otherID > 0)
+            $otherSQL = "AND `other_sequenceID` = $otherID";
+        
+        $values = $this->answersMappingTable->fetchAll(" WHERE `projectID` = $projectID AND `userID`=$userID AND `answerID` = $answerID AND `spawn_sequenceID` = $spawnID $otherSQL ORDER BY `other_sequenceID`");
         return $values;
     }
     

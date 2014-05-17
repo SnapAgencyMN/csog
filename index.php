@@ -78,6 +78,14 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
     }
 }
 
+if (strstr($_SERVER['REQUEST_URI'], "/projects/print/"))
+{
+    $projectID = $path[3];
+
+    require_once(FS_PATH . "html/blocks/projects/print/index.php");
+    exit();
+}
+
 if ($_SERVER['SCRIPT_NAME'] != "/ajaxHandler.php")
 {
     include(FS_PATH . "html/blocks/header.php");
