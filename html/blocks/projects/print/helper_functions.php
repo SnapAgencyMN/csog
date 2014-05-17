@@ -29,14 +29,18 @@ function printSection($section)
 
 function printCategory ($category, $spawnID = 0)
 {
+    require_once ('special_categories.php');
     global $questionsClass, $html;
-    
+        
     $suffix = "";
     if ($spawnID > 0)
         $suffix .= "#$spawnID";
         
     $html .= "<h3>{$category['title']} $suffix</h3>";
 
+    if (printSpecialCategories($category))
+        return true;
+    
     $questions = $questionsClass->listQuestions($category['id']);
     
     foreach ($questions as $question)
