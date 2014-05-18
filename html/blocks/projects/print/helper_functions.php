@@ -48,7 +48,6 @@ function printCategory ($category, $spawnID = 0)
         switch ($question['type'])
         {
             case "title":
-                break;
             case "other":
             case "question":
                 printQuestion($question, $spawnID);
@@ -69,7 +68,10 @@ function printQuestion($question, $spawnID)
       
         if (!empty($values) || $answer['type'] == "static")
         {
-            $html .= "<h4>{$question['title']}</h4>";
+            if ($answer['type'] == "static") // since values array is empty, triggering one print manually.
+                printAnswers($answer, $spawnID, 1);
+            else
+                $html .= "<h4>{$question['title']}</h4>";
 
             for ($i=0; $i<count($values); $i++)
             {
@@ -87,6 +89,9 @@ function printQuestion($question, $spawnID)
 
                 if (!empty($child_values) || $child['type'] == "static")
                 {
+                    if ($child['type'] == "static") // since values array is empty, triggering one print manually.
+                        printAnswers($answer, $spawnID, 1);
+                    
                     for ($i=0; $i<count($child_values); $i++)
                     {
                         printAnswers($child, $spawnID, $i);
