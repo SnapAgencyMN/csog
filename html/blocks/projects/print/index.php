@@ -29,8 +29,37 @@ $css .= ".mainttd {border:1px solid #000;}\n";
 
 $mpdf->WriteHTML($css,1); // Parses HTML as CSS only
 
+$times["Header"] = microtime(true); 
+
 require_once ("header.php");
 require_once ("main.php");
 
+echo "finish";
+
+$times["Finish"] = microtime(true); 
+
+/*
+pr_out($times);
+echo "Time differences: <br />";
+
+$first = true;
+$last = null;
+foreach ($times as $time)
+{
+    if ($first)
+    {
+        $last = $time;
+        $first = false;
+        continue;
+    }
+    
+    $difference = round($time-$last);
+    echo "difference: $difference seconds<br />";
+    
+    $last = $time;
+    
+}
+ * 
+ */
 $mpdf->Output();
 

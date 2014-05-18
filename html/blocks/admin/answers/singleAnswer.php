@@ -9,6 +9,7 @@
     $checkboxSelected = "";
     $imageSelected = "";
     $unknownSelected = "";
+    $staticSelected = "";
 
     $idHTMLHeader = "";
     $idHTMLValue = "";
@@ -38,6 +39,9 @@
             case "unknown":
                 $unknownSelected = "selected='selected'";
                 break;
+            case "static":
+                $staticSelected = "selected='selected'";
+                break;
         }
         
         $idHTMLHeader = "<th scope='col'>ID</th>";
@@ -58,11 +62,12 @@
             <option $checkboxSelected value='checkbox'>Checkbox</option>
             <option $imageSelected value='image'>Image</option>
             <option $unknownSelected value='unknown'>Unknown</option>
+            <option $staticSelected value='static'>Static PDF</option>
         </select>
     ";
     
     
-    $answersAvailable = $answersClass->listAnswers($questionID);
+    $answersAvailable = $answersClass->listParentAnswers($questionID);
     $parentSelect = "
         <select name='parentID'>
             <option value='0'>No parent</option>
@@ -71,7 +76,7 @@
     foreach ($answersAvailable as $answ)
     {
         $selected = "";
-        if (@$parentID > 0)
+        if (@$info['parentID'] > 0)
         {
             if ($answ['id'] == $info['parentID'])
                 $selected = 'selected="selected"';

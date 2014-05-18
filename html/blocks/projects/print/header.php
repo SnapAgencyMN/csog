@@ -23,6 +23,8 @@ $mpdf->setHTMLFooter('<div style="color:#5e3229"><img style="margin-left:0;width
 $html = "";
 $mpdf->WriteHTML($html,2);
 
+$times["Header Finish"] = microtime(true); 
+$times["Cover"] = microtime(true); 
 //----------Cover Page------------
 
 $sql = "SELECT * FROM projects WHERE id = $projectID";
@@ -41,11 +43,15 @@ if($result->num_rows >= 1)
 $mpdf->WriteHTML($html,2);
 $mpdf->AddPage();
 
+$times["Disclaimer"] = microtime(true); 
+
 //---------Disclaimer------------
 $html = "<h2>Homeowner’s Guide Disclaimer</h2><div class='content'><p>This Homeowner’s Guide is intended for information purposes only and is provided as a public service. While the University of Minnesota has made reasonable efforts to ensure the accuracy of the information provided in this homeowner’s guide, it is not responsible for any damages resulting from reliance on the information. Please consult a septic professional or permitting agency if you have specific questions about your system and its management needs. The University of Minnesota reserves the right to make additions, changes, or corrections to this guide at any time and without notice.</p></div>";
 
 $mpdf->WriteHTML($html,2);
 $mpdf->AddPage();
+
+$times["Introduction"] = microtime(true); 
 
 //----------Introduction----------
 
@@ -58,7 +64,19 @@ $html .= '<h3>Risks to Human and Animal Health</h3><div class="content"><p>It is
 $html .= '<h3>Risks to the Environment</h3><div class="content"><p>A septic system that fails to fully treat wastewater also allows excess nutrients (phosphorus and nitrogen) to reach nearby lakes and streams, promoting algae and plant growth. Algal blooms and abundant weeds may make the lake unpleasant for swimming and boating, and can affect water quality for fish and wildlife habitat. 
 Many synthetic cleaning products, pharmaceuticals, and other chemicals used in the house can be toxic to humans, pets, and wildlife. If allowed to enter a septic system, these products may reach groundwater or nearby surface water.</p></div>';
 $html .= '<h3>Treatment Options</h3><div class="content"><p>There are two primary methods to treat and disperse wastewater back into the environment – centralized and decentralized.  It is easy to describe a centralized approach to wastewater management – all the community’s wastewater drains to a common collection network and is transferred to a centralized treatment and disposal facility.  With a decentralized approach, the wastewater treatment infrastructure is distributed across a community. This may be accomplished by building individual onsite septic systems, having small residential clusters of homes on shared systems, and/or by some combination of both to serve multiple wastewater management zones.  This guide will focus on YOUR decentralized septic system.</p><p><img class="right-image" src="'.WS_URL.'media/intro3.png">A properly designed, installed, operated and maintained septic system will provide economical and effective wastewater treatment.  Pathogens and solids are removed and destroyed by filtration and naturally occurring microscopic organisms. Nutrients are removed, absorbed by soil particles or taken up by plants.</p></div>';
+$times["Introduction 1"] = microtime(true); 
+
 
 $mpdf->Bookmark("I. Introduction",0);
+$times["Introduction 2"] = microtime(true); 
+
+
 $mpdf->WriteHTML($html,2);
+$times["Introduction 3"] = microtime(true); 
+
+
 $mpdf->AddPage();
+
+$times["Introduction 4"] = microtime(true); 
+
+$times["Body ends"] = microtime(true); 

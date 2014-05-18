@@ -1,7 +1,6 @@
 <?php
 require_once("helper_functions.php");
 
-
 if (!isset($questionsClass))
     $questionsClass = new Questions($db);
 
@@ -21,6 +20,8 @@ $sections = $sectionsClass->listTopSections();
 $i=2;
 foreach ($sections as $section)
 {
+    $secN = $i-1;
+    $times["Section $secN start"] = microtime(true); 
     $html = "";
     switch ($section['type'])
     {
@@ -40,5 +41,7 @@ foreach ($sections as $section)
     $mpdf->Bookmark("$romeNumber. {$section['title']}", 0);
     $mpdf->WriteHTML($html,2);
     $mpdf->AddPage();
+    $times["Section $secN finish"] = microtime(true); 
     $i++;
+    
 }

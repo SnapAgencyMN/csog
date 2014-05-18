@@ -67,7 +67,7 @@ function printQuestion($question, $spawnID)
     {   
         $values = $answersClass->getUserAnswers($userID, $projectID, $answer['id'], $spawnID);
       
-        if (!empty($values))
+        if (!empty($values) || $answer['type'] == "static")
         {
             $html .= "<h4>{$question['title']}</h4>";
 
@@ -85,7 +85,7 @@ function printQuestion($question, $spawnID)
             {
                 $child_values = $answersClass->getUserAnswers($userID, $projectID, $child['id'], $spawnID);
 
-                if (!empty($child_values))
+                if (!empty($child_values) || $child['type'] == "static")
                 {
                     for ($i=0; $i<count($child_values); $i++)
                     {
