@@ -83,3 +83,30 @@ if ($action == "load_other_question_row")
     ";
 }
 
+if ($action == "save_user_section")
+{
+    $sectionsClass = new Sections($db);
+    
+    $toggle = getParameterString("toggle");
+    $sectionID = getParameterNumber('sectionID');
+    $parentID = getParameterNumber("parentID");
+    $projectID = getParameterNumber("projectID");
+    
+    if ($toggle == "on")
+        $sectionsClass->addUserSection ($_SESSION['USER']['ID'], $sectionID, $parentID);
+    else
+        $sectionsClass->deleteUserSection ($_SESSION['USER']['ID'], $sectionID, $parentID);
+    
+    $sections = $sectionsClass->listChlidrenSectionsForUser($parentID, $_SESSION["USER"]["ID"]);
+    
+    foreach ($sections as $section)
+    {
+        $details = $sectionsClass->getDetails($section['sectionID']);
+        
+        echo "
+            <li>
+                <a href='".WS_URL."projects/view/$projectID/{$section['sectionID']}'>{$details['title']}</a>
+            </li>
+        ";
+    }
+}

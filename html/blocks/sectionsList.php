@@ -13,23 +13,6 @@
     else
         $selectedSection = 1;
     
-    if ($action == "save_parent_selection")
-    {
-        $parentID = getParameterNumber("parentID");
-        
-        if ($parentID > 0)
-        {
-            $sectionsClass->clearUserSectionsForParent($_SESSION['USER']['ID'], $parentID);
-
-            $selectionArray = getParameterArray("parentID_$parentID");
-
-            foreach ($selectionArray as $selectionID)
-            {
-                $sectionsClass->addUserSection($_SESSION['USER']['ID'], $selectionID, $parentID);
-            }
-        }
-    }
-    
     foreach ($sections as $section)
     {
         if ($section['type'] == "standalone")
@@ -52,7 +35,7 @@
         
         echo "</ol>";
        
-        echo "<ol class='sublist'>";
+        echo "<ol parentID='{$parent['sectionID']}' class='sublist'>";
         foreach ($children as $child)
         {
             $details = $sectionsClass->getDetails($child['sectionID']);

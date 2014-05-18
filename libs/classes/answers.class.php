@@ -25,7 +25,7 @@ class Answers {
         $this->answersTable = new DbObject($this->db, $this->table_name,false);
         $this->answersMappingTable = new DbObject($this->db, $this->answers_mapping_table_name, false);
     }
-   
+    
     public function getDetails($answerID)
     {
         if ($answerID > 0)

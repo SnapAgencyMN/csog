@@ -621,3 +621,21 @@ $( document ).ready(function() {
         $(this).click()
     });
 });
+
+function updateSectionsMenu(id, parentID, projectID)
+{
+    var checkbox = $("#check_"+id)
+    
+    if ($.type(checkbox) != "undefined")
+    {
+        var checked = checkbox.is(':checked');
+        
+        if (checked)
+            toggle = "on";
+        else
+            toggle = "off";
+        
+        $( "ol[parentid="+parentID+"]").load( "/ajaxHandler.php?action=save_user_section&sectionID="+id+"&toggle="+toggle+"&parentID="+parentID+"&projectID="+projectID );
+
+    }
+}

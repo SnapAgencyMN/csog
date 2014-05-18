@@ -92,5 +92,3 @@ if ($_SERVER['SCRIPT_NAME'] != "/ajaxHandler.php")
     include(FS_PATH . "html/blocks/body.php");
     include(FS_PATH . "html/blocks/footer.php");
 }
-
-//pr_out($_SESSION);

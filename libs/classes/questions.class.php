@@ -63,12 +63,11 @@ class Questions {
         $this->questionsTable->data['categoryID'] = $categoryID;
         $this->questionsTable->data['type'] = $type;
         $this->questionsTable->data['`order`'] = $order;
-        
+        $otherAnswersExist = false;
         if ($questionID > 0)
         {
             $data = $this->getDetails($questionID);
             
-            $otherAnswersExist = false;
             if ($data['type'] == "other")
             {
                 if ($type != "other")

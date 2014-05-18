@@ -88,6 +88,7 @@ class Sections {
     
     public function getDetails($sectionID)
     {
+        $details = null;
         if ($sectionID > 0)
             $details = $this->sectionsTable->find_by_attribute("sectionID", $sectionID);
         
@@ -103,6 +104,17 @@ class Sections {
             
             $this->db->query($sql);
         }
+    }
+    
+    public function deleteUserSection ($userID, $sectionID, $parentID)
+    {
+        if ($userID >0 && $sectionID >0 && $parentID >0)
+        {            
+            $sql = "DELETE FROM `{$this->sections_mapping_table}` WHERE `userID` = $userID AND `sectionID` = $sectionID AND `parentID` = $parentID";
+            
+            $this->db->query($sql);
+        }
+
     }
     
     public function clearUserSectionsForParent($userID, $parentID)

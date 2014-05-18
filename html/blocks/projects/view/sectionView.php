@@ -47,4 +47,6 @@ else
     }
 }
 echo "</form>";
-echo "<a href='#' onclick=\"submitForm('mainPage'); return false;\" class='nextSectionLink'>Next Section</a>";
+
+if ($sectionDetails['type'] != "parent")
+    echo "<a href='#' onclick=\"submitForm('mainPage'); return false;\" class='nextSectionLink'>Next Section</a>";
