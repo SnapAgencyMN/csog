@@ -73,7 +73,8 @@ if (!empty($saveArray))
             
             foreach ($clear_answers as $answer)
             {
-                $answersClass->clearAll($_SESSION['USER']['ID'], $projectID, $answer['id']);
+                if ($answer['type'] != "image")
+                    $answersClass->clearAll($_SESSION['USER']['ID'], $projectID, $answer['id']);
             }
         }
     }

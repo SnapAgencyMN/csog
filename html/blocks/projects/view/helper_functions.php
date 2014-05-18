@@ -245,7 +245,7 @@ function echoSpawnCategory($category)
     global $categoriesClass;
     
     $selected = $categoriesClass->getNumberOfSpawnBoxesForUser($category['id'], $_SESSION['USER']['ID']);
-    $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='Please select {$category['spawn_box_label']} that you have'>";
+    $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='{$category['spawn_box_label']}'>";
     
     $selectBox = "<select class='right' name='spawn_{$category['id']}' id='spawn_{$category['id']}'>";
     for ($i=1; $i<=10; $i++)

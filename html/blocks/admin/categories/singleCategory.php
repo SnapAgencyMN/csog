@@ -5,7 +5,6 @@
     $label = "";
     $normalSelected = "";
     $spawnSelected = "";
-    $operationsSelected = "";
     
     if ($categoryID > 0)
     {
@@ -22,9 +21,6 @@
                 break;
             case "spawn":
                 $spawnSelected = "selected='selected'";
-                break;
-            case "operations":
-                $operationsSelected = "selected='selected'";
                 break;
         }
     }
@@ -56,7 +52,6 @@
             <select name='type'>
                 <option $normalSelected value='normal'>Normal</option>
                 <option $spawnSelected value='spawn'>Spawn</option>
-                <option $operationsSelected value='operations'>Operation & Maintainance</option
             </select>
         ";
         

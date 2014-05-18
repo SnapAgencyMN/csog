@@ -118,7 +118,14 @@ function printAnswers($answer, $spawnID, $otherID)
             $answerID = $id_arr[1];
             $id_value = $answersClass->getUserAnswers($userID, $projectID, $answerID, $spawnID, $otherID);
             
-            $pdfOutput = str_replace("%ID=$answerID%", $id_value[0]['value'], $pdfOutput);
+            $value = $id_value[0]['value'];
+            
+            if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
+            {
+                $value = "<img src='/media/uploads/$value' />";
+            }
+            
+            $pdfOutput = str_replace("%ID=$answerID%", $value, $pdfOutput);
         }
     }
     
@@ -131,7 +138,14 @@ function printAnswers($answer, $spawnID, $otherID)
             $answerID = $answer['id'];
             $id_value = $answersClass->getUserAnswers($userID, $projectID, $answerID, $spawnID, $otherID);
             
-            $pdfOutput = str_replace("%SELF%", $id_value[0]['value'], $pdfOutput);
+            $value = $id_value[0]['value'];
+            
+            if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
+            {
+                $value = "<img src='/media/uploads/$value' />";
+            }
+            
+            $pdfOutput = str_replace("%SELF%", $value, $pdfOutput);
         }
     }
     $html .= "<div class='content'>".$pdfOutput."</div>";

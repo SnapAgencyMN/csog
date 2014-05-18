@@ -71,7 +71,7 @@ if ($action == "save_form")
 <body>
 <form method="POST" id="uploadForm" enctype="multipart/form-data">
     <p>Image Upload:</p>
-    <input type="file" name="file" id="file-upload-form-input" onchange='window.parent.uploadImage(<?php echo "$userID, $answerID, $spawnID,\"".WS_URL.'"'?>)'>
+    <input type="file" name="file" id="file-upload-form-input" onchange='window.parent.uploadImage(<?php echo "$projectID, $userID, $answerID, $spawnID,\"".WS_URL.'"'?>)'>
     <input type="hidden" name="userID" value="<?php echo $userID;?>">
     <input type="hidden" name="answerID" value="<?php echo $answerID;?>">
     <input type="hidden" name="type" value="<?php echo $type;?>">
