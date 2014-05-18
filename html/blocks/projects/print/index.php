@@ -34,8 +34,6 @@ $times["Header"] = microtime(true);
 require_once ("header.php");
 require_once ("main.php");
 
-echo "finish";
-
 $times["Finish"] = microtime(true); 
 
 /*
