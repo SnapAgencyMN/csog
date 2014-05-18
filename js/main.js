@@ -416,36 +416,37 @@ $(function() {
 
   });
 */
-$("iframe").on("load", function () {
-    $.ajax({
-        url: _host+"ajaxHandler.php",
-        data:"action=load_image&userID=" + _userID + "&answerID="+ _answerID +"&spawnID="+ _spawnID + "&projectID="+_projectID,
-        dataType: "text",
-        success: function(data, textStatus, jqXHR){
-            var newImage= "<a class='right' href='"+_host+"media/uploads/"+data.trim()+"' data-lightbox='image-116'><img src='"+_host+"media/uploads/"+data.trim()+"' class='imageLightboxLink'></a>";
+    $("iframe").on("load", function () {
+        $.ajax({
+            url: _host+"ajaxHandler.php",
+            data:"action=load_image&userID=" + _userID + "&answerID="+ _answerID +"&spawnID="+ _spawnID + "&projectID="+_projectID,
+            dataType: "text",
+            success: function(data, textStatus, jqXHR){
+                var newImage= "<a class='right' href='"+_host+"media/uploads/"+data.trim()+"' data-lightbox='image-116'><img src='"+_host+"media/uploads/"+data.trim()+"' class='imageLightboxLink'></a>";
 
-            var elem = $("#iframe_"+_type+"_"+_answerID).parent().find("a");
-            $("#iframe_"+_type+"_"+_answerID).parent().find("a").replaceWith(newImage);
-        },
-        error:function(err){
-            alert(err);
-        }
+                var elem = $("#iframe_"+_type+"_"+_answerID).parent().find("a");
+                $("#iframe_"+_type+"_"+_answerID).parent().find("a").replaceWith(newImage);
+            },
+            error:function(err){
+                alert(err);
+            }
+        });
+    })
+    
+    var deleteList = $('input[type="submit"],a').filter(function() {
+        var reg = /delete/i;
+        var name = $(this).attr('name');
+        var value = $(this).val();
+        var href = $(this).attr('href');
+        var text = $(this).text();
+        return reg.test(name) || reg.test(value) || reg.test(href) || reg.test(text);
     });
-})
 
-});
+    deleteList.click(function() {
+        return confirm('Are you sure you want to continue with this action?');
+    });
 
-var deleteList = $('input[type="submit"],a').filter(function() {
-    var reg = /delete/i;
-    var name = $(this).attr('name');
-    var value = $(this).val();
-    var href = $(this).attr('href');
-    var text = $(this).text();
-    return reg.test(name) || reg.test(value) || reg.test(href) || reg.test(text);
-});
 
-deleteList.click(function() {
-    return confirm('Are you sure you want to continue with this action?');
 });
 
 function submitForm(id)

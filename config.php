@@ -2,7 +2,7 @@
 define("DEBUG", true);
 
 define('FS_PATH','/Users/mpak/Dropbox/NetBeans projects/csog/');
-define('WS_URL','http://localhost:8888/');
+define('WS_URL','http://max.local/');
 
 define('DB_USER','root');
 define('DB_PASS','root');
