@@ -10,8 +10,8 @@ require_once("../libs/classes/categories.class.php");
 require_once("../libs/classes/questions.class.php");
 require_once("../libs/classes/answers.class.php");
 
-define("SECTION_ID", 8);
-define("ORDER", 2);
+define("SECTION_ID", 20);
+define("ORDER", 1);
 define("LABEL", "Enter number of activities necessary for maintaining this system");
 
 define ("ACTIVITY_HINT", "Enter text in sentence form of the kinds of required or suggested operation and maintenance necessary for this system.");
@@ -46,7 +46,7 @@ $profID = $questionsClass->saveQuestion("Professional activities", PROF_HINT, $c
 $answersClass->saveAnswer("Details", "text", "", 0, $profID, 0);
 $answersClass->saveAnswer("Frequency", "text", "", 0, $profID, 1);
 
-$homeID = $questionsClass->saveQuestion("Homeowner activities", HOME_HINT, $categoryID, "question", 0);
+$homeID = $questionsClass->saveQuestion("Homeowner activities", HOME_HINT, $categoryID, "question", 2);
 $answersClass->saveAnswer("Details", "text", "", 0, $homeID, 0);
 $answersClass->saveAnswer("Frequency", "text", "", 0, $homeID, 1);
 

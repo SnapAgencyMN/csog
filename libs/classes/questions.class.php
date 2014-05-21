@@ -54,7 +54,7 @@ class Questions {
     
     public function saveQuestion($title, $hint, $categoryID, $type, $order, $questionID=0)
     {
-        include_once("libs/classes/answers.class.php");
+        include_once(__DIR__."/answers.class.php");
         $answersClass = new Answers($this->db);
 
         $this->questionsTable->clear_data();
@@ -94,7 +94,7 @@ class Questions {
     
     public function deleteQuestion($questionID)
     {
-        include_once("libs/classes/answers.class.php");
+        include_once(__DIR__."/answers.class.php");
         $answersClass = new Answers($this->db);
         
         if ($questionID > 0)
