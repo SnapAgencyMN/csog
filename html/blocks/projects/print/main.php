@@ -29,10 +29,11 @@ foreach ($sections as $section)
             printSection($section);
             break;
         case "parent":
-            $children = $sectionsClass->listChlidrenSectionsForUser($parentID, $userID);
+            $children = $sectionsClass->listChlidrenSectionsForUser($section['sectionID'], $userID);
             foreach ($children as $child)
             {
-                printSection($child);
+                $sect = $sectionsClass->getDetails($child['sectionID']);
+                printSection($sect);
             }
             break;
     }

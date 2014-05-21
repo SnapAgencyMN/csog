@@ -17,9 +17,9 @@ function printSection($section)
                 break;
             case "spawn":
                 $spawnBoxes = $categoriesClass->getNumberOfSpawnBoxesForUser($category['id'], $userID);
-                foreach ($spawnBoxes as $box)
+                for ($y=1; $y<=$spawnBoxes; $y++)
                 {
-                    printCategory($category, $box);
+                    printCategory($category, ($y-1)); // A hack to retrieve answer for the first spawn (which has a spawn value of 0)
                 }
                 break;
         }
@@ -34,8 +34,11 @@ function printCategory ($category, $spawnID = 0)
         
     $suffix = "";
     if ($spawnID > 0)
-        $suffix .= "#$spawnID";
-        
+    {
+        $sID = $spawnID+1;
+        $suffix .= "#$sID";
+    }
+    
     $html .= "<h3>{$category['title']} $suffix</h3>";
 
     if (printSpecialCategories($category))
@@ -61,11 +64,11 @@ function printQuestion($question, $spawnID)
     global $answersClass, $userID, $projectID, $html;
     
     $answers = $answersClass->listParentAnswers($question['id']);
-
+    
     foreach ($answers as $answer)
     {   
         $values = $answersClass->getUserAnswers($userID, $projectID, $answer['id'], $spawnID);
-      
+        
         if (!empty($values) || $answer['type'] == "static")
         {
             if ($answer['type'] == "static") // since values array is empty, triggering one print manually.
