@@ -59,10 +59,10 @@ function printAnswer($answer, $type, $value=null)
             ";
             break;
         case "image":
-            if (!empty($value[0]))
-                    $value = WS_URL."media/uploads/{$value[0]['value']}";
-                else
-                    $value = "";
+            if (!empty($value[0]['value']))
+                $value = WS_URL."media/uploads/{$value[0]['value']}";
+            else
+                $value = "";
             
             echo "
                 <a class='right' href='$value' data-lightbox='image-116'>
