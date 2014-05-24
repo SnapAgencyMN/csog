@@ -8,9 +8,9 @@ require_once("../libs/classes/categories.class.php");
 require_once("../libs/classes/questions.class.php");
 require_once("../libs/classes/answers.class.php");
 
-define("CATEGORY_ID", 4);
+define("CATEGORY_ID", 39);
 define("TYPE", "question");
-define("START_ORDER", 9);
+define("START_ORDER", 2);
 
 $dbInfo = array(
         "user" => DB_USER,
@@ -21,15 +21,25 @@ $dbInfo = array(
     );
  
 $questionTitles = array(
-    "Local", "Rules & Definitions", "Key Contacts", "Regulatory", "O&M", "Pumper", "Installer", "Designer", "Community contact", "Other"
+    "Drainage washes", 
+    "Lakes lakefront/riparian", 
+    "Ocean", 
+    "Property line", 
+    "Rivers/streams",
+    "Swimming pool",
+    "Wetland protection",
+    "Drinking water sources",
+    "Water main",
+    "Well",
+    "Service water main",
+    "Structures without foundations",
+    "Structures with foundations",
+    "Other",
 );
 
 
 $answers = array(
-    "Name" => "text",
-    "Website" => "text",
-    "Phone Number" => "text",
-    "Email" => "text",
+    "Yes" => "Checkbox",
 );
 
 $db = new Db($dbInfo);
@@ -45,7 +55,9 @@ foreach ($questionTitles as $title)
     $z=0;
     foreach ($answers as  $label => $type)
     {
-        $answersClass->saveAnswer($label, $type, "", 0, $questionID, $z);
+        $parentID = $answersClass->saveAnswer($label, $type, "", 0, $questionID, $z);
+        // Saving children answers !HARDCODED!
+        $answersClass->saveAnswer("Setback in feet", "text", "", $parentID, $questionID, $z+1);
         $z++;
     }
     

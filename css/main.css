@@ -323,6 +323,7 @@ ol#category_list
   background: url('/media/plusmin.png') no-repeat left transparent;
   background-position: 0 0;
   padding-left: 22px;
+  cursor: pointer;
 }
 
 .question_header_open

@@ -6,7 +6,7 @@ if(isset($projectID))
   $result = $database->query($sql);
   if($result->num_rows >= 1)
   {
-    $title = "Edit Existing Project";
+    $title = "Edit Project Description";
     $PData = $result->fetch_assoc();
   } else
   {
@@ -43,8 +43,11 @@ $userInfo = $result->fetch_assoc();
 <label for=latitude">Latitude:</label> <input type="text" name="latitude" <?php if(isset($PData) && $PData['latitude'] != "") { echo "value='".$PData['latitude']."'"; }?>></br>
 <label for="longitude">Longitude:</label> <input type="text" name="longitude" <?php if(isset($PData) && $PData['longitude'] != "") { echo "value='".$PData['longitude']."'"; }?>></br>
 Is there a recorded easement for access to perform service or periodic inspections on the system?
-<label for="easement_yes" name="easement_yes" >Yes</label><input type="radio" id="easement_yes" name="easement" value="Yes" <?php if(isset($PData) && $PData['easement'] == "Yes") { echo "checked "; } ?>/><div id="modifyFormName"><label>Easement description:</label><input type="text" <?php if(isset($PData) && $PData['easement_desc'] != "") { echo "value='".$PData['easement_desc']."'"; }?> name="easement_description" maxlength="80" class="requiredForm" /></div><br />
-<label for="easement_no" name="easement_no">No</label><input type="radio" id="easement_no" name="easement" value="No" <?php if(isset($PData) && $PData['easement'] == "No") { echo "checked "; } ?>/>
+<label for="easement_yes" name="easement_yes" >Yes</label><input onclick="javascript:$('#easement_description').css('display', 'block')" type="radio" id="easement_yes" name="easement" value="Yes" <?php if(isset($PData) && $PData['easement'] == "Yes") { echo "checked "; } ?>/>
+<div id="easement_description"><label>Easement description:</label>
+        <input type="text" <?php if(isset($PData) && $PData['easement_desc'] != "") { echo "value='".$PData['easement_desc']."'"; }?> name="easement_description"  maxlength="80" class="requiredForm" />
+</div><br />
+<label for="easement_no" name="easement_no">No</label><input onclick="javascript:$('#easement_description').css('display', 'none')" type="radio" id="easement_no" name="easement" value="No" <?php if(isset($PData) && $PData['easement'] == "No") { echo "checked "; } ?>/>
 <br /><br />
 <h2>Project Contact Information</h2>
   <div id="modifyFormName"><label>Primary contact person:</label><input type="text" <?php if(isset($PData) && $PData['contact_name'] != "") { echo "value='".$PData['contact_name']."'"; } ?> name="name" maxlength="80" class="requiredForm" /></div>

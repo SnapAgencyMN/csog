@@ -112,11 +112,11 @@ if ($DBresult->num_rows)
 
     echo '<li><a href="' . WS_URL . 'projects/view/' . $projectData['id'].'" class="projects_tableProjectName">' . $projectName . '</a> (' . $projectDate . ')' ;
     echo "<br />";
-    echo "<a href='".WS_URL."projects/edit/{$projectData['id']}'>Edit project description</a>";
+    echo "<a href='".WS_URL."projects/edit/{$projectData['id']}' class='projects_tableProjectName'>Edit project description</a>";
     echo "<br />";
-    echo "<a href='".WS_URL."projects/clone/{$projectData['id']}'>Duplicate this project</a>";
+    echo "<a href='".WS_URL."projects/clone/{$projectData['id']}' class='projects_tableProjectName'>Duplicate this project</a>";
     echo "<br />";
-    echo "<a href='".WS_URL."projects/delete/{$projectData['id']}'>Delete this project</a>";
+    echo "<a href='".WS_URL."projects/delete/{$projectData['id']}' class='projects_tableProjectName'>Delete this project</a>";
     
     //echo $startPage;
     //echo '   | <a href="' . WS_URL . 'projects/clone/'.$projectData['id'].'/">Clone</a> | <a href="' . WS_URL . 'projects/edit/'.$projectData['id'].'/">Edit</a> | <a href="' . WS_URL . 'projects/delete/' . $projectData['id'] . '/">Delete</a></li>';

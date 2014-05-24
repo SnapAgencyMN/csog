@@ -71,8 +71,19 @@ function printQuestion($question, $spawnID)
         
         if (!empty($values) || $answer['type'] == "static")
         {
-            if ($answer['type'] == "static") // since values array is empty, triggering one print manually.
+            if ($answer['type'] == "static")
+            { // since values array is empty, triggering one print manually.
+                switch ($question['title'])
+                {
+                    //Hack to enable print of certaing titles
+                    case "O&M expense":
+                        $html .= "<h4>{$question['title']}</h4>";
+                        break;
+                    default:
+                        break;
+                }
                 printAnswers($answer, $spawnID, 1);
+            }
             else
                 $html .= "<h4>{$question['title']}</h4>";
 
