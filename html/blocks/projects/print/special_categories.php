@@ -99,9 +99,6 @@ function printSpecialCategories($category) {
             $html .= "<p>Your system has been located so that it does not adversely affect neighbouring property or the local environment. Such 'setbacks' are part of your local regulations. Here are the relevant setbacks and easements for your system:</p>";
             //Header
             $html .= '<table style="border-collapse:collapse;">';
-            $html .= "<tr>";
-            $html .= "<td  style='text-weight:bold;text-align:center;border:1px solid #000;' colspan='5'><h4>Website/Phone Numbers</h4></td>";
-            $html .= "</tr>";
             $html .= '<tr style="border:1px solid #000;">';
             $html .= '<td style="font-weight:bold;text-align:center;width:175px;min-width:175px;border:1px solid #000;">'."Component"."</td>";
             $html .= '<td style="font-weight:bold;text-align:center;width:155px;min-width:155px;border:1px solid #000;">'."Setback in feet"."</td>";
