@@ -10,7 +10,7 @@ require_once("../libs/classes/categories.class.php");
 require_once("../libs/classes/questions.class.php");
 require_once("../libs/classes/answers.class.php");
 
-define("SECTION_ID", 20);
+define("SECTION_ID", 28);
 define("ORDER", 1);
 define("LABEL", "Enter number of activities necessary for maintaining this system");
 

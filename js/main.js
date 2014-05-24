@@ -428,7 +428,7 @@ $(function() {
                 $("#iframe_"+_type+"_"+_answerID).parent().find("a").replaceWith(newImage);
             },
             error:function(err){
-                alert(err);
+                //alert(err);
             }
         });
     })
@@ -558,7 +558,7 @@ function addNewOtherBox(questionID, type, intent)
             div.parent().append(data.trim());
         },
         error:function(err){
-            alert(err);
+            //alert(err);
         }
     });
     
@@ -594,7 +594,7 @@ function updateSpawn(categoryID, host)
             location.reload();
         },
         error:function(err){
-            alert(err);
+            //alert(err);
         }
     });
 }

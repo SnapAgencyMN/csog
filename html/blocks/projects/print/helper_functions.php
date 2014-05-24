@@ -65,6 +65,7 @@ function printQuestion($question, $spawnID)
     
     $answers = $answersClass->listParentAnswers($question['id']);
     
+    $currentQID = "";
     foreach ($answers as $answer)
     {   
         $values = $answersClass->getUserAnswers($userID, $projectID, $answer['id'], $spawnID);
@@ -85,7 +86,13 @@ function printQuestion($question, $spawnID)
                 printAnswers($answer, $spawnID, 1);
             }
             else
-                $html .= "<h4>{$question['title']}</h4>";
+            {
+                if (empty($currentQID))
+                {
+                    $currentQID = $question['id'];
+                    $html .= "<h4>{$question['title']}</h4>";    
+                }
+            }
 
             for ($i=0; $i<count($values); $i++)
             {
