@@ -62,6 +62,13 @@ class Categories {
         }
     }
     
+    public function getDetailsByTitle($sectionID, $title)
+    {
+        $result = $this->categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID AND `title` = '$title' {$this->orderStr} LIMIT 1");
+
+        return $result[0];
+    }
+    
     public function saveSpawnNumber($categoryID, $userID, $value)
     {
         if ($categoryID >0 && $userID > 0)

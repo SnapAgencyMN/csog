@@ -156,14 +156,18 @@ function printSpecialCategories($category) {
             break;
 
         case 62: // Maintenance [Maintenance]
-            global $html, $questionsClass, $userID, $projectID, $categoriesClass, $answersClass;
+            global $html, $questionsClass, $userID, $projectID, $categoriesClass, $answersClass, $sectionsClass;
             
+            // Intro
+            $html .= '<p>Your onsite system is a vital part of your property’s infrastructure. Taking care of it, just as you would your roof or windows, will ensure longevity and save you money.</p>';
+            $html .= '<p>Depending on your system type there may be specific guidance listed elsewhere in this Guide. For conventional systems, a schedule of suggested pumping and cleaning will depend on the size of your property, number of residents, size of tank and type of treatment field.</p>';
+            $html .= '<p>Your current system requires regular service to prevent early failure or poor treatment performance. Below are the components of your system and the suggested maintenance activities, frequencies and responsible parties.</p>';
             //Header
             $html .= '<table style="border-collapse:collapse;">';
             $html .= '<tr style="border:1px solid #000;">';
             $html .= '<td style="font-weight:bold;text-align:center;width:175px;min-width:175px;border:1px solid #000;">' . "Component" . "</td>";
-            $html .= '<td style="font-weight:bold;text-align:center;width:155px;min-width:175px;border:1px solid #000;">' . "Activity" . "</td>";
-            $html .= '<td style="font-weight:bold;text-align:center;width:215px;min-width:155px;border:1px solid #000;">' . "Frequency" . "</td>";
+            $html .= '<td style="font-weight:bold;text-align:center;width:175px;min-width:175px;border:1px solid #000;">' . "Activity" . "</td>";
+            $html .= '<td style="font-weight:bold;text-align:center;width:115px;min-width:115px;border:1px solid #000;">' . "Frequency" . "</td>";
             $html .= '<td style="font-weight:bold;text-align:center;width:155px;min-width:155px;border:1px solid #000;">' . "Responsible Party" . "</td>";
             $html .= '</tr>';
             $html .= '</table>';
@@ -171,7 +175,12 @@ function printSpecialCategories($category) {
             // Wastewater Treatment Plumbing
             require_once("o&m/wastewater.php");
             
-            break;
+            // Collection Types
+            require_once("o&m/collection.php");
+
+            // Tanks 
+            require_once("o&m/tanks.php");
+            return false;
         default:
             return false;
     }

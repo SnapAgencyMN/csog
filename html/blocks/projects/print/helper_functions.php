@@ -32,6 +32,9 @@ function printCategory ($category, $spawnID = 0)
     require_once ('special_categories.php');
     global $questionsClass, $html;
         
+    if ($category['title'] == "Operation & Maintenance") // TODO: Add a case to print static PDF for Wastewater 
+        return;
+    
     $suffix = "";
     if ($spawnID > 0)
     {
