@@ -8,7 +8,7 @@ require_once("../libs/classes/categories.class.php");
 require_once("../libs/classes/questions.class.php");
 require_once("../libs/classes/answers.class.php");
 
-define("CATEGORY_ID", 39);
+define("CATEGORY_ID", 63);
 define("TYPE", "question");
 define("START_ORDER", 2);
 
@@ -21,25 +21,19 @@ $dbInfo = array(
     );
  
 $questionTitles = array(
-    "Drainage washes", 
-    "Lakes lakefront/riparian", 
-    "Ocean", 
-    "Property line", 
-    "Rivers/streams",
-    "Swimming pool",
-    "Wetland protection",
-    "Drinking water sources",
-    "Water main",
-    "Well",
-    "Service water main",
-    "Structures without foundations",
-    "Structures with foundations",
-    "Other",
+    "Forest fire", 
+    "Freezing", 
+    "Pests/rodents", 
+    "Power failure", 
+    "Roots",
+    "Tree uprooting",
+    "Vegetation",
+    "Well related issues",
 );
 
 
 $answers = array(
-    "Yes" => "Checkbox",
+    "Yes" => "checkbox",
 );
 
 $db = new Db($dbInfo);
@@ -57,7 +51,7 @@ foreach ($questionTitles as $title)
     {
         $parentID = $answersClass->saveAnswer($label, $type, "", 0, $questionID, $z);
         // Saving children answers !HARDCODED!
-        $answersClass->saveAnswer("Setback in feet", "text", "", $parentID, $questionID, $z+1);
+        //$answersClass->saveAnswer("Setback in feet", "text", "", $parentID, $questionID, $z+1);
         $z++;
     }
     
