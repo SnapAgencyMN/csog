@@ -46,9 +46,19 @@ class Questions {
     {
         if ($categoryID > 0)
         {
-            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID {$this->orderStr} AND `type`='$type'");
+            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `type`='$type' {$this->orderStr}");
             
             return $questions;
+        }
+    }
+    
+    public function getQuestionByTitle($title, $categoryID)
+    {
+        if (!empty($title) && $categoryID > 0)
+        {
+            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `title` = '$title' {$this->orderStr} LIMIT 1");
+            
+            return $questions[0];
         }
     }
     

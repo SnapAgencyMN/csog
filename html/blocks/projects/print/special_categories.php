@@ -184,6 +184,9 @@ function printSpecialCategories($category) {
             //ATT
             require_once("o&m/att.php");
             
+            //Final Treatment
+            require_once("o&m/finalTreatment.php");
+            
             return false;
         default:
             return false;

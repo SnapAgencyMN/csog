@@ -6,6 +6,10 @@ $page = "";
 $pageTwo = "";
 if ($_SESSION['USER']['LoggedIn'] == true) {
     switch ($path[1]) {
+        case "test":
+            $page = FS_PATH . HTML_BLOCKS_DIR . "projects/print/o&m/finalTreatment.php";
+
+            break;
         case "about":
             $page = FS_PATH . HTML_BLOCKS_DIR . "about.php";
             break;
