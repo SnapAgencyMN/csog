@@ -24,7 +24,8 @@ $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
 - Blockage in plumbing<br /> 
 - Improper operation<br /> 
 - Pump failure<br /> 
-- Improper system design ­ Roots clogging pipes<br /> 
+- Improper system design <br />
+­ Roots clogging pipes<br /> 
 - Improper venting</td>';
 $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
 • Fix leaks/vents<br /> 

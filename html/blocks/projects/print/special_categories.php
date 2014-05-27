@@ -190,7 +190,7 @@ function printSpecialCategories($category) {
             return false;
             
         case 63:
-            global $html, $questionsClass, $userID, $projectID, $categoriesClass, $answersClass, $sectionsClass;
+            global $html, $questionsClass, $userID, $projectID, $answersClass;
             
             // Intro
             $html .= '<p>If you have having a problem with your system your best plan of attack is to contact a septic professional to evaluate the problem and recommend a course of action. See the key contact list (4.4.1) to determine who can best assist you with your problem. Some of the most typical general and specific issues are identified below.</p>';
@@ -207,6 +207,59 @@ function printSpecialCategories($category) {
             //Table
             require_once("troubleshooting/table.php");
             
+            return true;
+        case 64:
+            global $html, $questionsClass, $userID, $projectID, $answersClass;
+            
+            $question = $questionsClass->getQuestionsByTitle("Contact details", 64);
+            $questionID = $question[0]['id'];
+
+            $answers = $answersClass->getDetailsByLabel("Company name", $questionID);
+            $companyID = $answers[0]['id'];
+            $values = $answersClass->getUserAnswers($userID, $projectID, $companyID);
+            $companyName = $values[0]['value'];
+
+            
+            $answers = $answersClass->getDetailsByLabel("Phone number", $questionID);
+            $phoneID = $answers[0]['id'];
+            $values = $answersClass->getUserAnswers($userID, $projectID, $phoneID);
+            $phoneNumber = $values[0]['value'];
+            
+            $html .= "<p>Contact your septic professional – $companyName at $phoneNumber</p>";
+            
+            $html .= '<table style="border-collapse:collapse;">';
+            $html .= '<tr style="border:1px solid #000;">';
+            $html .= '<td style="font-weight:bold;text-align:center;width:175px;min-width:175px;border:1px solid #000;">' . "Problem" . "</td>";
+            $html .= '<td style="font-weight:bold;text-align:center;width:200px;min-width:200px;border:1px solid #000;">' . "Risk" . "</td>";
+            $html .= '<td style="font-weight:bold;text-align:center;width:200px;min-width:200px;border:1px solid #000;">' . "Potential Causes" . "</td>";
+            $html .= '<td style="font-weight:bold;text-align:center;width:200px;min-width:200px;border:1px solid #000;">' . "Potential Remedies" . "</td>";
+            $html .= '</tr>';
+            $html .= '</table>';
+            
+            $html .= '<table style="border-collapse:collapse;">';
+            $html .= "<tr style='border:1px solid #000;$color'>";
+            $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Alarm activated</td>';
+            $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">Could result in improper sewage treatment, surfacing of effluent  or back-up of effluent into the home</td>';
+            $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
+            - Pump failed<br /> 
+            - Fuse breaker tripped<br /> 
+            - Pump unplugged<br /> 
+            - Controls malfunctioning<br /> 
+            - Ground or rainwater infiltration<br /> 
+            - High water use<br /> 
+            - Effluent screen plugged<br />
+            - Advanced treatment unit not working properly<br />
+            - Frozen component</td>';
+            $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
+            • Control water use<br /> 
+            • Check breaker and plugs<br /> 
+            • Check controls and pump<br /> 
+            • Fix leaks in plumbing, tank and piping<br /> 
+            • Hire a professional to evaluate the system<br /> 
+            </td>';
+            $html .= '</tr>';
+            $html .= '</table>';
+
             return true;
         default:
             return false;
