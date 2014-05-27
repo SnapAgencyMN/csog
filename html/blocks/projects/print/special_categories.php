@@ -208,7 +208,7 @@ function printSpecialCategories($category) {
             require_once("troubleshooting/table.php");
             
             return true;
-        case 64:
+        case 65:
             global $html, $questionsClass, $userID, $projectID, $answersClass;
             
             $question = $questionsClass->getQuestionsByTitle("Contact details", 64);
