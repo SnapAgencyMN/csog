@@ -62,6 +62,16 @@ class Questions {
         }
     }
     
+    public function getQuestionsByTitle($title, $categoryID)
+    {
+        if (!empty($title) && $categoryID > 0)
+        {
+            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `title` = '$title' {$this->orderStr}");
+            
+            return $questions;
+        }
+    }
+    
     public function saveQuestion($title, $hint, $categoryID, $type, $order, $questionID=0)
     {
         include_once(__DIR__."/answers.class.php");

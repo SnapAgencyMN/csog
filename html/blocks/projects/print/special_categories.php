@@ -188,6 +188,26 @@ function printSpecialCategories($category) {
             require_once("o&m/finalTreatment.php");
             
             return false;
+            
+        case 63:
+            global $html, $questionsClass, $userID, $projectID, $categoriesClass, $answersClass, $sectionsClass;
+            
+            // Intro
+            $html .= '<p>If you have having a problem with your system your best plan of attack is to contact a septic professional to evaluate the problem and recommend a course of action. See the key contact list (4.4.1) to determine who can best assist you with your problem. Some of the most typical general and specific issues are identified below.</p>';
+            $html .= '<h4>Common problems</h4>';
+            $html .= '<p>The three most common causes of septic system failure are:</p>';
+            $html .= '<ol>';
+            $html .= '<li><p>Overuse of water. Abnormally high water use above or close to the amount your system was designed for, leaks, or short periods of very high water use can all cause failure. Even normal water volumes delivered to a partially damaged system may be too much.</p></li>';
+            $html .= '<li><p>Improper maintenance. When too many solids are allowed to accumulate in the septic tank, they will be carried out into the soil treatment area and cause plugging. This usually happens because the owner did not have the septic tank pumped regularly.</p></li>';
+            $html .= '<li><p>Improper design or installation. This could result from bad choices or mistakes made by designers, installers and inspectors, or homeowners who have remodeled their home increasing or changing the water use without making appropriate adjustments to their septic system.</p></li>';
+            $html .= "</ol>";
+            $html .= "<h4>Septic System Troubleshooting Guide for Homeowners</h4>";
+            $html .= '<p>Diagnosing the specific causes of failure may be difficult for the owner and often requires the skills of a professional. The following chart shows common problems, possible causes and remedies.</p>';
+
+            //Table
+            require_once("troubleshooting/table.php");
+            
+            return true;
         default:
             return false;
     }
