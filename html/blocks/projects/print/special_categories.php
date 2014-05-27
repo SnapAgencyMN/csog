@@ -211,7 +211,7 @@ function printSpecialCategories($category) {
         case 65:
             global $html, $questionsClass, $userID, $projectID, $answersClass;
             
-            $question = $questionsClass->getQuestionsByTitle("Contact details", 64);
+            $question = $questionsClass->getQuestionsByTitle("Contact details", 65);
             $questionID = $question[0]['id'];
 
             $answers = $answersClass->getDetailsByLabel("Company name", $questionID);
