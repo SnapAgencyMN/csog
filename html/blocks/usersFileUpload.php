@@ -16,24 +16,15 @@ $dbInfo = array(
     );
  
 $db = new Db($dbInfo);
-$answersClass = new Answers($db);
+$filenamesave = uniqid(time()); 
+$action = getParameterString("action");
 
-$userID = getParameterNumber("userID");    
-$answerID = getParameterNumber("answerID");
-$projectID = getParameterNumber('projectID');
-$type = getParameterString("type");
-$action = getParameterString("action", 'display_form');
-
-if ($type != "normal")
-    $spawnID = end(explode("_", $type));
-else
-    $spawnID = 0;
-    
 if ($action == "save_form")
 {
-    //$allowedExts = array("gif", "jpeg", "jpg", "png");
-    //$temp = explode(".", $_FILES["file"]["name"]);
-    //$extension = end($temp);
+    $fname = getParameterString("filename");   
+    $temp = explode(".", $_FILES["file"]["name"]);
+    $extension = end($temp);
+    
     if ((($_FILES["file"]["type"] == "image/gif")
       || ($_FILES["file"]["type"] == "image/jpeg")
       || ($_FILES["file"]["type"] == "image/jpg")
@@ -43,7 +34,6 @@ if ($action == "save_form")
       || ($_FILES["file"]["type"] == "image/tiff-fx")
       || ($_FILES["file"]["type"] == "image/png"))
       && ($_FILES["file"]["size"] < 2000000) )
-      //&& in_array($extension, $allowedExts))
     {
         if ($_FILES["file"]["error"] > 0)
         {
@@ -51,10 +41,10 @@ if ($action == "save_form")
           die();
         }
         
-        $filenamesave = uniqid(time()) . "." . $extension; 
-        move_uploaded_file($_FILES["file"]["tmp_name"],FS_PATH . "media/uploads/" . $filenamesave);
-        
-        $answersClass->saveUserAnswer($userID, $projectID, $answerID, $filenamesave, $spawnID);
+        move_uploaded_file($_FILES["file"]["tmp_name"],FS_PATH . "media/uploads/" . $fname.".$extension");
+
+        $sql = "INSERT INTO `temp_images` (`imageName`) VALUES ('$fname.$extension') ON DUPLICATE KEY UPDATE `imageName` = '$fname.$extension'";
+        $id = Db::query($sql);
     }
     else
     {
@@ -72,12 +62,9 @@ if ($action == "save_form")
 </head>
 <body>
 <form method="POST" id="uploadForm" enctype="multipart/form-data">
-    <p>Image Upload:</p>
-    <input type="file" name="file" id="file-upload-form-input" onchange='window.parent.uploadImage(<?php echo "$projectID, $userID, $answerID, $spawnID,\"".WS_URL.'"'?>)'>
-    <input type="hidden" name="userID" value="<?php echo $userID;?>">
-    <input type="hidden" name="answerID" value="<?php echo $answerID;?>">
-    <input type="hidden" name="type" value="<?php echo $type;?>">
-    <input type="hidden" name="action" value="save_form">
+    <input type="file" name="file" id="file-upload-form-input" onchange='window.parent.uploadUserImage("<?php echo $filenamesave ?>")' />
+    <input type="hidden" name="filename" value="<?php echo $filenamesave ?>" />
+    <input type="hidden" name="action" value="save_form" />
     <p>File formats accepted: jpg, gif, png</p>
 </form>
 </body>

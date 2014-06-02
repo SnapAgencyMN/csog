@@ -30,6 +30,16 @@ if ($action == "load_image")
     echo $value[0]['value'];
 }
 
+if ($action == "load_user_image")
+{
+    $id = getParameterString("id");
+    $sql = "SELECT * FROM `temp_images` WHERE `imageName` LIKE '$id%'";
+    $tempDetails = Db::query($sql); 
+    $tmpArray = Db::fetch_array($tempDetails);
+    
+    echo $tmpArray['imageName'];
+}
+
 if ($action == "load_other_question_row")
 {
     $answersClass = new Answers($db);

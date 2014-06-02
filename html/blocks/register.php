@@ -19,32 +19,7 @@ if(isset($_POST['registersubmit']) && $_POST['registersubmit'] == "1")
   $zip = $_POST['zip'];
   $website = $_POST['website'];
   $phoneNumber = $_POST['phoneNumber'];
-  $image = "";
-  
-
-  $allowedExts = array("gif", "jpeg", "jpg", "png");
-  $temp = explode(".", $_FILES["companyLogo"]["name"]);
-  $extension = end($temp);
-  if ((($_FILES["companyLogo"]["type"] == "image/gif")
-    || ($_FILES["companyLogo"]["type"] == "image/jpeg")
-    || ($_FILES["companyLogo"]["type"] == "image/jpg")
-    || ($_FILES["companyLogo"]["type"] == "image/pjpeg")
-    || ($_FILES["companyLogo"]["type"] == "image/x-png")
-    || ($_FILES["companyLogo"]["type"] == "image/png"))
-    && ($_FILES["companyLogo"]["size"] < 2000000)
-    && in_array($extension, $allowedExts))
-  {
-    if ($_FILES["companyLogo"]["error"] > 0)
-    {
-    } else
-    {
-      $filenamesave = uniqid(time()) . "." . $extension; 
-      move_uploaded_file($_FILES["companyLogo"]["tmp_name"],FS_PATH . "media/uploads/" . $filenamesave);
-      $image = $filenamesave;
-    }
-  } 
-
-
+  $image = $_POST['logoImage'];
 
   $sql = "INSERT INTO users (name,company_name,email,website,mailing_address,city,state,zip,phone_number,username,password,verify,company_logo) values ('$name','$company_name','$email','$website','$mailingAddress','$city','$state','$zip','$phoneNumber','$username','$password','$verify','$image')";
   $database->query($sql);
@@ -86,8 +61,14 @@ mail($to, $subject, $email, implode("\r\n", $headers));
       <div id="registerFormZip"><label>Zip:</label><input type="text" name="zip" maxlength="160" class="requiredForm" /></div>
       <div id="registerFormCompanyName"><label>Company name:</label><input type="text" name="companyName" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormWebsite"><label>Website:</label><input type="text" name="website" maxlength="80" class="requiredForm" /></div>
-      <div id="registerFormCompanyLogo"><label>Company logo:</label><input type="file" name="companyLogo" class="requiredForm" />File formats accepted: jpg, gif, png</div>
-      <div id="registerFormUsername"><label>Username:</label><input type="text" name="username" maxlength="80" class="requiredForm" /></div>
+      <div id="registerFormCompanyLogo" style='height:130px;'>
+          <label>Company logo:</label>
+          <a class='right' style='padding-right: 400px;' href='' data-lightbox='image-116'>
+                <img src='' class='imageLightboxLink'>
+            </a><br />
+          <iframe id='uploadIframe' class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px; padding-right:60px;' src='<?php echo WS_URL?>html/blocks/usersFileUpload.php' class='upload_frame'></iframe>
+    </div>
+      <div id="registerFormUsername" style='clear:both;'><label>Username:</label><input type="text" name="username" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormPassword"><label>Password:</label><input type="password" name="password" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormConfirmPassword"><label>Confirm password:</label><input type="password" name="passwordConfirm" maxlength="80" class="requiredForm" /></div>
       <input type="hidden" name="registersubmit" value="1" />

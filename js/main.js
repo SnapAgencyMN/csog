@@ -417,20 +417,40 @@ $(function() {
   });
 */
     $("iframe").on("load", function () {
-        $.ajax({
-            url: _host+"ajaxHandler.php",
-            data:"action=load_image&userID=" + _userID + "&answerID="+ _answerID +"&spawnID="+ _spawnID + "&projectID="+_projectID,
-            dataType: "text",
-            success: function(data, textStatus, jqXHR){
-                var newImage= "<a class='right' href='"+_host+"media/uploads/"+data.trim()+"' data-lightbox='image-116'><img src='"+_host+"media/uploads/"+data.trim()+"' class='imageLightboxLink'></a>";
+        if ($(this).attr('id') == "uploadIframe")
+        {
+            $.ajax({
+                url: "/ajaxHandler.php",
+                data:"action=load_user_image&id=" + _tmpImageID,
+                dataType: "text",
+                success: function(data, textStatus, jqXHR){
+                    var newImage= "<input type='hidden' name='logoImage' value='"+data.trim()+"' /><a class='right' style='padding-right:400px' href='/media/uploads/"+data.trim()+"' data-lightbox='image-116'><img src='/media/uploads/"+data.trim()+"' class='imageLightboxLink'></a>";
 
-                var elem = $("#iframe_"+_type+"_"+_answerID).parent().find("a");
-                $("#iframe_"+_type+"_"+_answerID).parent().find("a").replaceWith(newImage);
-            },
-            error:function(err){
-                //alert(err);
-            }
-        });
+                    var elem = $("#uploadIframe").parent().find("a");
+                    $("#uploadIframe").parent().find("a").replaceWith(newImage);
+                },
+                error:function(err){
+                    //alert(err);
+                }
+            });
+        }
+        else
+        {
+            $.ajax({
+                url: "/ajaxHandler.php",
+                data:"action=load_image&userID=" + _userID + "&answerID="+ _answerID +"&spawnID="+ _spawnID + "&projectID="+_projectID,
+                dataType: "text",
+                success: function(data, textStatus, jqXHR){
+                    var newImage= "<a class='right' href='"+_host+"media/uploads/"+data.trim()+"' data-lightbox='image-116'><img src='"+_host+"media/uploads/"+data.trim()+"' class='imageLightboxLink'></a>";
+
+                    var elem = $("#iframe_"+_type+"_"+_answerID).parent().find("a");
+                    $("#iframe_"+_type+"_"+_answerID).parent().find("a").replaceWith(newImage);
+                },
+                error:function(err){
+                    //alert(err);
+                }
+            });
+        }
     })
     
     var deleteList = $('input[type="submit"],a').filter(function() {
@@ -613,6 +633,13 @@ function uploadImage(projectID, userID, answerID, spawnID, host)
     _host = host;
 
     var form = $("#iframe_"+type+"_"+answerID).contents().find('#uploadForm');
+    form.submit();
+}
+
+function uploadUserImage(id)
+{   
+    _tmpImageID = id;
+    var form = $("#uploadIframe").contents().find('#uploadForm');
     form.submit();
 }
 

@@ -54,39 +54,12 @@
       $database->query($sql);
       $_SESSION['USER']['Verbose'] = "true";
     }
-
-
-
-    if($_FILES['companyLogo']["name"] != "")
+    
+    if($_POST['logoImage'] != "")
     {
-      $image = "";
-      $allowedExts = array("gif", "jpeg", "jpg", "png");
-      $temp = explode(".", $_FILES["companyLogo"]["name"]);
-      $extension = end($temp);
-      if ((($_FILES["companyLogo"]["type"] == "image/gif")
-        || ($_FILES["companyLogo"]["type"] == "image/jpeg")
-        || ($_FILES["companyLogo"]["type"] == "image/jpg")
-        || ($_FILES["companyLogo"]["type"] == "image/pjpeg")
-        || ($_FILES["companyLogo"]["type"] == "image/x-png")
-        || ($_FILES["companyLogo"]["type"] == "image/png"))
-        && ($_FILES["companyLogo"]["size"] < 2000000)
-        && in_array($extension, $allowedExts))
-      {
-        if ($_FILES["companyLogo"]["error"] > 0)
-        {
-        } else
-        {
-          $filenamesave = uniqid(time()) . "." . $extension; 
-          move_uploaded_file($_FILES["companyLogo"]["tmp_name"],FS_PATH . "media/uploads/" . $filenamesave);
-          $image = $filenamesave;
-        }
-      }
-      $sql = "UPDATE users SET company_logo = '".$image."' WHERE id = ".$_SESSION['USER']['ID'];
+      $sql = "UPDATE users SET company_logo = '".$_POST['logoImage']."' WHERE id = ".$_SESSION['USER']['ID'];
       $database->query($sql);
-  
-     
     }
-
 
   }
 
@@ -117,9 +90,12 @@
 
       <div id="modifyFormCompanyName"><label>Company name:</label><input type="text"  value="<?php echo $userInfo['company_name']; ?>"name="companyName" maxlength="80" class="requiredForm" /></div>
       <div id="modifyFormWebsite"><label>Website:</label><input type="text" value="<?php echo $userInfo['website']; ?>" name="website" maxlength="80" class="requiredForm" /></div>
-      <?php if ($userInfo['company_logo'] != "") { ?><a href="<?php echo WS_URL . "media/uploads/" . $userInfo['company_logo']; ?>" data-lightbox="image-logo"><img src="<?php echo WS_URL . "media/uploads/" . $userInfo['company_logo']; ?>" class="imageLightboxLink modifyUserLogoImage"></a></br> <?php } ?>
-      <div id="modifyFormCompanyLogo"><label>Company logo:</label><input type="file" name="companyLogo" class="requiredForm" /></div>
-      <div id="modifyFormVerbose"><label>Expert mode:</label><input type="checkbox"  value="true" <?php if($userInfo['verbose'] != "false") { echo "checked"; } ?> name="verbose" /></div>
+      <div id="registerFormCompanyLogo" style='height:130px;'>
+          <label>Company logo:</label>
+          <input type='hidden' name='logoImage' value='<?php echo $userInfo['company_logo'] ?>' /><a class='right' style='padding-right:400px' href='/media/uploads/<?php echo $userInfo['company_logo'] ?>' data-lightbox='image-116'><img src='/media/uploads/<?php echo $userInfo['company_logo'] ?>' class='imageLightboxLink'></a>
+          <iframe id='uploadIframe' class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px; padding-right:60px;' src='<?php echo WS_URL?>html/blocks/usersFileUpload.php' class='upload_frame'></iframe>
+    </div>
+      <div style='clear:both;' id="modifyFormVerbose"><label>Expert mode:</label><input type="checkbox"  value="true" <?php if($userInfo['verbose'] != "false") { echo "checked"; } ?> name="verbose" /></div>
       <input type="hidden" name="generalModifySubmit" value="1">
       <div><input type="submit" value="Update" class="form-button" /></div>
     </form>
