@@ -4,6 +4,7 @@ var _answerID;
 var _spawnID;
 var _type;
 var _host;
+var _tmpImageID = 0;
 
 $(function() {
   /* Section Slider for Questions. */

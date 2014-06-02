@@ -33,11 +33,15 @@ if ($action == "load_image")
 if ($action == "load_user_image")
 {
     $id = getParameterString("id");
-    $sql = "SELECT * FROM `temp_images` WHERE `imageName` LIKE '$id%'";
-    $tempDetails = Db::query($sql); 
-    $tmpArray = Db::fetch_array($tempDetails);
     
-    echo $tmpArray['imageName'];
+    if ($id != "0")
+    {
+        $sql = "SELECT * FROM `temp_images` WHERE `imageName` LIKE '$id%'";
+        $tempDetails = Db::query($sql); 
+        $tmpArray = Db::fetch_array($tempDetails);
+
+        echo $tmpArray['imageName'];
+    }
 }
 
 if ($action == "load_other_question_row")
