@@ -119,6 +119,7 @@ $(function() {
   });
 
   $('#resetPasswordVerifyForm').submit(function( event ) {
+      //alert('here starts');
     $('.formError').remove();
     var values = {};
     $.each($('#resetPasswordVerifyForm').serializeArray(), function(i, field) {
@@ -147,14 +148,14 @@ $(function() {
       data: $('#resetPasswordVerifyForm').serialize(),
       type: 'POST',
       success: function(data) {
+          //alert('here finishing');
         $('#resetPasswordVerifyForm').html("<div><p>Your password has been reset.</p></div>");
-        alert(data);
       }
     });     
 
     event.preventDefault();
   });
-
+ 
   /* Modify user form input validation */
   $('#generalModifyForm').submit(function( event ) {
     $('.formError').remove();

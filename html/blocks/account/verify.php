@@ -11,7 +11,7 @@ if ($DBresult->num_rows >= 1 && $verifyCode != "")
   ?>
 
   <h2>Email Verification</h2>
-  <p>Your email has been verified. You may now <a href="<?php echo WS_URL;?>">login</a></p>
+  <p>Your email has been verified. You may now <a href="<?php echo WS_URL;?>"><u>login</u></a></p>
   
   <?php
 
