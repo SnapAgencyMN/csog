@@ -419,7 +419,7 @@ $(function() {
   });
 */
     $("iframe").on("load", function () {
-        if ($(this).attr('id') == "uploadIframe")
+        if ($(this).attr('id') == "uploadIframe" && _tmpImageID != 0)
         {
             $.ajax({
                 url: "/ajaxHandler.php",
