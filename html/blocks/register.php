@@ -21,14 +21,28 @@ if(isset($_POST['registersubmit']) && $_POST['registersubmit'] == "1")
   $phoneNumber = $_POST['phoneNumber'];
   $image = $_POST['logoImage'];
 
-  $sql = "INSERT INTO users (name,company_name,email,website,mailing_address,city,state,zip,phone_number,username,password,verify,company_logo) values ('$name','$company_name','$email','$website','$mailingAddress','$city','$state','$zip','$phoneNumber','$username','$password','$verify','$image')";
-  $database->query($sql);
+  // Check if the user already exist
+  $username = $database->real_escape_string($username);
+  $verifySQL = "SELECT * FROM users WHERE username = \"$username\"";
+
+  $result = $database->query($verifySQL);
+  if(!empty($result) && $result->num_rows >= 1)
+    {
+        echo "
+            <h2>This username already exists.</h2>
+            <p>Please go back and provide a different username.</p>    
+        ";
+    }
+    else
+    {
+        $sql = "INSERT INTO users (name,company_name,email,website,mailing_address,city,state,zip,phone_number,username,password,verify,company_logo) values ('$name','$company_name','$email','$website','$mailingAddress','$city','$state','$zip','$phoneNumber','$username','$password','$verify','$image')";
+        $database->query($sql);
 ?>
   <h2>Check Your Email To Activate Your Account</h2>
   <p>You must activate your account before you can begin using it.</p>
 
 <?php
-
+    
 $to = $_POST['email'];
 $subject = "CSOG EMail Confirmation";
 $email = "Please verify your email before logging in by visiting: ".WS_URL."account/verify/$verify";
@@ -44,7 +58,7 @@ $headers[] = "X-Mailer: PHP/".phpversion();
 
 
 mail($to, $subject, $email, implode("\r\n", $headers));
-
+    }
 } else
 {
 ?>
