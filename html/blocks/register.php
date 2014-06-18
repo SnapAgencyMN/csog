@@ -45,7 +45,7 @@ if(isset($_POST['registersubmit']) && $_POST['registersubmit'] == "1")
     
 $to = $_POST['email'];
 $subject = "CSOG EMail Confirmation";
-$email = "Please verify your email before logging in by visiting: ".WS_URL."account/verify/$verify";
+$email = "Please verify your email before logging in by visiting: <a href='".WS_URL."account/verify/$verify'>this link</a>.";
 
 /*
 $headers   = array();
@@ -65,7 +65,7 @@ $mail->CharSet = 'UTF-8';
 
 $mail->Host       = "rsb31.rhostbh.com"; // SMTP server example
 $mail->SMTPSecure = "ssl";
-$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
+$mail->SMTPDebug  = 0;                     // enables SMTP debug information (for testing)
 $mail->SMTPAuth   = true;                  // enable SMTP authentication
 $mail->Port       = 465;                    // set the SMTP port for the GMAIL server
 $mail->Username   = "snap@carney.com"; // SMTP account username example
@@ -83,10 +83,12 @@ if(!$mail->Send())
 
     // set email send state failed in user accounts.
     // send email to me.
-
-    error_log($mail->ErrorInfo);
-    echo "FAILED - Mailer Error: " . $mail->ErrorInfo;
-    return;
+    if (DEBUG)
+    {
+        error_log($mail->ErrorInfo);
+        echo "FAILED - Mailer Error: " . $mail->ErrorInfo;
+        return;
+    }
 }
 
 
