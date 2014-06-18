@@ -1,4 +1,4 @@
-<?php 
+<?php
 if(isset($_SESSION['USER']['LoggedIn']) && $_SESSION['USER']['LoggedIn'] = true)
 {
 }
@@ -47,7 +47,7 @@ $to = $_POST['email'];
 $subject = "CSOG EMail Confirmation";
 $email = "Please verify your email before logging in by visiting: ".WS_URL."account/verify/$verify";
 
-
+/*
 $headers   = array();
 $headers[] = "MIME-Version: 1.0";
 $headers[] = "Content-type: text/plain; charset=iso-8859-1";
@@ -58,6 +58,37 @@ $headers[] = "X-Mailer: PHP/".phpversion();
 
 
 mail($to, $subject, $email, implode("\r\n", $headers));
+*/
+$mail = new PHPMailer();
+$mail->IsSMTP();
+$mail->CharSet = 'UTF-8';
+
+$mail->Host       = "rsb31.rhostbh.com"; // SMTP server example
+$mail->SMTPDebug  = 1;                     // enables SMTP debug information (for testing)
+$mail->SMTPAuth   = true;                  // enable SMTP authentication
+$mail->Port       = 465;                    // set the SMTP port for the GMAIL server
+$mail->Username   = "snap@carney.com"; // SMTP account username example
+$mail->Password   = "6014Spenser";        // SMTP account password example
+
+$mail->From = "noreply@".substr(WS_URL,7,-1);
+$mail->FromName = "CSOG";
+$mail->AddAddress($_POST['email']);
+$mail->Subject =$subject;
+$mail->IsHTML(true);
+$mail->Body = $email;
+
+if(!$mail->Send())
+{
+
+    // set email send state failed in user accounts.
+    // send email to me.
+
+    error_log($mail->ErrorInfo);
+    echo "FAILED - Mailer Error: " . $mail->ErrorInfo;
+    return;
+}
+
+
     }
 } else
 {
