@@ -64,7 +64,7 @@ $mail->IsSMTP();
 $mail->CharSet = 'UTF-8';
 
 $mail->Host       = "rsb31.rhostbh.com"; // SMTP server example
-$mail->SMTPDebug  = 1;                     // enables SMTP debug information (for testing)
+$mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
 $mail->SMTPAuth   = true;                  // enable SMTP authentication
 $mail->Port       = 465;                    // set the SMTP port for the GMAIL server
 $mail->Username   = "snap@carney.com"; // SMTP account username example
