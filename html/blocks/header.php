@@ -27,11 +27,12 @@
             <?php if(@$_SESSION['USER']['LoggedIn'] == true) { ?>
           <li><a href="<?php echo WS_URL; ?>account/edit">Your Account</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
           <li><a href="<?php echo WS_URL; ?>projects/">Projects</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+          <li><a href="<?php echo WS_URL; ?>help/">Help</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
           <li>
 
               <a href="<?php echo WS_URL . "logout/"; ?>">Log Out</a> 
             <?php } else { ?>
-              <a href="<?php echo WS_URL . "login/"; ?>">Log In/Register</a>
+              <a href="<?php echo WS_URL . "login/"; ?>">Click here to Log In or Register</a>
             <?php  } ?>
           </li>
         </ul>

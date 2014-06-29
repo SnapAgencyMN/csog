@@ -6,6 +6,9 @@ $page = "";
 $pageTwo = "";
 if ($_SESSION['USER']['LoggedIn'] == true) {
     switch ($path[1]) {
+        case "help":
+            $page = FS_PATH . HTML_BLOCKS_DIR . "help.php";
+            break;
         case "test":
             $page = FS_PATH . HTML_BLOCKS_DIR . "projects/print/o&m/finalTreatment.php";
 
@@ -35,6 +38,9 @@ if ($_SESSION['USER']['LoggedIn'] == true) {
             break;
         case "projects":
             switch ($path[2]) {
+                case "search":
+                    $page = FS_PATH . HTML_BLOCKS_DIR . "projects/search.php";
+                    break;
                 case "new":
                     $page = FS_PATH . HTML_BLOCKS_DIR . "projects/edit.php";
                     break;

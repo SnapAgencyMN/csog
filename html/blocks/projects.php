@@ -82,6 +82,22 @@ if (isset($_POST['createProjectSubmit']) && $_POST['createProjectSubmit'] == 1)
 <div id="projects_table">
   <h2>Welcome <?php echo $_SESSION['USER']['Name']; ?> from <?php echo $_SESSION['USER']['CompanyName']; ?></h2>
   <a href="<?php echo WS_URL . 'account/edit/' ?>">Edit your profile</a><br /><br /><br />
+  
+  <h2>Click here to create a new project.</h2>
+  <button class='form-button' onclick="javascript:window.location.href='<?php echo WS_URL ?>projects/new/';">Create</button>
+  <br /><br />
+  <p class="projectText">
+      We recommend you create generic project templates for system designs with several shared characteristics. Name it something relevant, for example, "Hillside Template".
+  </p>
+  <br />
+  <p class="projectText">
+      Enter ficticious information for project specific, required fields. Address example: 1234 Main St, Anywhere, USA 12345 
+  </p>
+  <br />
+  <p class="projectText">
+      You can duplicate a template, saving it with a new name, for a quick start on a new project.
+  </p>
+  <br />
 <?php
 $sql = "SELECT * FROM projects WHERE users_id = '".$_SESSION['USER']['ID']."'";
 $DBresult = $database->query($sql);
@@ -128,17 +144,4 @@ if ($DBresult->num_rows)
   echo '<h2>You have no projects.</h2>';
 }
 ?>
-  <br /><br />
-  <h2><a href="<?php echo WS_URL ?>projects/new/">Click here to create a new project.</a></h2>
-  <p>
-      We recommend you create a project template for commonly answered questions and duplicate it as a new project starting point. Name it something relevant, for example, “Project Template”. This will eliminate some redundancy for each new guide you create.
-  </p>
-  <br /><br /><br />
-  <h2>Contact a Site Administrator</h2>
-  <form id="contact-form-projects" method="post">
-    <div id="contact-form-name-div"><label for="name">Name</label><input type="text" id="contact-form-name" name="name" value="<?php echo $_SESSION['USER']['Name']; ?>"/></div>
-    <div id="contact-form-email-div"><label for="email">Email</label><input type="email" id="contact-form-email" name="email" value="<?php echo $_SESSION['USER']['Email']; ?>"/ /></div>
-    <div id="contact-form-message-div"><label for="message">Message</label><textarea name="message" id="projects_message"></textarea></div>
-    <input type="submit" value="Send Email" id="projects_submit" class="form-button" />
-  </form>
 </div>

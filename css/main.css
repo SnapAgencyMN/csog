@@ -309,7 +309,7 @@ ol#category_list
 #projects_table li { padding:10px 0 10px 10px }
 .projects_tableProjectName:hover { color:#2e8b98; }
 #projects_message { height:100px; width:264px }
-#projects_submit { margin:10px 0 0 298px }
+#projects_submit { float:right; margin-top:15px; margin-right:83px; }
 
 /*---------------------*/
 
@@ -643,4 +643,20 @@ table tbody tr td input.order
 .right
 {
     float:right;
+}
+
+.loginText
+{
+    width:265px;
+}
+
+.projectText
+{
+    width:515px;
+}
+
+.searchTextInput
+{
+    width: 157px;
+    min-width: 157px;
 }
