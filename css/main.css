@@ -687,3 +687,8 @@ ul.square li
 {
     text-decoration:underline;
 }
+
+.error
+{
+    color: red;
+}

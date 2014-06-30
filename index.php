@@ -47,7 +47,7 @@ if ($database->connect_errno) {
     printf("Connect failed: %s\n", $database->connect_error);
     exit();
 }
-
+$loginError = "";
 if (isset($_POST['user']) && isset($_POST['pass'])) {
     $user = $database->real_escape_string($_POST['user']);
     $pass = $database->real_escape_string(sha1($_POST['pass']));
@@ -77,6 +77,12 @@ if (isset($_POST['user']) && isset($_POST['pass'])) {
         $_SESSION['USER']['Name'] = $userData['name'];
         $_SESSION['USER']['Email'] = $userData['email'];
         $_SESSION['USER']['CompanyName'] = $userData['company_name'];
+        
+        header( 'Location: '.WS_URL.'projects' );
+    }
+    else
+    {
+        $loginError = "Username or password is incorrect. Please try again.";
     }
 }
 

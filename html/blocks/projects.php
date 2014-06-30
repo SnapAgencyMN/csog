@@ -50,7 +50,7 @@ if (isset($_POST['createProjectSubmit']) && $_POST['createProjectSubmit'] == 1)
     || ($_FILES["projectLogo"]["type"] == "image/pjpeg")
     || ($_FILES["projectLogo"]["type"] == "image/x-png")
     || ($_FILES["projectLogo"]["type"] == "image/png"))
-    && ($_FILES["projectLogo"]["size"] < 2000000)
+    && ($_FILES["projectLogo"]["size"] < 1058576)
     && in_array($extension, $allowedExts))
   {
     if ($_FILES["projectLogo"]["error"] > 0)
