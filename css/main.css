@@ -660,3 +660,30 @@ table tbody tr td input.order
     width: 157px;
     min-width: 157px;
 }
+
+.intended
+{
+    margin-left:25px;
+}
+
+.ui-accordion-header
+{
+    cursor: pointer;
+}
+
+b{font-weight: 800;}
+
+ul.square ul.circle li 
+{
+    list-style-type:circle; margin-left: 30px;
+}
+
+ul.square li
+{
+    list-style-type:square; margin-left: 15px;
+}
+
+.underline
+{
+    text-decoration:underline;
+}

@@ -108,8 +108,8 @@ if(!$mail->Send())
       <div id="registerFormCity"><label>City: *</label><input type="text" name="city" maxlength="160" class="requiredForm" /></div>
       <div id="registerFormState"><label>State: *</label><input type="text" name="state" maxlength="160" class="requiredForm" /></div>
       <div id="registerFormZip"><label>Zip: *</label><input type="text" name="zip" maxlength="160" class="requiredForm" /></div>
-      <div id="registerFormCompanyName"><label>Company name: *</label><input type="text" name="companyName" maxlength="80" class="requiredForm" /></div>
-      <div id="registerFormWebsite"><label>Website: *</label><input type="text" name="website" maxlength="80" class="requiredForm" /></div>
+      <div id="registerFormCompanyName"><label>Company name: </label><input type="text" name="companyName" maxlength="80" class="requiredForm" /></div>
+      <div id="registerFormWebsite"><label>Website: </label><input type="text" name="website" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormCompanyLogo" style='height:130px;'>
           <label>Company logo:</label>
           <a class='right' style='padding-right: 400px;' href='' data-lightbox='image-116'>
@@ -120,13 +120,13 @@ if(!$mail->Send())
       <div id="registerFormUsername" style='clear:both;'><label>Username: *</label><input type="text" name="username" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormPassword"><label>Password: *</label><input type="password" name="password" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormConfirmPassword"><label>Confirm password: *</label><input type="password" name="passwordConfirm" maxlength="80" class="requiredForm" /></div>
-      <div id="registerFormConfirmPassword"><label>I have read the Disclaimer and agree to the terms. *</label><input type="checkbox" name="disclaimer" class="requiredForm" /></div>
+      <div id="registerFormConfirmPassword"><label>I have read the Disclaimer and agree to the terms. *</label><input type="checkbox" name="disclaimer" id="disclaimer" class="requiredForm" /></div>
       <input type="hidden" name="registersubmit" value="1" />
-      <div><button class='form-button' >Disclaimer</button></div>
+      <div><button class='form-button' onclick="javascript:window.location.href='<?php echo WS_URL;?>disclaimer/';">Disclaimer</button></div>
       <br />
       <div><input style = 'width:83px' type="submit" value="Register" id="login_submit" class="form-button" /></div>
     </form><br />
   </div>
-  
+
 <?php
 }

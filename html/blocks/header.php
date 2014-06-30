@@ -53,8 +53,12 @@
                 echo "<a href='".WS_URL."projects/print/$path[3]' target='blank'>Print PDF</a>";
               }
             }
+            if($path[1] == "register")
+            {
+                echo "<p style='position:relative; right:100px; top:20px;'>* Asterisks indicate required fields.</p>";
+            }
+
             ?><br />
-            <a href="<?php echo WS_URL;?>disclaimer/">Disclaimer</a>
           </div>
           <div id="headerInfo">
             <?php

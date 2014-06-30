@@ -251,21 +251,25 @@ $(function() {
       $('#registerFormZip').after("<div class='formError'>This field is required.</div>");
       errors = 1;
     }
+    /*
     if($.trim(values['website']) == "")
     {
       $('#registerFormWebsite').after("<div class='formError'>This field is required.</div>");
       errors = 1;
     }
+    */
     if($.trim(values['phoneNumber']) == "")
     {
       $('#registerFormPhoneNumber').after("<div class='formError'>This field is required.</div>");
       errors = 1;
     }
+    /*
     if($.trim(values['companyName']) == "")
     {
       $('#registerFormCompanyName').after("<div class='formError'>This field is required.</div>");
       errors = 1;
     }
+    */
     if($.trim(values['email']) == "")
     {
       $('#registerFormEmail').after("<div class='formError'>This field is required.</div>");
@@ -324,7 +328,12 @@ $(function() {
       $('#registerFormConfirmPassword').after("<div class='formError'>Passwords must match.</div>");
       errors = 1;
     }
-
+    
+    if($.trim(values['disclaimer']) == "")
+    {
+      $('#disclaimer').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
 
 
     if(errors == 1)
