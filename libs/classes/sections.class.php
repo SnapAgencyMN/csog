@@ -183,4 +183,34 @@ class Sections {
         }
     }
     
+    public function isLastSection($sectionID)
+    {
+        $lastSection = $this->sectionsTable->fetchAll("ORDER BY `sectionID` DESC LIMIT 1");
+        
+        if ($lastSection[0]['sectionID'] == $sectionID)
+            return true;
+        else 
+            return false;
+    }
+    
+    public function getPaginationData($sectionID)
+    {
+        $sql = "SELECT sectionID FROM `{$this->table_name}`";
+        $sections = $this->sectionsTable->find_by_sql($sql);
+        
+        $i = 0;
+        $seqNum = 0;
+        foreach ($sections as $section)
+        {
+            $i++;
+            if ($section['sectionID'] == $sectionID)
+                $seqNum = $i;
+        }
+        $result['sequence'] = $seqNum;
+        $result['nextSectionSeqNum'] = $seqNum+1;
+        $result['total'] = $i;
+        
+        return $result;
+    }
+    
 }

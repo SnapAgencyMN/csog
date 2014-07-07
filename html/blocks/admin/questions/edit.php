@@ -45,8 +45,9 @@
             $type = getParameterString("type");
             $order = getParameterNumber("order");
             
-            $questionsClass->saveQuestion($title, $hint, $categoryID, $type, $order, $questionID);
-            $action = "display-all";
+            $questionID = $questionsClass->saveQuestion($title, $hint, $categoryID, $type, $order, $questionID);
+            $_REQUEST['questionID'] = $questionID;
+            $action = "display-one";
         }
         if ($action == "delete")
         {

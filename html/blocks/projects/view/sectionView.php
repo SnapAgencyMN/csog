@@ -49,4 +49,12 @@ else
 echo "</form>";
 
 if ($sectionDetails['type'] != "parent")
-    echo "<a href='#' onclick=\"submitForm('mainPage'); return false;\" class='nextSectionLink'>Next Section</a>";
+{
+    if (!$sectionsClass->isLastSection($sectionDetails['sectionID']))
+    {
+        $paginationInfo = $sectionsClass->getPaginationData($sectionDetails['sectionID']);
+        echo "<button onClick=\"submitForm('mainPage'); return false;\" class='nextSectionLink form-button'>Continue to Section {$paginationInfo['nextSectionSeqNum']} of {$paginationInfo['total']}</button>";
+    }
+    else
+        echo "<button onClick=\"parent.location='".WS_URL."projects/print/$path[3]'\" class='form-button'>Print PDF</button>";
+}

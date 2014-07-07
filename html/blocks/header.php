@@ -50,7 +50,6 @@
               {
                 $name = $result->fetch_assoc();
                 $projectOk = $name['name'];
-                echo "<a href='".WS_URL."projects/print/$path[3]' target='blank'>Print PDF</a>";
               }
             }
             if($path[1] == "register")

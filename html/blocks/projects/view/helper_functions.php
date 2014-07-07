@@ -98,8 +98,17 @@ function isSelected($sectionID, $sectionsArray)
 function echoCategory($category, $type='normal')
 {
     global $questionsClass, $answersClass, $projectID;
+    $suffix = "";
     
-    echo "<h3 class='question_header'>{$category['title']}</h3>";
+    $spawnID = 0;
+    if ($type != "normal"){
+        $spawnArr = explode("_", $type);
+        $spawnID = array_pop ($spawnArr);
+        $suffix = "#".($spawnID+1);
+    }
+    
+    
+    echo "<h3 class='question_header'>{$category['title']} $suffix</h3>";
     
     $questions = $questionsClass->listQuestions($category['id']);
 
@@ -117,12 +126,6 @@ function echoCategory($category, $type='normal')
         
         if($question['type'] == "question" && $titlePrinted)
             $intent = "20px";
-        
-        $spawnID = 0;
-        if ($type != "normal"){
-            $spawnArr = explode("_", $type);
-            $spawnID = array_pop ($spawnArr);
-        }
         
         // PRINT QUESTION OF OTHER TYPE
         if ($question['type'] == "other")
