@@ -7,7 +7,17 @@ $pageTwo = "";
 if ($_SESSION['USER']['LoggedIn'] == true) {
     switch ($path[1]) {
         case "help":
-            $page = FS_PATH . HTML_BLOCKS_DIR . "help.php";
+            $page = FS_PATH . HTML_BLOCKS_DIR . "help/view.php";
+            if ($_SESSION['USER']['Admin']) {
+                switch ($path[2]) {
+                    case "add":
+                        $page = FS_PATH . HTML_BLOCKS_DIR . "help/add.php";
+                        break;
+                }
+                
+                if (strstr($path[2], "edit"))
+                    $page = FS_PATH . HTML_BLOCKS_DIR . "help/edit.php";
+            }
             break;
         case "test":
             $page = FS_PATH . HTML_BLOCKS_DIR . "projects/print/o&m/finalTreatment.php";

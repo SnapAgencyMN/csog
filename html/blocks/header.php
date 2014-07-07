@@ -22,7 +22,7 @@
   <body>
     <div id="header_wrapper">
       <div id="header_inner">
-        <span id="header_title"><a href="<?php if($_SESSION['USER']['LoggedIn'] == true) { ?>/projects"><?php } else { ?>/"><?php } ?>Community Septic System Owners Guide Tool</a></span>
+        <span id="header_title"><a href="<?php if($_SESSION['USER']['LoggedIn'] == true) { ?>/projects"><?php } else { ?>/"><?php } ?>Community Septic System Owner's Guide Tool</a></span>
         <ul id="header_nav">
             <?php if(@$_SESSION['USER']['LoggedIn'] == true) { ?>
           <li><a href="<?php echo WS_URL; ?>account/edit">Your Account</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>

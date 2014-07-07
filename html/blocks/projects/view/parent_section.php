@@ -4,8 +4,14 @@ $childrenSections = $sectionsClass->listChlidrenSectionsForUser($sectionDetails[
 
 $children = $sectionsClass->listChildrenSections($sectionID);
 
-$img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='Please select {$sectionDetails['title']} that you have'>";
-
+$img = "";
+$subTitle = "";
+if(!$_SESSION['USER']['Verbose'] )
+    $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='Please select {$sectionDetails['title']} that you have'>";
+else
+    $subTitle = "<p class='hintVerbose'>Please select {$sectionDetails['title']} that you have</p>";
+    
+    
 echo <<< HTML_STRING
 
 <h3> Please select options relevant to you: </h3>
@@ -18,6 +24,7 @@ echo <<< HTML_STRING
             </div>
             <div class='question_set_row_title'>
                 {$sectionDetails['title']}
+                $subTitle
             </div>
             <div class='question_set_row_field'>
 HTML_STRING;

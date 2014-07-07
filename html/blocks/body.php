@@ -44,6 +44,11 @@ include(FS_PATH . "php/page.php");
         
         if ($path[1] == "help")
         {
+            if ($_SESSION["USER"]['Admin'])
+            {
+                echo "<a href='".WS_URL."help/edit'>Manage Help Topics</a><br /><br />";
+            }
+            
             ?>
             <h2>Contact a Tool Administrator</h2>
             <form id="contact-form-projects" method="post">

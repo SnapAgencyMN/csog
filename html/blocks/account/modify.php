@@ -47,12 +47,12 @@
     {
       $sql = "UPDATE users SET verbose = 'true' WHERE id = ".$_SESSION['USER']['ID'];
       $database->query($sql);
-      $_SESSION['USER']['Verbose'] = $_POST['false'];
+      $_SESSION['USER']['Verbose'] = 'true';
     } else
     {
       $sql = "UPDATE users SET verbose = 'false' WHERE id = ".$_SESSION['USER']['ID'];
       $database->query($sql);
-      $_SESSION['USER']['Verbose'] = "true";
+      $_SESSION['USER']['Verbose'] = "false";
     }
     
     if($_POST['logoImage'] != "")
@@ -95,9 +95,13 @@
           <input type='hidden' name='logoImage' value='<?php echo $userInfo['company_logo'] ?>' /><a class='right' style='padding-right:400px' href='/media/uploads/<?php echo $userInfo['company_logo'] ?>' data-lightbox='image-116'><img src='/media/uploads/<?php echo $userInfo['company_logo'] ?>' class='imageLightboxLink'></a>
           <iframe id='uploadIframe' class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px; padding-right:60px;' src='<?php echo WS_URL?>html/blocks/usersFileUpload.php' class='upload_frame'></iframe>
     </div>
-      <div style='clear:both;' id="modifyFormVerbose"><label>Expert mode:</label><input type="checkbox"  value="true" <?php if($userInfo['verbose'] != "false") { echo "checked"; } ?> name="verbose" /></div>
+      <div style='clear:both;' id="modifyFormVerbose"><label>Turn Tool Tips on:</label><input type="checkbox"  value="true" <?php if($userInfo['verbose'] != "false") { echo "checked"; } ?> name="verbose" /></div>
+      <div style='clear:both;'>
+          <p>&nbsp;&nbsp;(If you'd like Tool Tips to be visible at all times, check "Turn Tool Tips On". Otherwise they can be accessed as needed)</p>
+      </div>
       <input type="hidden" name="generalModifySubmit" value="1">
       <div><input type="submit" value="Update" class="form-button" /></div>
+      <br />
     </form>
   </div>
   <div class="modify_wrapper">

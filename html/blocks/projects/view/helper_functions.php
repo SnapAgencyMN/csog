@@ -142,7 +142,9 @@ function echoCategory($category, $type='normal')
                 $hint = "";
                 if (!empty($question['hint']))
                 {
-                    $hint = "<img src='".WS_URL."/media/hint.png' alt='Hint' title=\"{$question['hint']}\">";
+                    if(!$_SESSION['USER']['Verbose'] )
+                        $hint = "<img src='".WS_URL."/media/hint.png' alt='Hint' title=\"{$question['hint']}\">";
+                        
                 }
                 
                 echo "
@@ -152,8 +154,16 @@ function echoCategory($category, $type='normal')
                         </div>
                         <div class='question_set_row_title'>
                             {$question['title']}
-                        </div>
                 ";
+                if($_SESSION['USER']['Verbose'] )
+                {
+                    if(!empty($question['hint'])) 
+                    { 
+                        echo "<p class='hintVerbose'>{$question['hint']}</p>"; 
+                    }
+                }
+                echo "</div>";
+
            
                 $answers = $answersClass->listAnswers($question['id']);
                 
@@ -196,7 +206,8 @@ function echoCategory($category, $type='normal')
             $hint = "";
             if (!empty($question['hint']))
             {
-                $hint = "<img src='".WS_URL."/media/hint.png' alt='Hint' title=\"{$question['hint']}\">";
+                if(!$_SESSION['USER']['Verbose'] )
+                    $hint = "<img src='".WS_URL."/media/hint.png' alt='Hint' title=\"{$question['hint']}\">";
             }
             
             echo "
@@ -206,8 +217,15 @@ function echoCategory($category, $type='normal')
                     </div>
                     <div class='question_set_row_title $titleClass'>
                         {$question['title']}
-                    </div>
             ";
+            if($_SESSION['USER']['Verbose'] )
+            {
+                if(!empty($question['hint'])) 
+                { 
+                    echo "<p class='hintVerbose'>{$question['hint']}</p>"; 
+                }
+            }
+            echo "</div>";
 
             $answers = $answersClass->listAnswers($question['id']);
             echo "<div class='question_set_row_field'>";
@@ -245,8 +263,15 @@ function echoSpawnCategory($category)
     global $categoriesClass;
     
     $selected = $categoriesClass->getNumberOfSpawnBoxesForUser($category['id'], $_SESSION['USER']['ID']);
-    $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='{$category['spawn_box_label']}'>";
     
+    $img = "";
+    $subTitle = "";
+    if(!$_SESSION['USER']['Verbose'] )
+        $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='{$category['spawn_box_label']}'>";
+    else
+        $subTitle = "<p class='hintVerbose'>{$category['spawn_box_label']}}</p>";
+    
+        
     $selectBox = "<select class='right' name='spawn_{$category['id']}' id='spawn_{$category['id']}'>";
     for ($i=1; $i<=10; $i++)
     {
@@ -270,6 +295,7 @@ function echoSpawnCategory($category)
                     </div>
                     <div class='question_set_row_title'>
                         {$category['spawn_box_label']}
+                        $subTitle
                     </div>
                     <div class='question_set_row_field'>
                         <div class='question_answers'>
