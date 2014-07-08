@@ -168,18 +168,34 @@ class Sections {
         }
     }
     
-    public function getNextSectionID($currentSectionID)
+    public function getNextSectionID($currentSectionID, $userID)
     {
-        $return = false;
+        $check = false;
         $sections = $this->listNonParentSections();
         
         foreach ($sections as $section)
         {
-            if ($return)
-                return $section['sectionID'];
+            if ($check)
+            {
+                $sectionDetails = $this->getDetails($section['sectionID']);
+                if ($sectionDetails['parentID'] > 0)
+                {
+                    $userSections = $this->listChlidrenSectionsForUser($sectionDetails['parentID'], $userID);
+                    
+                    foreach ($userSections as $sec)
+                    {
+                        if ($sec['sectionID'] == $section['sectionID'])
+                        {
+                            return $section['sectionID'];
+                        }
+                    }
+                }
+                else                
+                    return $section['sectionID'];
+            }
             
             if ($section['sectionID'] == $currentSectionID)
-                $return = true;
+                $check = true;
         }
     }
     

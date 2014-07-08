@@ -16,7 +16,7 @@ if (!isset($answersClass))
 $sectionDetails = $sectionsClass->getDetails($sectionID);
 $categories = $categoriesClass->listCategories($sectionID); 
 
-$nextSectionID = $sectionsClass->getNextSectionID($sectionID);
+$nextSectionID = $sectionsClass->getNextSectionID($sectionID, $_SESSION['USER']["ID"]);
 
 require_once("actions.php");
 
