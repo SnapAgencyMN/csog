@@ -47,12 +47,12 @@
     {
       $sql = "UPDATE users SET verbose = 'true' WHERE id = ".$_SESSION['USER']['ID'];
       $database->query($sql);
-      $_SESSION['USER']['Verbose'] = 'true';
+      $_SESSION['USER']['Verbose'] = true;
     } else
     {
       $sql = "UPDATE users SET verbose = 'false' WHERE id = ".$_SESSION['USER']['ID'];
       $database->query($sql);
-      $_SESSION['USER']['Verbose'] = "false";
+      $_SESSION['USER']['Verbose'] = false;
     }
     
     if($_POST['logoImage'] != "")
@@ -76,12 +76,24 @@
   $sql = "SELECT phone_number, mailing_address, city, state, zip, website, name, email, company_name, company_logo,verbose FROM users WHERE id = " . $_SESSION['USER']['ID'];
   $result = $database->query($sql);
   $userInfo = $result->fetch_assoc();
+  
+  if (!empty($userInfo['phone_number']))
+  {
+    $ph = $userInfo['phone_number'];
+    $ph = str_replace("-", "", $ph);
+    $ph = str_replace("–", "", $ph);
+    $ph = str_replace(" ", "", $ph);
+    $ph = str_replace("(", "", $ph);
+    $ph = str_replace(")", "", $ph);
+
+    $phoneNumber = "(".$ph[0].$ph[1].$ph[2].") ".$ph[3].$ph[4].$ph[5]."-".$ph[6].$ph[7].$ph[8].$ph[9]; 
+  }
 ?> 
   <div class="modify_wrapper">
     <h2>General Information</h2>
     <form action="<?php echo WS_URL . "account/edit/"; ?>" method="POST" id="generalModifyForm" enctype="multipart/form-data">
       <div id="modifyFormName"><label>Name:</label><input type="text" value="<?php echo $userInfo['name']; ?>" name="name" maxlength="80" class="requiredForm" /></div>
-      <div id="modifyFormPhoneNumber"><label>Phone number:</label><input type="text" value="<?php echo $userInfo['phone_number']; ?>" name="phoneNumber" maxlength="80" class="requiredForm" /></div>
+      <div id="modifyFormPhoneNumber"><label>Phone number:</label><input type="text" value="<?php echo $phoneNumber; ?>" name="phoneNumber" maxlength="80" class="requiredForm" /></div>
       <div id="modifyFormEmail"><label>Email:</label><input type="text" value="<?php echo $userInfo['email']; ?>" name="email" maxlength="80" class="requiredForm" /></div>
       <div id="modifyFormMailingAddress"><label>Mailing address:</label><input type="text" value="<?php echo $userInfo['mailing_address']; ?>" name="mailingAddress" maxlength="160" class="requiredForm" /></div>
       <div id="modifyFormCity"><label>City:</label><input type="text" value="<?php echo $userInfo['city']; ?>" name="city" maxlength="160" class="requiredForm" /></div>

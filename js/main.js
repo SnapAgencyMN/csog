@@ -630,11 +630,12 @@ function updateSpawn(categoryID, host)
     });
 }
 
-function uploadImage(projectID, userID, answerID, spawnID, host)
+function uploadImage(projectID, userID, answerID, spawnID, host, type)
 {   
-    var type = 'normal';
-    if (spawnID > 0 )
+    if (type.indexOf("spawn") > -1)
         type = 'spawn_'+spawnID
+    else
+        type = 'normal';
     
     _projectID = projectID;
     _userID = userID;

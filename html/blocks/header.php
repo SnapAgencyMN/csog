@@ -46,14 +46,14 @@
             {
               $sql = "SELECT name FROM projects WHERE id = ".$path[3]." && users_id = ".$_SESSION['USER']['ID'];
               $result = $database->query($sql);
-              if($result->num_rows == 1)
+              if(@$result->num_rows == 1)
               {
                 $name = $result->fetch_assoc();
                 $projectOk = $name['name'];
               }
             }
-            if($path[1] == "register")
-            {
+            if($path[1] == "register" || $path[1] == "projects" || $path[1] == "account" )
+            { 
                 echo "<p style='position:relative; right:100px; top:20px;'>* Asterisks indicate required fields.</p>";
             }
 

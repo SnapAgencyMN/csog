@@ -128,6 +128,8 @@ if ($DBresult->num_rows)
 
     echo '<li><a href="' . WS_URL . 'projects/view/' . $projectData['id'].'" class="projects_tableProjectName">' . $projectName . '</a> (' . $projectDate . ')' ;
     echo "<br />";
+    echo "<a href='" . WS_URL . 'projects/view/' . $projectData['id']."' class='projects_tableProjectName'>Edit system specifications</a>";
+    echo "<br />";
     echo "<a href='".WS_URL."projects/edit/{$projectData['id']}' class='projects_tableProjectName'>Edit project description</a>";
     echo "<br />";
     echo "<a href='".WS_URL."projects/clone/{$projectData['id']}' class='projects_tableProjectName'>Duplicate this project</a>";

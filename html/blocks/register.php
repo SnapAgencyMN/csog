@@ -97,7 +97,6 @@ if(!$mail->Send())
 {
 ?>
   <div id="register_wrapper">
-    <p style='margin-left:160px;'>Fields marked * are required fields.</p>
     <h2>Register</h2>
     <form action="<?php echo WS_URL . "register/"; ?>" method="POST" id="registerForm" enctype="multipart/form-data">
       <div id="registerFormName"><label>Name: *</label><input type="text" name="name" maxlength="80" class="requiredForm" /></div>

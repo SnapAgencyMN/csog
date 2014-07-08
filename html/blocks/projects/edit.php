@@ -19,6 +19,17 @@ $sql = "SELECT name, email, phone_number, mailing_address FROM users WHERE id = 
 $result = $database->query($sql);
 $userInfo = $result->fetch_assoc();
 
+if (!empty($PData['contact_phone']))
+{
+    $ph = $PData['contact_phone'];
+    $ph = str_replace("-", "", $ph);
+    $ph = str_replace("–", "", $ph);
+    $ph = str_replace(" ", "", $ph);
+    $ph = str_replace("(", "", $ph);
+    $ph = str_replace(")", "", $ph);
+    
+    $phoneNumber = "(".$ph[0].$ph[1].$ph[2].") ".$ph[3].$ph[4].$ph[5]."-".$ph[6].$ph[7].$ph[8].$ph[9]; 
+}
 ?>
 <form action="<?php echo WS_URL . "projects/"; ?>" method="POST" enctype="multipart/form-data" id="new-project-form">
 <label for="projectName">Project name: </label><input type="text" name="projectName" id="newProjectName" <?php if(isset($PData) && $PData['name'] != "") { echo "value='".$PData['name']."'"; }?>></br>
@@ -51,7 +62,7 @@ Is there a recorded easement for access to perform service or periodic inspectio
 <br /><br />
 <h2>Project Contact Information</h2>
   <div id="modifyFormName"><label>Primary contact person:</label><input type="text" <?php if(isset($PData) && $PData['contact_name'] != "") { echo "value='".$PData['contact_name']."'"; } ?> name="name" maxlength="80" class="requiredForm" /></div>
-    <div id="modifyFormPhoneNumber"><label>Contact phone number:</label><input type="text" name="phone_number" maxlength="11" class="requiredForm" <?php if(isset($PData) && $PData['contact_phone'] != "") { echo "value='".$PData['contact_phone']."'"; } ?> /></div>
+    <div id="modifyFormPhoneNumber"><label>Contact phone number:</label><input type="text" name="phone_number" maxlength="11" class="requiredForm" <?php if(isset($PData) && $PData['contact_phone'] != "") { echo "value='".$phoneNumber."'"; } ?> /></div>
       <div id="modifyFormEmail"><label>Contact email:</label><input type="text" <?php if(isset($PData) && $PData['contact_email'] != "") { echo "value='".$PData['contact_email']."'"; } ?> name="email" maxlength="80" class="requiredForm" /></div>
       <div id="modifyFormMailingAddress"><label>Street address:</label><input type="text" <?php if(isset($PData) && $PData['contact_address'] != "") { echo "value='".$PData['contact_address']."'"; } ?> name="contact_address" maxlength="160" class="requiredForm" /></div>
       <div id="modifyFormMailingAddress"><label>City:</label><input type="text" <?php if(isset($PData) && $PData['contact_city'] != "") { echo "value='".$PData['contact_city']."'"; } ?> name="contact_city" maxlength="160" class="requiredForm" /></div>
