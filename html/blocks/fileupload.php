@@ -78,7 +78,7 @@ if ($action == "save_form")
     <input type="hidden" name="answerID" value="<?php echo $answerID;?>">
     <input type="hidden" name="type" value="<?php echo $type;?>">
     <input type="hidden" name="action" value="save_form">
-    <p>File formats accepted: jpg, gif, png</p>
+    <p>File formats accepted: jpg, jpeg, gif, png</p>
 </form>
 </body>
 </html>

@@ -34,7 +34,7 @@ if (!empty($PData['contact_phone']))
 <form action="<?php echo WS_URL . "projects/"; ?>" method="POST" enctype="multipart/form-data" id="new-project-form">
 <label for="projectName">Project name: </label><input type="text" name="projectName" id="newProjectName" <?php if(isset($PData) && $PData['name'] != "") { echo "value='".$PData['name']."'"; }?>></br>
 <?php if (@$PData['file'] != "") { ?><a href="<?php echo WS_URL . "media/uploads/" . $PData['file']; ?>" data-lightbox="image-logo"><img src="<?php echo WS_URL . "media/uploads/" . $PData['file']; ?>" class="imageLightboxLink registerProject"></a></br> <?php } ?>
-<label for="projectLogo">Project logo: </label><input type="file" name="projectLogo">File formats accepted: jpg, gif, png</br>
+<label for="projectLogo">Project logo: </label><input type="file" name="projectLogo">File formats accepted: jpg, jpeg, gif, png</br>
 <label for="date">Current date: </label><input type="date" name="date" <?php if(isset($PData) && $PData['date'] != "") { echo "value='".$PData['date']."'"; }?>></br>
 <br />
 <h3>System location</h3>

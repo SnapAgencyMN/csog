@@ -201,26 +201,44 @@ class Sections {
     
     public function isLastSection($sectionID)
     {
-        $lastSection = $this->sectionsTable->fetchAll("ORDER BY `sectionID` DESC LIMIT 1");
-        
+        $lastSection = $this->sectionsTable->fetchAll("WHERE `type` = 'standalone' ORDER BY `order` DESC LIMIT 1");
+        //print_r($lastSection);
         if ($lastSection[0]['sectionID'] == $sectionID)
             return true;
         else 
             return false;
     }
     
-    public function getPaginationData($sectionID)
+    public function getPaginationData($sectionID, $userID)
     {
-        $sql = "SELECT sectionID FROM `{$this->table_name}`";
-        $sections = $this->sectionsTable->find_by_sql($sql);
-        
         $i = 0;
-        $seqNum = 0;
-        foreach ($sections as $section)
+        $nextSectionID = 0;
+        
+        $sql = "SELECT * FROM `{$this->table_name}` WHERE `type` != 'child' ORDER BY `order`";
+        $topLevelSections = $this->sectionsTable->find_by_sql($sql);
+        
+        foreach ($topLevelSections as $section)
         {
             $i++;
+            
             if ($section['sectionID'] == $sectionID)
                 $seqNum = $i;
+            
+            if ($section['type'] == "parent")
+            {
+                $children = $this->listChlidrenSectionsForUser($section['sectionID'], $userID);
+                
+                if (!empty($children))
+                {
+                    foreach ($children as $child)
+                    {
+                        $i++;
+
+                        if ($child['sectionID'] == $sectionID)
+                            $seqNum = $i;
+                    }
+                }
+            }
         }
         $result['sequence'] = $seqNum;
         $result['nextSectionSeqNum'] = $seqNum+1;

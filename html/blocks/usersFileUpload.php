@@ -65,7 +65,7 @@ if ($action == "save_form")
     <input type="file" name="file" id="file-upload-form-input" onchange='window.parent.uploadUserImage("<?php echo $filenamesave ?>")' />
     <input type="hidden" name="filename" value="<?php echo $filenamesave ?>" />
     <input type="hidden" name="action" value="save_form" />
-    <p>File formats accepted: jpg, gif, png</p>
+    <p>File formats accepted: jpg, jpeg, gif, png</p>
 </form>
 </body>
 </html>

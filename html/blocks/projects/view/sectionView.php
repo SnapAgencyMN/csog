@@ -52,8 +52,8 @@ if ($sectionDetails['type'] != "parent")
 {
     if (!$sectionsClass->isLastSection($sectionDetails['sectionID']))
     {
-        $paginationInfo = $sectionsClass->getPaginationData($sectionDetails['sectionID']);
-        echo "<button onClick=\"submitForm('mainPage'); return false;\" class='nextSectionLink form-button'>Continue to Section {$paginationInfo['nextSectionSeqNum']} of {$paginationInfo['total']}</button>";
+        $paginationInfo = $sectionsClass->getPaginationData($sectionDetails['sectionID'], $_SESSION['USER']['ID']);
+        echo "<button onClick=\"submitForm('mainPage'); return false;\" class='nextSectionLink form-button'>Save and Continue to Section {$paginationInfo['nextSectionSeqNum']} of {$paginationInfo['total']}</button>";
     }
     else
         echo "<button onClick=\"parent.location='".WS_URL."projects/print/$path[3]'\" class='form-button'>Print PDF</button>";
