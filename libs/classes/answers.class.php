@@ -142,12 +142,17 @@ class Answers {
     
     public function getUserAnswers($userID, $projectID, $answerID, $spawnID = 0, $otherID = 0)
     {
-        $otherSQL = "";
-        if ($otherID > 0)
-            $otherSQL = "AND `other_sequenceID` = $otherID";
-        
-        $values = $this->answersMappingTable->fetchAll(" WHERE `projectID` = $projectID AND `userID`=$userID AND `answerID` = $answerID AND `spawn_sequenceID` = $spawnID $otherSQL ORDER BY `other_sequenceID`");
-        return $values;
+        if ($answerID > 0)
+        {
+            $otherSQL = "";
+            if ($otherID > 0)
+                $otherSQL = "AND `other_sequenceID` = $otherID";
+
+            $values = $this->answersMappingTable->fetchAll(" WHERE `projectID` = $projectID AND `userID`=$userID AND `answerID` = $answerID AND `spawn_sequenceID` = $spawnID $otherSQL ORDER BY `other_sequenceID`");
+            return $values;
+        }
+        else
+            return null;
     }
     
     public function saveUserAnswer($userID, $projectID, $answerID, $value, $spawn_sequenceID = 0, $other_sequenceID = 0)
