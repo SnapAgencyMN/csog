@@ -41,7 +41,7 @@ if($result->num_rows >= 1)
 
 }
 $mpdf->WriteHTML($html,2);
-$mpdf->AddPage('','','','','on');
+$mpdf->AddPage();
 
 $times["Disclaimer"] = microtime(true); 
 
