@@ -17,7 +17,7 @@ if($result->num_rows >= 1)
   $mpdf->setHTMLHeader($html);
 }
 
-$mpdf->setHTMLFooter('<div style="color:#5e3229"><img style="margin-left:0;width:700px;" src="/media/site-images/footer-image2.png" /><span float="right">p{PAGENO}</span></div> ');
+$mpdf->setHTMLFooter('<div style="color:#5e3229">'.$answers['name'].'<img style="margin-left:0;width:700px;" src="/media/site-images/footer-image2.png" /><span float="right">p{PAGENO}</span></div> ');
 
 
 $html = "";
@@ -41,7 +41,7 @@ if($result->num_rows >= 1)
 
 }
 $mpdf->WriteHTML($html,2);
-$mpdf->AddPage();
+$mpdf->AddPage('','','','','on');
 
 $times["Disclaimer"] = microtime(true); 
 

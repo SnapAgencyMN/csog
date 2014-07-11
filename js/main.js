@@ -357,6 +357,56 @@ $(function() {
       $('#newProjectName').after("<div class='formError'>This field is required.</div>");
       errors = 1;
     }
+    if($.trim(values['date']) == "")
+    {
+      $('#newProjectDate').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
+    if($.trim(values['projectCity']) == "")
+    {
+      $('#newProjectCity').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
+    if($.trim(values['projectState']) == "")
+    {
+      $('#newProjectState').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
+    if($.trim(values['name']) == "")
+    {
+      $('#newProjectContactName').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
+    if($.trim(values['phone_number']) == "")
+    {
+      $('#newProjectPhoneNumber').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
+    if($.trim(values['email']) == "")
+    {
+      $('#newProjectContactEmail').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
+    if($.trim(values['contact_address']) == "")
+    {
+      $('#newProjectAddress').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
+    if($.trim(values['contact_city']) == "")
+    {
+      $('#newProjectContactCity').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
+    if($.trim(values['contact_state']) == "")
+    {
+      $('#newProjectContactState').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
+    if($.trim(values['contact_zip']) == "")
+    {
+      $('#newProjectZip').after("<div class='formError'>This field is required.</div>");
+      errors = 1;
+    }
     if(errors == 1)
     {
       event.preventDefault();

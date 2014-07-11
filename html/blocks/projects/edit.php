@@ -32,15 +32,15 @@ if (!empty($PData['contact_phone']))
 }
 ?>
 <form action="<?php echo WS_URL . "projects/"; ?>" method="POST" enctype="multipart/form-data" id="new-project-form">
-<label for="projectName">Project name: </label><input type="text" name="projectName" id="newProjectName" <?php if(isset($PData) && $PData['name'] != "") { echo "value='".$PData['name']."'"; }?>></br>
+<label for="projectName">Project name: * </label><input type="text" class='requiredForm' name="projectName" id="newProjectName" <?php if(isset($PData) && $PData['name'] != "") { echo "value='".$PData['name']."'"; }?>></br>
 <?php if (@$PData['file'] != "") { ?><a href="<?php echo WS_URL . "media/uploads/" . $PData['file']; ?>" data-lightbox="image-logo"><img src="<?php echo WS_URL . "media/uploads/" . $PData['file']; ?>" class="imageLightboxLink registerProject"></a></br> <?php } ?>
 <label for="projectLogo">Project logo: </label><input type="file" name="projectLogo">File formats accepted: jpg, jpeg, gif, png</br>
-<label for="date">Current date: </label><input type="date" name="date" <?php if(isset($PData) && $PData['date'] != "") { echo "value='".$PData['date']."'"; }?>></br>
+<label for="date">Current date: *</label><input type="date" class='requiredForm' id='newProjectDate' name="date" <?php if(isset($PData) && $PData['date'] != "") { echo "value='".$PData['date']."'"; }?>></br>
 <br />
 <h3>System location</h3>
 <label for="systemStreetAddress">Street address:</label> <input type="text" name="systemStreetAddress" <?php if(isset($PData) && $PData['systemStreetAddress'] != "") { echo "value='".$PData['systemStreetAddress']."'"; }?>></br>
-<label for="projectCity">City:</label> <input type="text" name="projectCity" <?php if(isset($PData) && $PData['city'] != "") { echo "value='".$PData['city']."'"; }?>></br>
-<label for="projectState">State:</label> <input type="text" name="projectState" <?php if(isset($PData) && $PData['state'] != "") { echo "value='".$PData['state']."'"; }?>></br>
+<label for="projectCity">City: *</label> <input type="text" class='requiredForm' id='newProjectCity' name="projectCity" <?php if(isset($PData) && $PData['city'] != "") { echo "value='".$PData['city']."'"; }?>></br>
+<label for="projectState">State: *</label> <input type="text" class='requiredForm' id='newProjectState' name="projectState" <?php if(isset($PData) && $PData['state'] != "") { echo "value='".$PData['state']."'"; }?>></br>
 <label for="projectZip">Zip:</label> <input type="text" name="projectZip" <?php if(isset($PData) && $PData['zip'] != "") { echo "value='".$PData['zip']."'"; }?>></br>
 <?php /*<label for="other">Other:</label> <input type="text" name="other" <?php if(isset($PData) && $PData['other'] != "") { echo "value='".$PData['other']."'"; }?>></br>
 <label for="mailingAddress">Mailing address:</label> <input type="text" name="mailingAddress" <?php if(isset($PData) && $PData['mailingAddress'] != "") { echo "value='".$PData['mailingAddress']."'"; }?>></br> */ ?>
@@ -61,13 +61,13 @@ Is there a recorded easement for access to perform service or periodic inspectio
 <label for="easement_no" name="easement_no">No</label><input onclick="javascript:$('#easement_description').css('display', 'none')" type="radio" id="easement_no" name="easement" value="No" <?php if(isset($PData) && $PData['easement'] == "No") { echo "checked "; } ?>/>
 <br /><br />
 <h2>Project Contact Information</h2>
-  <div id="modifyFormName"><label>Primary contact person:</label><input type="text" <?php if(isset($PData) && $PData['contact_name'] != "") { echo "value='".$PData['contact_name']."'"; } ?> name="name" maxlength="80" class="requiredForm" /></div>
-    <div id="modifyFormPhoneNumber"><label>Contact phone number:</label><input type="text" name="phone_number" maxlength="11" class="requiredForm" <?php if(isset($PData) && $PData['contact_phone'] != "") { echo "value='".$phoneNumber."'"; } ?> /></div>
-      <div id="modifyFormEmail"><label>Contact email:</label><input type="text" <?php if(isset($PData) && $PData['contact_email'] != "") { echo "value='".$PData['contact_email']."'"; } ?> name="email" maxlength="80" class="requiredForm" /></div>
-      <div id="modifyFormMailingAddress"><label>Street address:</label><input type="text" <?php if(isset($PData) && $PData['contact_address'] != "") { echo "value='".$PData['contact_address']."'"; } ?> name="contact_address" maxlength="160" class="requiredForm" /></div>
-      <div id="modifyFormMailingAddress"><label>City:</label><input type="text" <?php if(isset($PData) && $PData['contact_city'] != "") { echo "value='".$PData['contact_city']."'"; } ?> name="contact_city" maxlength="160" class="requiredForm" /></div>
-      <div id="modifyFormMailingAddress"><label>State:</label><input type="text" <?php if(isset($PData) && $PData['contact_state'] != "") { echo "value='".$PData['contact_state']."'"; } ?> name="contact_state" maxlength="160" class="requiredForm" /></div>
-      <div id="modifyFormMailingAddress"><label>Zip:</label><input type="text" <?php if(isset($PData) && $PData['contact_zip'] != "") { echo "value='".$PData['contact_zip']."'"; } ?> name="contact_zip" maxlength="160" class="requiredForm" /></div>   
+  <div id="modifyFormName"><label>Primary contact person: *</label><input class='requiredForm' id='newProjectContactName' type="text" <?php if(isset($PData) && $PData['contact_name'] != "") { echo "value='".$PData['contact_name']."'"; } ?> name="name" maxlength="80" class="requiredForm" /></div>
+    <div id="modifyFormPhoneNumber"><label>Contact phone number: *</label><input class='requiredForm' type="text" id='newProjectPhoneNumber' name="phone_number" maxlength="11" class="requiredForm" <?php if(isset($PData) && $PData['contact_phone'] != "") { echo "value='".$phoneNumber."'"; } ?> /></div>
+      <div id="modifyFormEmail"><label>Contact email: *</label><input class='requiredForm' type="text" <?php if(isset($PData) && $PData['contact_email'] != "") { echo "value='".$PData['contact_email']."'"; } ?> name="email" id='newProjectContactEmail' maxlength="80" class="requiredForm" /></div>
+      <div id="modifyFormMailingAddress"><label>Street address: *</label><input class='requiredForm' type="text" <?php if(isset($PData) && $PData['contact_address'] != "") { echo "value='".$PData['contact_address']."'"; } ?> name="contact_address" id='newProjectAddress' maxlength="160" class="requiredForm" /></div>
+      <div id="modifyFormMailingAddress"><label>City: *</label><input class='requiredForm' type="text" <?php if(isset($PData) && $PData['contact_city'] != "") { echo "value='".$PData['contact_city']."'"; } ?> name="contact_city" id='newProjectContactCity' maxlength="160" class="requiredForm" /></div>
+      <div id="modifyFormMailingAddress"><label>State: *</label><input class='requiredForm' type="text" <?php if(isset($PData) && $PData['contact_state'] != "") { echo "value='".$PData['contact_state']."'"; } ?> name="contact_state" id='newProjectContactState' maxlength="160" class="requiredForm" /></div>
+      <div id="modifyFormMailingAddress"><label>Zip: *</label><input class='requiredForm' type="text" <?php if(isset($PData) && $PData['contact_zip'] != "") { echo "value='".$PData['contact_zip']."'"; } ?> name="contact_zip" id='newProjectZip' maxlength="160" class="requiredForm" /></div>   
       
       
       

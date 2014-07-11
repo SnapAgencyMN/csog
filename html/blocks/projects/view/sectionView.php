@@ -18,12 +18,24 @@ $categories = $categoriesClass->listCategories($sectionID);
 
 $nextSectionID = $sectionsClass->getNextSectionID($sectionID, $_SESSION['USER']["ID"]);
 
+if (!$sectionsClass->isLastSection($sectionDetails['sectionID']))
+{
+    $redirectPage = WS_URL."projects/view/$projectID/$nextSectionID";
+    $projectHiddenInput = "";
+}
+else
+{
+    $projectHiddenInput = "<input type='hidden' name='projectID' value='$projectID' />";
+    $redirectPage = WS_URL."projects";
+}
+
 require_once("actions.php");
 
 // Print out section title
 echo "
     <h2>{$sectionDetails['title']}</h2>
-    <form action='".WS_URL."projects/view/$projectID/$nextSectionID' id='mainPage' method='POST'>
+    <form action='$redirectPage' id='mainPage' method='POST'>
+        $projectHiddenInput
         <input type='hidden' name='save_sectionID' value='$sectionID' />
 ";
 
@@ -56,5 +68,8 @@ if ($sectionDetails['type'] != "parent")
         echo "<button onClick=\"submitForm('mainPage'); return false;\" class='nextSectionLink form-button'>Save and Continue to Section {$paginationInfo['nextSectionSeqNum']} of {$paginationInfo['total']}</button>";
     }
     else
-        echo "<button onClick=\"parent.location='".WS_URL."projects/print/$path[3]'\" class='form-button'>Print PDF</button>";
+    {
+        echo "<button onClick=\"submitForm('mainPage'); return false;\" class='form-button'>Save project</button>";
+        echo "<button style='margin-left:20px;' onClick=\"parent.location='".WS_URL."projects/print/$path[3]'\" class='form-button'>Print PDF</button>";
+    }
 }

@@ -146,7 +146,7 @@ function printAnswers($answer, $spawnID, $otherID)
             
             if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
             {
-                $value = "<img src='/media/uploads/$value' />";
+                $value = "<img src='/media/uploads/$value' /><br />";
             }
             
             $pdfOutput = str_replace("%ID=$answerID%", $value, $pdfOutput);
@@ -166,7 +166,7 @@ function printAnswers($answer, $spawnID, $otherID)
             
             if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
             {
-                $value = "<img src='/media/uploads/$value' />";
+                $value = "<img src='/media/uploads/$value' /><br />";
             }
             
             $pdfOutput = str_replace("%SELF%", $value, $pdfOutput);

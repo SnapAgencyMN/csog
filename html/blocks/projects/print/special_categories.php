@@ -152,7 +152,7 @@ function printSpecialCategories($category) {
                         break;
                 }
             }
-
+            return true;
             break;
 
         case 62: // Maintenance [Maintenance]

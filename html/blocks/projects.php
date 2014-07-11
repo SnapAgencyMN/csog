@@ -1,4 +1,19 @@
 <?php
+if (!isset($questionsClass))
+    $questionsClass = new Questions($db);
+
+if (!isset($sectionsClass))
+    $sectionsClass = new Sections($db);
+
+if (!isset($categoriesClass))
+    $categoriesClass = new Categories($db);
+
+if (!isset($answersClass))
+    $answersClass = new Answers($db);
+
+$projectID = getParameterNumber("projectID");
+
+require_once("projects/view/actions.php");
 
 if (isset($_POST['deleteConfirm']) && $_POST['deleteConfirm'] == 1)
 {
