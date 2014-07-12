@@ -25,9 +25,9 @@
         <span id="header_title"><a href="<?php if($_SESSION['USER']['LoggedIn'] == true) { ?>/projects"><?php } else { ?>/"><?php } ?>Community Septic System Owner's Guide Tool</a></span>
         <ul id="header_nav">
             <?php if(@$_SESSION['USER']['LoggedIn'] == true) { ?>
-          <li <?php if( $_SERVER['REQUEST_URI'] == 'account' ) { echo "class=active"; } ?>><a href="<?php echo WS_URL; ?>account/edit">Your Account</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-          <li <?php if( $_SERVER['REQUEST_URI'] == 'projects' ) { echo "class=active"; } ?>><a href="<?php echo WS_URL; ?>projects/">Projects</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
-          <li <?php if( $_SERVER['REQUEST_URI'] == 'help' ) { echo "class=active"; } ?>><a href="<?php echo WS_URL; ?>help/">Help</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+            <li <?php if( strstr($_SERVER['REQUEST_URI'], 'account') ) { echo "class=active"; } ?>><a href="<?php echo WS_URL; ?>account/edit">Your Account</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+          <li <?php if( strstr($_SERVER['REQUEST_URI'], 'projects') ) { echo "class=active"; } ?>><a href="<?php echo WS_URL; ?>projects/">Projects</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
+          <li <?php if( strstr($_SERVER['REQUEST_URI'], 'help') ) { echo "class=active"; } ?>><a href="<?php echo WS_URL; ?>help/">Help</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
           <li>
 
               <a href="<?php echo WS_URL . "logout/"; ?>">Log Out</a> 
