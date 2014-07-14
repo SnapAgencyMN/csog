@@ -35,7 +35,7 @@ if($result->num_rows >= 1)
   $html = "";
   $html .= "<div style='padding-top:100px;'>";
   $html .= "<img src='/media/uploads/{$answers['file']}'>";
-  $html .= "<h1>System Name or Brand: " . $answers['name'] . "</h1>";
+  $html .= "<h1>" . $answers['name'] . "</h1>";
   $html .= "<p>This owner's manual is customized to your septic system. It is designed to help you understand your system well enough to perform basic owner maintenance and know when you need service.</p>";
   $html .= "</div>";
 
