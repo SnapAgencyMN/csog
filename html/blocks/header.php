@@ -71,6 +71,12 @@
               }
             ?>
           </div>
+            <?php
+            if($path[1] == "register" || $path[1] == "projects" || $path[1] == "account" )
+            { 
+                echo "<div style="margin: 15px 250px 0 0; font-size: 17px; text-align: right;">Entries marked * are required fields.</div>";
+            }
+            ?>
         </div>
       </div>
     </div>
