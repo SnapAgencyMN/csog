@@ -1,9 +1,9 @@
 <?php
 include(FS_PATH . "php/page.php");
 ?>
-<div id="body_wrapper" <?php if ($path[1] == "help" ) echo "style='width:1260px'"?>>
+<div id="body_wrapper">
     <?php if ($path[1] != "admin") {?>
-        <div id="nav_wrapper" <?php if ($path[1] == "help" ) echo "style='width:350px'"?>>
+        <div id="nav_wrapper">
             <?php
             if ($path[1] != "" && $path[1] != "logout" && $path[1] != "help") {
                 if (@$_SESSION['USER']['LoggedIn'] == true) {
