@@ -310,8 +310,8 @@ ol#category_list
 
 #projects_table li { padding:10px 0 10px 10px }
 .projects_tableProjectName:hover { color:#2e8b98; }
-#projects_message { height:100px; width:264px }
-#projects_submit { float:right; margin-top:15px; margin-right:83px; }
+#projects_message { height:120px; width:190px }
+#projects_submit { margin-top:15px; }
 
 /*---------------------*/
 
@@ -708,4 +708,13 @@ ul.square li
 	margin: 10px 285px 10px 0; 
 	font-size: 17px; 
 	text-align: right;
+}
+
+/* HELP PAGE */
+#contact-form-projects input[type=text], 
+#contact-form-projects input[type=password], 
+#contact-form-projects input[type=email], 
+#contact-form-projects input[type=textbox]
+{
+	min-width:200px;
 }
