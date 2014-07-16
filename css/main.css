@@ -139,6 +139,7 @@ background-position:0 0;
       float:right;
       margin-right:130px;
       font-size:20px;
+      height:48px;
     }
 
       #header_nav li
@@ -517,7 +518,7 @@ ol#category_list
   font-size:1.2em;
   height:48px;
   line-height:1.2em;
-  padding:28px 0 0;
+  /*padding:28px 0 0;*/
 }
 
 #disclaimerLink
@@ -692,4 +693,12 @@ ul.square li
 .error
 {
     color: red;
+}
+
+.active
+{
+    background-image: url(/img/active.jpg);
+    background-repeat: no-repeat;
+    background-position-y: 56%;
+    height:100%;
 }
