@@ -72,7 +72,8 @@
               }
             ?>
           </div>
-            <?php
+        </div>
+        <?php
             
             if($path[1] == "register" || $path[1] == "projects" || $path[1] == "account" )
             { 
@@ -80,6 +81,5 @@
             }
               
             ?>
-        </div>
       </div>
     </div>
