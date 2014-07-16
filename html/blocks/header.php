@@ -77,7 +77,7 @@
             
             if($path[1] == "register" || $path[1] == "projects" || $path[1] == "account" )
             { 
-                echo '<div style="margin: 30px 250px 0 0; font-size: 17px; text-align: right;">Entries marked * are required fields.</div>';
+                echo '<div id="asterisk">Entries marked * are required fields.</div>';
             }
               
             ?>
