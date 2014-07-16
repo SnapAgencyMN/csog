@@ -93,7 +93,7 @@
     <h2>General Information</h2>
     <form action="<?php echo WS_URL . "account/edit/"; ?>" method="POST" id="generalModifyForm" enctype="multipart/form-data">
       <div id="modifyFormName"><label>Name:</label><input type="text" value="<?php echo $userInfo['name']; ?>" name="name" maxlength="80" class="requiredForm" /></div>
-      <div id="modifyFormPhoneNumber"><label>Phone number:</label><input type="text" value="<?php echo $phoneNumber; ?>" name="phoneNumber" maxlength="80" class="requiredForm" /></div>
+      <div id="modifyFormPhoneNumber"><label>Phone number:</label><input type="text" value="<?php echo $phoneNumber; ?>" name="phoneNumber" placeholder="(xxx) xxx-xxxx" maxlength="80" class="requiredForm" /></div>
       <div id="modifyFormEmail"><label>Email:</label><input type="text" value="<?php echo $userInfo['email']; ?>" name="email" maxlength="80" class="requiredForm" /></div>
       <div id="modifyFormMailingAddress"><label>Mailing address:</label><input type="text" value="<?php echo $userInfo['mailing_address']; ?>" name="mailingAddress" maxlength="160" class="requiredForm" /></div>
       <div id="modifyFormCity"><label>City:</label><input type="text" value="<?php echo $userInfo['city']; ?>" name="city" maxlength="160" class="requiredForm" /></div>

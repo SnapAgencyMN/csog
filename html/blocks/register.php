@@ -101,7 +101,7 @@ if(!$mail->Send())
     <h2>Register</h2>
     <form action="<?php echo WS_URL . "register/"; ?>" method="POST" id="registerForm" enctype="multipart/form-data">
       <div id="registerFormName"><label>Name: *</label><input type="text" name="name" maxlength="80" class="requiredForm" /></div>
-      <div id="registerFormPhoneNumber"><label>Phone number: *</label><input type="text" name="phoneNumber" maxlength="80" class="requiredForm" /></div>
+      <div id="registerFormPhoneNumber"><label>Phone number: *</label><input placeholder="(xxx) xxx-xxxx" type="text" name="phoneNumber" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormEmail"><label>Email: *</label><input type="text" name="email" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormConfirmEmail"><label>Confirm email: *</label><input type="text" name="emailConfirm" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormMailingAddress"><label>Mailing address: *</label><input type="text" name="mailingAddress" maxlength="160" class="requiredForm" /></div>
