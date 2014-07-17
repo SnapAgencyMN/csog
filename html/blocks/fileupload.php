@@ -33,7 +33,7 @@ if ($action == "save_form")
 {
     //$allowedExts = array("gif", "jpeg", "jpg", "png");
     $temp = explode(".", $_FILES["file"]["name"]);
-    $extension = end($temp);
+    $extension = strtolower(end($temp));
     if ((($_FILES["file"]["type"] == "image/gif")
       || ($_FILES["file"]["type"] == "image/jpeg")
       || ($_FILES["file"]["type"] == "image/jpg")

@@ -144,7 +144,7 @@ function printAnswers($answer, $spawnID, $otherID)
             
             $value = $id_value[0]['value'];
             
-            if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
+            if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif") ||strstr($value, ".tiff"))
             {
                 $value = "<img src='/media/uploads/$value' /><br />";
             }
