@@ -124,6 +124,14 @@ function echoCategory($category, $type='normal')
             $intent = "0px";
         }
         
+        $requiredClass = "";
+        $requiredPrefix = "";
+        if ($question['required'] == 1)
+        {
+            $requiredClass = "required";
+            $requiredPrefix = "*";
+        }
+        
         if($question['type'] == "question" && $titlePrinted)
             $intent = "20px";
         
@@ -151,12 +159,12 @@ function echoCategory($category, $type='normal')
                 }
                 
                 echo "
-                    <div class='question_set_row' id='other_".$i."_".$type."_question_row_{$question['id']}'>
+                    <div class='question_set_row $requiredClass' id='other_".$i."_".$type."_question_row_{$question['id']}'>
                         <div style='padding-left:$intent' class='question_set_row_hint'>
                             $hint
                         </div>
                         <div class='question_set_row_title'>
-                            {$question['title']}
+                            {$question['title']} $requiredPrefix
                 ";
                 if($_SESSION['USER']['Verbose'] )
                 {
@@ -214,12 +222,12 @@ function echoCategory($category, $type='normal')
             }
             
             echo "
-                <div class='question_set_row' id='$type"."_question_row_{$question['id']}'>
+                <div class='question_set_row $requiredClass' id='$type"."_question_row_{$question['id']}'>
                     <div style='padding-left:$intent' class='question_set_row_hint'>
                         $hint
                     </div>
                     <div class='question_set_row_title $titleClass'>
-                        {$question['title']}
+                        {$question['title']} $requiredPrefix
             ";
             if($_SESSION['USER']['Verbose'] )
             {

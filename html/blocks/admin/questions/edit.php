@@ -44,8 +44,9 @@
             $categoryID = getParameterNumber("categoryID");
             $type = getParameterString("type");
             $order = getParameterNumber("order");
+            $required = getParameterNumber('required');
             
-            $questionID = $questionsClass->saveQuestion($title, $hint, $categoryID, $type, $order, $questionID);
+            $questionID = $questionsClass->saveQuestion($title, $hint, $categoryID, $type, $order, $required, $questionID);
             $_REQUEST['questionID'] = $questionID;
             $action = "display-one";
         }

@@ -532,7 +532,18 @@ $(function() {
 
 function submitForm(id)
 {
-    $("#"+id).submit();
+    var submit = true;
+    $(".required input[type=text]").each(function() {
+        if (this.value == "")
+        {
+            alert("You have not filled all of the required fields.");
+            $(this).after("<div class='formError' style='text-align:left'>This field is required.</div>");
+            submit = false;
+        }
+    });
+    
+    if (submit)
+        $("#"+id).submit();
 }
 
 function updateRow(id, type, otherID)

@@ -6,6 +6,7 @@
     $titleSelected = "";
     $questionSelected = "";
     $otherSelected = "";
+    $required = "";
     
     if (@$questionID > 0)
     {
@@ -15,6 +16,8 @@
         $order = $info['order']; 
         $hint = $info['hint'];
         $categoryID = $info['categoryID'];
+        if ($info['required'])
+            $required = "checked='checked'";
         
         if ($info['type'] == "question")
             $questionSelected = 'selected="selected"';
@@ -86,6 +89,9 @@
 
         echo "
                 </table>
+                
+                <label for='required'>Mandatory question</label><input $required style = 'margin-top: 10px;' type='checkbox' name='required' id='required' value='1' />
+                <br />
                 <input style = 'margin-top: 10px;' type='submit' value='Submit' />
                 <input type='hidden' name='action' value='save' />
                 <input type='hidden' name='sectionID' value='$sectionID' />

@@ -72,7 +72,7 @@ class Questions {
         }
     }
     
-    public function saveQuestion($title, $hint, $categoryID, $type, $order, $questionID=0)
+    public function saveQuestion($title, $hint, $categoryID, $type, $order, $required=0, $questionID=0)
     {
         include_once(__DIR__."/answers.class.php");
         $answersClass = new Answers($this->db);
@@ -83,6 +83,7 @@ class Questions {
         $this->questionsTable->data['categoryID'] = $categoryID;
         $this->questionsTable->data['type'] = $type;
         $this->questionsTable->data['`order`'] = $order;
+        $this->questionsTable->data['`required`'] = $required;
         $otherAnswersExist = false;
         if ($questionID > 0)
         {
