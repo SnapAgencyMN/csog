@@ -334,7 +334,6 @@ if (!empty($values[0]['value'])) {
     $html .= '</tr>';
     //$html .= '</table>';
 }
-$html .= "</table>";
 
 $answers = $answersClass->getDetailsByLabel("Spray", $questionID);
 $answer = $answers[0];
@@ -433,6 +432,8 @@ drawRow($title, $activity, $frequency, $reponsible);
 $activity = "Make sure that your Service provider has clear access to all of the components for the final treatment and dispersal system.";
 $frequency = "Each visit";
 drawRow($title, $activity, $frequency, $reponsible);
+
+$html .= "</table>";
 
 function drawRow($title, $activity, $frequency, $reponsible, $color = "") {
     global $html;
