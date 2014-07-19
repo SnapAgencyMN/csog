@@ -198,7 +198,7 @@ function printSpecialCategories($category) {
             global $html, $questionsClass, $userID, $projectID, $answersClass;
             
             // Intro
-            $html .= "<div class='content'";
+            $html .= "<div class='content'>";
             $html .= '<p>If you have having a problem with your system your best plan of attack is to contact a septic professional to evaluate the problem and recommend a course of action. See the key contact list (4.4.1) to determine who can best assist you with your problem. Some of the most typical general and specific issues are identified below.</p>';
             $html .= '<h4>Common problems</h4>';
             $html .= '<p>The three most common causes of septic system failure are:</p>';
