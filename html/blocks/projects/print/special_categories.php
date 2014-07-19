@@ -160,9 +160,11 @@ function printSpecialCategories($category) {
             global $html, $questionsClass, $userID, $projectID, $categoriesClass, $answersClass, $sectionsClass;
             
             // Intro
+            $html .= "<div class='content'>";
             $html .= '<p>Your onsite system is a vital part of your property’s infrastructure. Taking care of it, just as you would your roof or windows, will ensure longevity and save you money.</p>';
             $html .= '<p>Depending on your system type there may be specific guidance listed elsewhere in this Guide. For conventional systems, a schedule of suggested pumping and cleaning will depend on the size of your property, number of residents, size of tank and type of treatment field.</p>';
             $html .= '<p>Your current system requires regular service to prevent early failure or poor treatment performance. Below are the components of your system and the suggested maintenance activities, frequencies and responsible parties.</p>';
+            $html .= "</div>";
             //Header
             $html .= '<table style="border-collapse:collapse;">';
             $html .= '<tr style="border:1px solid #000;">';
@@ -184,9 +186,11 @@ function printSpecialCategories($category) {
             
             //ATT
             require_once("o&m/att.php");
+            $html .= "</table>";
             
             //Final Treatment
             require_once("o&m/finalTreatment.php");
+            
             
             return false;
             
