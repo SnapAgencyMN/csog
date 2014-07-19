@@ -17,16 +17,15 @@ $sectionDetails = $sectionsClass->getDetails($sectionID);
 $categories = $categoriesClass->listCategories($sectionID); 
 
 $nextSectionID = $sectionsClass->getNextSectionID($sectionID, $_SESSION['USER']["ID"]);
-
+$projectHiddenInput = "";
 if (!$sectionsClass->isLastSection($sectionDetails['sectionID']))
 {
     $redirectPage = WS_URL."projects/view/$projectID/$nextSectionID";
-    $projectHiddenInput = "";
 }
 else
 {
-    $projectHiddenInput = "<input type='hidden' name='projectID' value='$projectID' />";
-    $redirectPage = WS_URL."projects";
+    //$projectHiddenInput = "<input type='hidden' name='projectID' value='$projectID' />";
+    $redirectPage = WS_URL."projects/view/$projectID/$sectionID";
 }
 
 require_once("actions.php");
@@ -70,6 +69,6 @@ if ($sectionDetails['type'] != "parent")
     else
     {
         echo "<button onClick=\"submitForm('mainPage'); return false;\" class='form-button'>Save project</button>";
-        echo "<button style='margin-left:20px;' onClick=\"parent.location='".WS_URL."projects/print/$path[3]'\" class='form-button'>Print PDF</button>";
+        echo "<button style='margin-left:20px;' onClick=\"openInNewTab('".WS_URL."projects/print/$path[3]')\" class='form-button'>Print PDF</button>";
     }
 }

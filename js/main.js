@@ -739,3 +739,8 @@ function updateSectionsMenu(id, parentID, projectID)
 
     }
 }
+
+function openInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
+}
