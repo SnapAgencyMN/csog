@@ -9,10 +9,10 @@ $html .= '<td style="font-weight:bold;text-align:center;width:200px;min-width:20
 $html .= '<td style="font-weight:bold;text-align:center;width:200px;min-width:200px;border:1px solid #000;">' . "Potential Causes" . "</td>";
 $html .= '<td style="font-weight:bold;text-align:center;width:200px;min-width:200px;border:1px solid #000;">' . "Potential Remedies" . "</td>";
 $html .= '</tr>';
-$html .= '</table>';
+//$html .= '</table>';
 
 // 1st row
-$html .= '<table style="border-collapse:collapse;">';
+//$html .= '<table style="border-collapse:collapse;">';
 $html .= "<tr style='border:1px solid #000;$color'>";
 $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Sewage backs up into house and/or plumbing fixtures don’t drain or are sluggish</td>';
 $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">Human contact with sewage is a serious public health risk. Many waterborne diseases exist in household sewage.<br /> 
@@ -37,11 +37,11 @@ $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
 • Seal pipe connections   
 </td>';
 $html .= '</tr>';
-$html .= '</table>';
+//$html .= '</table>';
 
 
 //2nd row
-$html .= '<table style="border-collapse:collapse;">';
+//$html .= '<table style="border-collapse:collapse;">';
 $html .= "<tr style='border:1px solid #000;$color'>";
 $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Sewage surfacing in yard</td>';
 $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">Human contact with sewage is a serious public health risk. Many water-borne diseases exist in household sewage.<br /> 
@@ -62,10 +62,10 @@ $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
 • Fence off area until problem is fixed
 </td>';
 $html .= '</tr>';
-$html .= '</table>';
+//$html .= '</table>';
 
 //3rd row
-$html .= '<table style="border-collapse:collapse;">';
+//$html .= '<table style="border-collapse:collapse;">';
 $html .= "<tr style='border:1px solid #000;$color'>";
 $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Sewage odors — indoors</td>';
 $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">Toxic gases can cause discomfort and illness.
@@ -84,10 +84,10 @@ $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
 • Clear roof vent
 </td>';
 $html .= '</tr>';
-$html .= '</table>';
+//$html .= '</table>';
 
 //4th row
-$html .= '<table style="border-collapse:collapse;">';
+//$html .= '<table style="border-collapse:collapse;">';
 $html .= "<tr style='border:1px solid #000;$color'>";
 $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Sewage odors — outdoors</td>';
 $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">Major nuisance, but no serious health risk</td>';
@@ -107,10 +107,10 @@ $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
 • Add carbon filter to plumbing roof vent
 </td>';
 $html .= '</tr>';
-$html .= '</table>';
+//$html .= '</table>';
 
 //4th row
-$html .= '<table style="border-collapse:collapse;">';
+//$html .= '<table style="border-collapse:collapse;">';
 $html .= "<tr style='border:1px solid #000;$color'>";
 $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Contaminated surface waters</td>';
 $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
@@ -129,13 +129,13 @@ $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
 • Work with community to upgrade septic systems that are not providing proper wastewater treatment.
 </td>';
 $html .= '</tr>';
-$html .= '</table>';
+//$html .= '</table>';
 
 //Flooding
 $value = getValue("Flooding");
 if (!empty($value))
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">System was covered with floodwater</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
@@ -156,14 +156,14 @@ if (!empty($value))
     • If the system will still not accept effluent the pipes or soil might be “plugged”. At this time the homeowner should consult a septic system professional
     </td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
 
 //Forest fire
 $value = getValue("Forest fire");
 if (!empty($value))
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">System was burned by a forest fire</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">
@@ -180,14 +180,14 @@ if (!empty($value))
     • Re-vegetate over the system
     </td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
 
 //Freezing
 $value = getValue("Freezing");
 if (!empty($value))
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Distribution pipes and/or soil treatment system freezes in winter</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">    
@@ -218,14 +218,14 @@ The system may be inoperable.
     • Do NOT build a fire over system 
     </td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
 
 //Pests/rodents
 $value = getValue("Pests/rodents");
 if (!empty($value))
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Pest or rodents are living or borrowing into system</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">    
@@ -242,14 +242,14 @@ Vegetation over system can be damaged
     • Have a septic professional fix any areas where the soil and vegetation have been impacted
     </td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
 
 //Power failure
 $value = getValue("Power failure");
 if (!empty($value))
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Power failure</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">    
@@ -267,14 +267,14 @@ Could result in improper sewage treatment, surfacing of effluent  or back-up of 
     • After power is restored if issues persists, have a septic professional evaluate panels, pumps or other components to determine if damaged
     </td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
 
 //Roots
 $value = getValue("Roots");
 if (!empty($value))
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Roots plugging pipes or components</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">    
@@ -291,14 +291,14 @@ If roots are excessive in pipes or components they can cause blockages resulting
     • Copper sulfate is a short term Band-Aid  but not the solution and should only be a temporary solution
     </td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
 
 //Trees Uprooting
 $value = getValue("Tree uprooting");
 if (!empty($value))
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Trees uprooting near or on septic system</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">    
@@ -316,14 +316,14 @@ Loss of vegetation<br/>
     • Re-establish vegetationHave a septic professional evaluate system to determine if damaged
     </td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
 
 //Vegetation
 $value = getValue("Vegetation");
 if (!empty($value))
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Lack of vegetation over system</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">    
@@ -341,14 +341,14 @@ Freezing more likely in cold climates<br/>
     • Plant and maintain vegetation appropriate for climate,  location and soil conditions
     </td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
 
 //Well related issues
 $value = getValue("Well related issues");
 if (!empty($value))
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Contaminated well</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">    
@@ -369,7 +369,7 @@ Drinking contaminated water can cause health problems such as dysentery, hepatit
     • Contact your local government to investigate other potential sources 
     </td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
 
 $question = $questionsClass->getQuestionsByTitle("Other", CATEGORY_ID);
@@ -394,15 +394,16 @@ $remedies = $answersClass->getUserAnswers($userID, $projectID, $remediesID);
 
 for ($i=0; $i<count($problems); $i++)
 {
-    $html .= '<table style="border-collapse:collapse;">';
+    //$html .= '<table style="border-collapse:collapse;">';
     $html .= "<tr style='border:1px solid #000;$color'>";
     $html .= "<td style='width:175px;min-width:175px;border:1px solid #333;'>{$problems[$i]['value']}</td>";
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">' .$risks[$i]['value']. '</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">' .$causes[$i]['value']. '</td>';
     $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">' .$remedies[$i]['value']. '</td>';
     $html .= '</tr>';
-    $html .= '</table>';
+    //$html .= '</table>';
 }
+$html .= '</table>';
 
 function getValue($title)
 {

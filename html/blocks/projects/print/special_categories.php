@@ -17,7 +17,7 @@ function printSpecialCategories($category) {
             $html .= '<td style="font-weight:bold;text-align:center;width:155px;min-width:155px;border:1px solid #000;">' . "Phone Number" . "</td>";
             $html .= '<td style="font-weight:bold;text-align:center;width:155px;min-width:155px;border:1px solid #000;">' . "Email" . "</td>";
             $html .= '</tr>';
-            $html .= '</table>';
+            //$html .= '</table>';
 
             //Content
             $questions = $questionsClass->listQuestions($category['id']);
@@ -39,7 +39,7 @@ function printSpecialCategories($category) {
                         $email = $answersClass->getDetailsByLabel("Email", $question['id']);
                         $emailValue = $answersClass->getUserAnswers($userID, $projectID, $email[0]['id']);
 
-                        $html .= '<table style="border-collapse:collapse;">';
+                        //$html .= '<table style="border-collapse:collapse;">';
                         $html .= "<tr style='border:1px solid #000;$color'>";
                         $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">' . $question['title'] . "</td>";
                         $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $nameValue[0]['value'] . "</td>";
@@ -47,7 +47,7 @@ function printSpecialCategories($category) {
                         $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $phoneValue[0]['value'] . "</td>";
                         $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $emailValue[0]['value'] . "</td>";
                         $html .= '</tr>';
-                        $html .= '</table>';
+                        //$html .= '</table>';
                         break;
 
                     case "other":
@@ -74,7 +74,7 @@ function printSpecialCategories($category) {
                                 }
                             }
 
-                            $html .= '<table style="border-collapse:collapse;">';
+                            //$html .= '<table style="border-collapse:collapse;">';
                             $html .= "<tr style='border:1px solid #000;$color'>";
                             $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">' . $question['title'] . " #$i</td>";
                             $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $nameValue[0]['value'] . "</td>";
@@ -82,14 +82,14 @@ function printSpecialCategories($category) {
                             $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $phoneValue[0]['value'] . "</td>";
                             $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $emailValue[0]['value'] . "</td>";
                             $html .= '</tr>';
-                            $html .= '</table>';
+                            //$html .= '</table>';
                         }
                         break;
                 }
 
                 $i++;
             }
-
+            $html .= '</table>';
             return true;
 
         case 39: // Setbacks from System [Wastewater Streatment System]
@@ -126,7 +126,7 @@ function printSpecialCategories($category) {
                     case "other":
                         $checkBoxAnswer = $answersClass->listParentAnswers($question['id']);
                         $values = $answersClass->getUserAnswers($userID, $projectID, $checkBoxAnswer[0]['id']);
-
+                        
                         for ($i = 1; $i <= count($values); $i++) {
                             $children = $answersClass->listChildren($checkBoxAnswer[0]['id']);
 
@@ -140,14 +140,14 @@ function printSpecialCategories($category) {
                                         $setbackValue = !empty($val[0]) ? $val[0]['value'] : 0;
                                         break;
                                 }
-
-                                //$html .= '<table style="border-collapse:collapse;">';
-                                $html .= "<tr style='border:1px solid #000;$color'>";
-                                $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">' . $nameValue[0]['value'] . "</td>";
-                                $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $setbackValue . " feet</td>";
-                                $html .= '</tr>';
-                                //$html .= '</table>';
                             }
+                            
+                            //$html .= '<table style="border-collapse:collapse;">';
+                            $html .= "<tr style='border:1px solid #000;$color'>";
+                            $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">' . $nameValue[0]['value'] . "</td>";
+                            $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $setbackValue . " feet</td>";
+                            $html .= '</tr>';
+                            //$html .= '</table>';                        
                         }
                         break;
                 }
@@ -171,7 +171,7 @@ function printSpecialCategories($category) {
             $html .= '<td style="font-weight:bold;text-align:center;width:115px;min-width:115px;border:1px solid #000;">' . "Frequency" . "</td>";
             $html .= '<td style="font-weight:bold;text-align:center;width:155px;min-width:155px;border:1px solid #000;">' . "Responsible Party" . "</td>";
             $html .= '</tr>';
-            $html .= '</table>';
+            //$html .= '</table>';
             
             // Wastewater Treatment Plumbing
             require_once("o&m/wastewater.php");
@@ -235,9 +235,9 @@ function printSpecialCategories($category) {
             $html .= '<td style="font-weight:bold;text-align:center;width:200px;min-width:200px;border:1px solid #000;">' . "Potential Causes" . "</td>";
             $html .= '<td style="font-weight:bold;text-align:center;width:200px;min-width:200px;border:1px solid #000;">' . "Potential Remedies" . "</td>";
             $html .= '</tr>';
-            $html .= '</table>';
+            //$html .= '</table>';
             
-            $html .= '<table style="border-collapse:collapse;">';
+            //$html .= '<table style="border-collapse:collapse;">';
             $html .= "<tr style='border:1px solid #000;$color'>";
             $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Alarm activated</td>';
             $html .= '<td style="width:200px;min-width:200px;border:1px solid #333;">Could result in improper sewage treatment, surfacing of effluent  or back-up of effluent into the home</td>';

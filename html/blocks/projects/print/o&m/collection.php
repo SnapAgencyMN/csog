@@ -37,14 +37,14 @@
             
             if (!empty($activityTitle))
             {
-                $html .= '<table style="border-collapse:collapse;">';
+                //$html .= '<table style="border-collapse:collapse;">';
                 $html .= "<tr style='border:1px solid #000;$color'>";
                 $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">Collection Types</td>';
                 $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">' . $activityTitle . "</td>";
                 $html .= '<td style="width:115px;min-width:115px;border:1px solid #333;">' . $activityFrequency . "</td>";
                 $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $responsibleParty . "</td>";
                 $html .= '</tr>';
-                $html .= '</table>';
+                //$html .= '</table>';
             }
         }
     }
