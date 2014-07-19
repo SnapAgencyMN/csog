@@ -27,6 +27,7 @@ $css .= "img {max-width: 800px; max-height:600px; width:80%;margin-left:10%;}\n"
 $css .= "div {page-break-inside: avoid;}\n";
 $css .= ".content { margin-left:30px; margin-top:0px; margin-bottom:10px;}\n";
 $css .= "p {margin-top:0px; margin-bottom:10px;}\n";
+$css .= "table {margin-left:30px; margin-bottom:10px;}\n";
 $css .= ".maint {border-collapse:collapse;}\n";
 $css .= ".mainttd {border:1px solid #000;}\n";
 
