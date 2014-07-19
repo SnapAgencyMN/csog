@@ -152,6 +152,7 @@ function printSpecialCategories($category) {
                         break;
                 }
             }
+            $html .= '</table>';
             return true;
             break;
 
