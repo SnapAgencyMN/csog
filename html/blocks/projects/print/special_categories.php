@@ -24,7 +24,7 @@ function printSpecialCategories($category) {
 
             $i = 0;
             foreach ($questions as $question) {
-                $color = $i % 2 ? "background-color:#ddd" : "";
+                $color = $i % 2 ? "" : "background-color:#ddd";
                 switch ($question['type']) {
                     case "question":
                         $name = $answersClass->getDetailsByLabel("Name", $question['id']);
@@ -48,35 +48,38 @@ function printSpecialCategories($category) {
                         $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $emailValue[0]['value'] . "</td>";
                         $html .= '</tr>';
                         //$html .= '</table>';
+                        $i++;
                         break;
 
                     case "other":
                         $checkBoxAnswer = $answersClass->listParentAnswers($question['id']);
                         $values = $answersClass->getUserAnswers($userID, $projectID, $checkBoxAnswer[0]['id']);
 
-                        for ($i = 1; $i <= count($values); $i++) {
+                        for ($z = 1; $z <= count($values); $z++) {
+                            $color = ($color == "") ? "background-color:#ddd" : "";
+
                             $children = $answersClass->listChildren($checkBoxAnswer[0]['id']);
 
                             foreach ($children as $child) {
                                 switch ($child['label']) {
                                     case "Name":
-                                        $nameValue = $answersClass->getUserAnswers($userID, $projectID, $child['id'], 0, $i);
+                                        $nameValue = $answersClass->getUserAnswers($userID, $projectID, $child['id'], 0, $z);
                                         break;
                                     case "Website":
-                                        $websiteValue = $answersClass->getUserAnswers($userID, $projectID, $child['id'], 0, $i);
+                                        $websiteValue = $answersClass->getUserAnswers($userID, $projectID, $child['id'], 0, $z);
                                         break;
                                     case "Phone Number":
-                                        $phoneValue = $answersClass->getUserAnswers($userID, $projectID, $child['id'], 0, $i);
+                                        $phoneValue = $answersClass->getUserAnswers($userID, $projectID, $child['id'], 0, $z);
                                         break;
                                     case "Email":
-                                        $emailValue = $answersClass->getUserAnswers($userID, $projectID, $child['id'], 0, $i);
+                                        $emailValue = $answersClass->getUserAnswers($userID, $projectID, $child['id'], 0, $z);
                                         break;
                                 }
                             }
 
                             //$html .= '<table style="border-collapse:collapse;">';
                             $html .= "<tr style='border:1px solid #000;$color'>";
-                            $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">' . $question['title'] . " #$i</td>";
+                            $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">' . $question['title'] . " #$z</td>";
                             $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $nameValue[0]['value'] . "</td>";
                             $html .= '<td style="width:215px;min-width:215px;border:1px solid #333;">' . $websiteValue[0]['value'] . "</td>";
                             $html .= '<td style="width:155px;min-width:155px;border:1px solid #333;">' . $phoneValue[0]['value'] . "</td>";
@@ -86,8 +89,6 @@ function printSpecialCategories($category) {
                         }
                         break;
                 }
-
-                $i++;
             }
             $html .= '</table>';
             return true;

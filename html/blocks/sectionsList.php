@@ -24,6 +24,9 @@
             printParentSection ($section);
         }
     }
+    
+    echo "<button onClick=\"openInNewTab('".WS_URL."projects/print/$path[3]')\" class='form-button'>Print PDF</button>";
+
   
     function printParentSection($parent)
     {
