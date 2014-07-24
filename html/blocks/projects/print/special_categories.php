@@ -56,7 +56,8 @@ function printSpecialCategories($category) {
                         $values = $answersClass->getUserAnswers($userID, $projectID, $checkBoxAnswer[0]['id']);
 
                         for ($z = 1; $z <= count($values); $z++) {
-                            $color = ($color == "") ? "background-color:#ddd" : "";
+                            if ($z > 1)
+                                $color = ($color == "") ? "background-color:#ddd" : "";
 
                             $children = $answersClass->listChildren($checkBoxAnswer[0]['id']);
 
