@@ -9,6 +9,12 @@ var _tmpImageID = 0;
 $(function() {
   /* Section Slider for Questions. */
   $('.question_header').click(function() {
+    var toHide = $(".question_header_open").next(".question_set_wrapper");  
+    $(".question_header_open").removeClass("question_header_open");
+    toHide.slideUp("Slow", function() {
+        toHide.addClass("hidden");
+    });  
+      
     var target = $(this).next(".question_set_wrapper");
     if(target.hasClass("hidden"))
     {
