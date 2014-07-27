@@ -26,6 +26,7 @@ $css .= "h1 {color:#5e3229; margin-bottom:10px;margin-top:0px;}\n";
 $css .= "img {max-width: 800px; max-height:600px; width:80%;margin-left:10%;}\n";
 $css .= "div {page-break-inside: avoid;}\n";
 $css .= ".content { margin-left:30px; margin-top:0px; margin-bottom:10px;}\n";
+$css .= ".pdfImg { width:500px;}\n";
 $css .= "p {margin-top:0px; margin-bottom:10px;}\n";
 $css .= "table {margin-left:30px; margin-bottom:10px;}\n";
 $css .= ".maint {border-collapse:collapse;}\n";
