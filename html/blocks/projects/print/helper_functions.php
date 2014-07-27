@@ -131,7 +131,8 @@ function printAnswers($answer, $spawnID, $otherID)
     global $html, $answersClass, $userID, $projectID;
         
     $pdfOutput = $answer['pdfOutput'];
-
+    $value = "";
+    
     preg_match_all("%ID=[0-9]+%", $pdfOutput, $ids);
 
     if (count($ids) > 0 )
@@ -172,6 +173,24 @@ function printAnswers($answer, $spawnID, $otherID)
             $pdfOutput = str_replace("%SELF%", $value, $pdfOutput);
         }
     }
+    
+    preg_match_all("@<.*>@", $pdfOutput, $defaultImages);
+    
+    if(count($defaultImages) > 0)
+    {
+        if (empty($value))
+        {
+            foreach($defaultImages[0] as $image)
+            {
+                $pdfOutput = str_replace("@", "", $image)."<br />";
+            }
+        }
+        else
+        {
+            $pdfOutput = str_replace($image, "", $pdfOutput);
+        }
+    }
+    
     $html .= "<div class='content'>".$pdfOutput."</div>";
 }
 
