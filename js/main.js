@@ -539,15 +539,46 @@ $(function() {
 function submitForm(id)
 {
     var submit = true;
-    $(".required input[type=text]").each(function() {
+    var valueExists = false;
+    $(".required > .question_set_row_field > .text > input[type=text]").each(function() {       
         if (this.value == "")
         {
-            alert("You have not filled all of the required fields.");
             $(this).after("<div class='formError' style='text-align:left'>This field is required.</div>");
-            submit = false;
+        }
+        else
+        {
+            valueExists = true;
         }
     });
     
+    $(".required > .question_set_row_field > .radio > input[type=radio]").each(function() {
+        if ($(this).is(':checked'))
+        {
+            valueExists = true;
+        }
+        else
+        {
+            $(this).after("<div class='formError' style='text-align:left'>This field is required.</div>");
+        }
+    });
+    
+    $(".required > .question_set_row_field > .checkbox > input[type=checkbox]").each(function() {
+        if ($(this).is(':checked'))
+        {
+            valueExists = true;
+        }
+        else
+        {
+            $(this).after("<div class='formError' style='text-align:left'>This field is required.</div>");
+        }
+    });
+    
+    if (!valueExists)
+    {
+        alert("You have not filled all of the required fields.");
+        submit = false;
+    }
+
     if (submit)
         $("#"+id).submit();
 }

@@ -118,6 +118,9 @@ function printSpecialCategories($category) {
                         $val = $answersClass->getUserAnswers($userID, $projectID, $setback[0]['id']);
                         $setbackValue = !empty($val[0]) ? $val[0]['value'] : 0;
 
+                        if ($setbackValue == 0)
+                            continue;
+                        
                         //$html .= '<table style="border-collapse:collapse;">';
                         $html .= "<tr style='border:1px solid #000;$color'>";
                         $html .= '<td style="width:175px;min-width:175px;border:1px solid #333;">' . $question['title'] . "</td>";
