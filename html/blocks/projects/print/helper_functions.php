@@ -64,7 +64,7 @@ function printCategory ($category, $spawnID = -1)
     }
 }
 
-function printQuestion($question, $spawnID)
+function printQuestion($question, $spawnID = -1)
 {
     global $answersClass, $userID, $projectID, $html;
 
@@ -75,7 +75,7 @@ function printQuestion($question, $spawnID)
     {
         $values = $answersClass->getUserAnswers($userID, $projectID, $answer['id'], $spawnID);
 
-        if (!empty($values) || $answer['type'] == "static")
+        if (!empty($values) || ($answer['type'] == "static" && $spawnID >=0 ))
         {
             if ($answer['type'] == "static")
             { // since values array is empty, triggering one print manually.
