@@ -29,6 +29,7 @@ foreach ($sections as $section)
             printSection($section);
             break;
         case "parent":
+            $html .= "<h2>{$section['title']}</h2>";
             $children = $sectionsClass->listChlidrenSectionsForUser($section['sectionID'], $userID);
             foreach ($children as $child)
             {
