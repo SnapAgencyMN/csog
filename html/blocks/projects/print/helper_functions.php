@@ -27,7 +27,7 @@ function printSection($section)
 
 }
 
-function printCategory ($category, $spawnID = 0)
+function printCategory ($category, $spawnID = -1)
 {
     require_once ('special_categories.php');
     global $questionsClass, $html;
@@ -36,11 +36,13 @@ function printCategory ($category, $spawnID = 0)
         return;
 
     $suffix = "";
-    if ($spawnID > 0)
+    if ($spawnID >= 0)
     {
         $sID = $spawnID+1;
         $suffix .= "#$sID";
     }
+    else
+        $spawnID = 0;
 
     $html .= "<h3>{$category['title']} $suffix</h3>";
 
