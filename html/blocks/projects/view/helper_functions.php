@@ -318,7 +318,10 @@ function echoSpawnCategory($category)
         </div>
         <div class='clear'></div>
 HTML_STR;
-                    
+    
+    if ($selected == 0)
+        $selected++;
+    
     for ($z = 0; $z < $selected; $z++)
     {
         echoCategory($category, "spawn_$z");
