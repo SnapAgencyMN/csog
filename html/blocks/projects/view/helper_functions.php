@@ -277,11 +277,13 @@ function echoSpawnCategory($category)
     
     $img = "";
     $subTitle = "";
+    
+    /*
     if(!$_SESSION['USER']['Verbose'] )
         $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='{$category['spawn_box_label']}'>";
     else
         $subTitle = "<p class='hintVerbose'>{$category['spawn_box_label']}</p>";
-    
+    */
         
     $selectBox = "<select class='right' name='spawn_{$category['id']}' id='spawn_{$category['id']}'>";
     for ($i=1; $i<=10; $i++)
