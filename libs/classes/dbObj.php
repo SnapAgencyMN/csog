@@ -41,7 +41,6 @@ class DbObject{
 	}	
 	
 	public function find_by_sql($sql=""){
-            echo $sql;
 		$result_set=Db::query($sql);
 		$data=array();
 		$class_name=get_called_class();
