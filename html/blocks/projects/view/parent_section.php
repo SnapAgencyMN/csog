@@ -7,16 +7,12 @@ $children = $sectionsClass->listChildrenSections($sectionID);
 $img = "";
 $subTitle = "";
 if(!$_SESSION['USER']['Verbose'] )
-    $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='Please select {$sectionDetails['title']} that you have'>";
+    $img = "<img src='".WS_URL."/media/hint.png' alt='Hint' title='{$sectionDetails['description']}'>";
 else
-    $subTitle = "<p class='hintVerbose'>Please select {$sectionDetails['title']} that you have</p>";
+    $subTitle = "<p class='hintVerbose'>{$sectionDetails['description']}</p>";
     
     
 echo <<< HTML_STRING
-
-<h3> Please select options relevant to you: </h3>
-
-
     <div class='question_set_wrapper' style='display:block; float:left; width:100%;'>
         <div class='question_set_row'>
             <div class='question_set_row_hint'>
