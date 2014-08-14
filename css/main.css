@@ -99,7 +99,7 @@ p
 /* HEADER ELEMENTS */
 #header_wrapper
 {
-  background:url(../media/site-images/header_bg.png) -595px 0;
+  background:url(../media/site-images/header_bg.png);
   font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
   font-weight:600;
   min-height:210px;
