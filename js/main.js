@@ -508,7 +508,7 @@ $(function() {
                 data:"action=load_image&userID=" + _userID + "&answerID="+ _answerID +"&spawnID="+ _spawnID + "&projectID="+_projectID,
                 dataType: "text",
                 success: function(data, textStatus, jqXHR){
-                    var newImage= "<a class='right' href='"+_host+"media/uploads/"+data.trim()+"' data-lightbox='image-116'><img src='"+_host+"media/uploads/"+data.trim()+"' class='imageLightboxLink'></a>";
+                    var newImage= "<a class='right' href='"+_host+"media/uploads/"+data.trim()+"' data-lightbox='image-116'><img src='"+_host+"media/uploads/"+data.trim()+"?rnd="+Math.random() * (10000 - 1) + 1 + "' class='imageLightboxLink'></a>";
 
                     var elem = $("#iframe_"+_type+"_"+_answerID).parent().find("a");
                     $("#iframe_"+_type+"_"+_answerID).parent().find("a").replaceWith(newImage);

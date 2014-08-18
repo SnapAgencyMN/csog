@@ -6,7 +6,7 @@ require_once(__DIR__."/../../libs/utils.php");
 require_once(__DIR__."/../../libs/classes/answers.class.php");
 require_once(__DIR__."/../../libs/classes/db.php");
 require_once(__DIR__."/../../libs/classes/dbObj.php");
-
+session_start();
 $dbInfo = array(
         "user" => DB_USER,
         "pass" => DB_PASS,
@@ -23,6 +23,7 @@ $answerID = getParameterNumber("answerID");
 $projectID = getParameterNumber('projectID');
 $type = getParameterString("type");
 $action = getParameterString("action", 'display_form');
+$default = getParameterNumber("default");
 
 if ($type != "normal")
     $spawnID = end(explode("_", $type));
@@ -51,10 +52,16 @@ if ($action == "save_form")
           die();
         }
         
-        $filenamesave = uniqid(time()) . "." . $extension; 
-        move_uploaded_file($_FILES["file"]["tmp_name"],FS_PATH . "media/uploads/" . $filenamesave);
+        $filenamesave = uniqid(time()) . "." . $extension;
         
-        $answersClass->saveUserAnswer($userID, $projectID, $answerID, $filenamesave, $spawnID);
+        if ($default == 1 && $_SESSION['USER']['Admin'] == 1)
+            move_uploaded_file($_FILES["file"]["tmp_name"],FS_PATH . "media/uploads/defaults/" . $answerID);
+        else
+        {
+            $answersClass->saveUserAnswer($userID, $projectID, $answerID, $filenamesave, $spawnID);
+            move_uploaded_file($_FILES["file"]["tmp_name"],FS_PATH . "media/uploads/" . $filenamesave);
+        }
+        
     }
     else
     {

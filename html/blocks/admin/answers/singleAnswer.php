@@ -3,7 +3,9 @@
     $label = "";
     $pdfOutput = "";
     $order = "";
-    
+    $default = "";
+    $imageDefault = "";
+
     $textBoxSelected = "";
     $radioSelected = "";
     $checkboxSelected = "";
@@ -21,6 +23,15 @@
         $label = $info['label'];
         $pdfOutput = $info['pdfOutput'];
         $order = $info['order'];
+        
+        if ($info['default'] == 1)
+            $default = "checked='checked'";
+        
+        if ($info['type'] == "image")
+        {
+            $imageDefault = "<label for='default'>Has default image</label><input $default style = 'margin-top: 10px;' type='checkbox' name='default' id='default' value='1' />
+                <br />";
+        }
         
         switch ($info['type'])
         {
@@ -56,7 +67,7 @@
         ";
     
     $typeSelect = "
-        <select name='type'>
+        <select name='type' onchange='checkImageDefault(this)'>
             <option $textBoxSelected value='text'>Textbox</option>
             <option $radioSelected value='radio'>Radio button</option>
             <option $checkboxSelected value='checkbox'>Checkbox</option>
@@ -117,9 +128,12 @@
                 </tr>
             </tbody>
         ";
-
+        
         echo "
                 </table>
+                <div id='defaultImageInput'>
+                    $imageDefault
+                </div>
                 <input style = 'margin-top: 10px;' type='submit' value='Submit' />
                 <input type='hidden' name='action' value='save-answer' />
                 <input type='hidden' name='sectionID' value='$sectionID' />
@@ -130,4 +144,21 @@
             echo "<input type='hidden' name='answerID' value='$answerID' />";
         
         echo "</form>";
+        
+        echo "
+            <script>
+                function checkImageDefault(selectBox)
+                {
+                    if (selectBox.value == 'image')
+                    {
+                        $('#defaultImageInput').html(\"<label for='default'>Has default image</label><input style = 'margin-top: 10px;' type='checkbox' name='default' id='default' value='1' /><br />\");
+                    }
+                    else
+                    {
+                        $('#defaultImageInput').html('');
+
+                    }
+                }      
+            </script>
+            ";
 ?>

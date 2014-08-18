@@ -21,9 +21,10 @@
             $type = getParameterString("type");
             $pdf = getParameterString("pdfOutput");
             $order = getParameterNumber('order');
+            $default = getParameterNumber("default");
             $parentID = getParameterNumber('parentID');
             
-            $answersClass->saveAnswer($label, $type, $pdf, $parentID, $questionID, $order, $answerID);
+            $answersClass->saveAnswer($label, $type, $pdf, $parentID, $questionID, $order, $default, $answerID);
         }
         if ($action == "delete-answer")
         {

@@ -59,16 +59,25 @@ function printAnswer($answer, $type, $value=null)
             ";
             break;
         case "image":
-            if (!empty($value[0]['value']))
-                $value = WS_URL."media/uploads/{$value[0]['value']}";
+            if (@$_SESSION['USER']['Admin'] == 1 && $answer['default'] == 1)
+            {
+                $value = WS_URL."media/uploads/defaults/{$answer['id']}";
+            }
             else
-                $value = "";
+            {
+                if (!empty($value[0]['value']))
+                    $value = WS_URL."media/uploads/{$value[0]['value']}";
+                elseif ($answer['default'] == 1)
+                    $value = WS_URL."media/uploads/defaults/{$answer['id']}";
+                else
+                    $value = "";
+            }
             
             echo "
                 <a class='right' href='$value' data-lightbox='image-116'>
                     <img src='$value' class='imageLightboxLink'>
                 </a><br />
-                <iframe div_type='$type' id='iframe_$type"."_{$answer['id']}'  class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?userID={$_SESSION['USER']['ID']}&answerID={$answer['id']}&amp;type=".$type."&amp;projectID=$projectID' class='upload_frame'></iframe>
+                <iframe div_type='$type' id='iframe_$type"."_{$answer['id']}'  class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?userID={$_SESSION['USER']['ID']}&answerID={$answer['id']}&amp;type=".$type."&amp;projectID=$projectID&amp;default={$answer['default']}' class='upload_frame'></iframe>
             ";
             break;
         case "unknown":

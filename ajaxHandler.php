@@ -25,9 +25,16 @@ if ($action == "load_image")
     $answerID = getParameterNumber("answerID");
     $spawnID = getParameterNumber("spawnID");
     
-    $value = $answersClass->getUserAnswers($userID, $projectID, $answerID, $spawnID);
-    
-    echo $value[0]['value'];
+    if ($_SESSION['USER']['Admin']==1)
+    {
+        $value = "defaults/$answerID";
+        echo $value;
+    }
+    else
+    {
+        $value = $answersClass->getUserAnswers($userID, $projectID, $answerID, $spawnID);
+        echo $value[0]['value'];
+    }
 }
 
 if ($action == "load_user_image")

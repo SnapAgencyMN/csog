@@ -84,7 +84,7 @@ class Answers {
         }
     }
     
-    public function saveAnswer($label, $type,  $pdf, $parentID, $questionID, $order, $answerID = 0)
+    public function saveAnswer($label, $type,  $pdf, $parentID, $questionID, $order, $default, $answerID = 0)
     {
         $this->answersTable->clear_data();
         $this->answersTable->data['label'] = $label;
@@ -93,6 +93,7 @@ class Answers {
         $this->answersTable->data['parentID'] = $parentID;
         $this->answersTable->data['questionID'] = $questionID;
         $this->answersTable->data['`order`'] = $order;
+        $this->answersTable->data['`default`'] = $default;
 
         if ($answerID > 0)
         {
