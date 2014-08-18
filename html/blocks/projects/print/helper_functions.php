@@ -74,7 +74,6 @@ function printQuestion($question, $spawnID)
     foreach ($answers as $answer)
     {
         $values = $answersClass->getUserAnswers($userID, $projectID, $answer['id'], $spawnID);
-
         if (!empty($values) || ($answer['type'] == "static" && $spawnID < 1))
         {
             if ($answer['type'] == "static")
@@ -104,6 +103,8 @@ function printQuestion($question, $spawnID)
                 printAnswers($answer, $spawnID, $i);
             }
         }
+	elseif ($answer['default'] == 1)
+		printAnswers($answer, $spawnID, 0);
 
         $childrenAnswers = $answersClass->listChildren($answer['id']);
 
@@ -123,6 +124,8 @@ function printQuestion($question, $spawnID)
                         printAnswers($child, $spawnID, $i);
                     }
                 }
+		elseif ($child['default'] == 1)
+		    printAnswers($answer, $spawnID, 0);
             }
         }
     }
@@ -131,7 +134,7 @@ function printQuestion($question, $spawnID)
 function printAnswers($answer, $spawnID, $otherID)
 {
     global $html, $answersClass, $userID, $projectID;
-
+    @session_start();
     $pdfOutput = $answer['pdfOutput'];
     $value = "";
     $imageAssigned = false;
@@ -169,10 +172,32 @@ function printAnswers($answer, $spawnID, $otherID)
 
             $value = $id_value[0]['value'];
 
-            if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
-            {
-                $value = "<img src='/media/uploads/$value' /><br />";
+	    if ($answer['type'] == 'image' && $answer['default'] == 1)
+	    {
+		if ($_SESSION['USER']['Admin'] == 1)
+		{
+		    $value = "<img src='/media/uploads/defaults/{$answer['id']}' /><br />";
+		}
+		elseif (!empty($value))
+		{
+			if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
+			{
+			    $value = "<img src='/media/uploads/$value' /><br />";
+            		}
+		}
+  		else
+		{
+		    $value = "<img src='/media/uploads/defaults/{$answer['id']}' /><br />";
+		}
 		$imageAssigned = true;
+            }
+	    else
+	    {
+		if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
+            	{
+                    $value = "<img src='/media/uploads/$value' /><br />";
+		    $imageAssigned = true;
+            	}
             }
 
             $pdfOutput = str_replace("%SELF%", $value, $pdfOutput);
