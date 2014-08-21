@@ -72,10 +72,11 @@ function printAnswer($answer, $type, $value=null)
                 else
                     $value = "";
             }
+            $rnd = rand(1, 1000000);
             
             echo "
                 <a class='right' href='$value' data-lightbox='image-116'>
-                    <img src='$value' class='imageLightboxLink'>
+                    <img src='$value?$rnd' class='imageLightboxLink'>
                 </a><br />
                 <iframe div_type='$type' id='iframe_$type"."_{$answer['id']}'  class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px;' src='".WS_URL."html/blocks/fileupload.php?userID={$_SESSION['USER']['ID']}&answerID={$answer['id']}&amp;type=".$type."&amp;projectID=$projectID&amp;default={$answer['default']}' class='upload_frame'></iframe>
             ";
