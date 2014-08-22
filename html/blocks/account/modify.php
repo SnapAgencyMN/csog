@@ -105,7 +105,7 @@
       <div id="registerFormCompanyLogo" style='height:130px;'>
           <label>Company logo:</label>
           <input type='hidden' name='logoImage' value='<?php echo $userInfo['company_logo'] ?>' /><a class='right' style='padding-right:400px' href='/media/uploads/<?php echo $userInfo['company_logo'] ?>' data-lightbox='image-116'><img src='/media/uploads/<?php echo $userInfo['company_logo'] ?>' class='imageLightboxLink'></a>
-          <iframe id='uploadIframe' class='right' style='clear: both; min-width:60%; min-height:45px; padding-right:60px;' src='<?php echo WS_URL?>html/blocks/usersFileUpload.php' class='upload_frame'></iframe>
+          <iframe id='uploadIframe' class='right' style='clear: both; min-width:100%; min-height:45px; padding-right:60px;' src='<?php echo WS_URL?>html/blocks/usersFileUpload.php' class='upload_frame'></iframe>
     </div>
       <div style='clear:both;' id="modifyFormVerbose"><label>Turn Tool Tips on:</label><input type="checkbox"  value="true" <?php if($userInfo['verbose'] != "false") { echo "checked"; } ?> name="verbose" /></div>
       <div style='clear:both;'>

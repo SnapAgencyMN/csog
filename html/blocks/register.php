@@ -115,7 +115,7 @@ if(!$mail->Send())
           <a class='right' style='padding-right: 400px;' href='' data-lightbox='image-116'>
                 <img src='' class='imageLightboxLink'>
             </a><br />
-          <iframe id='uploadIframe' class='right' style='clear: both; width:60%; min-width:60%; height:100px; min-height:100px; padding-right:60px;' src='<?php echo WS_URL?>html/blocks/usersFileUpload.php' class='upload_frame'></iframe>
+          <iframe id='uploadIframe' class='right' style='clear: both; width:60%; min-width:100%; height:100px; min-height:100px; padding-right:60px;' src='<?php echo WS_URL?>html/blocks/usersFileUpload.php' class='upload_frame'></iframe>
     </div>
       <div id="registerFormUsername" style='clear:both;'><label>Username: *</label><input type="text" name="username" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormPassword"><label>Password: *</label><input type="password" name="password" maxlength="80" class="requiredForm" /></div>

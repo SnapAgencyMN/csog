@@ -540,9 +540,11 @@ function submitForm(id)
 {
     var submit = true;
     var valueExists = false;
+    var requiredExist = false;
     $(".required > .question_set_row_field > .text > input[type=text]").each(function() {       
         if (this.value == "")
         {
+            requiredExist = true;
             $(this).after("<div class='formError' style='text-align:left'>This field is required.</div>");
         }
         else
@@ -558,6 +560,7 @@ function submitForm(id)
         }
         else
         {
+            requiredExist = true;
             $(this).after("<div class='formError' style='text-align:left'>This field is required.</div>");
         }
     });
@@ -569,11 +572,12 @@ function submitForm(id)
         }
         else
         {
+            requiredExist = true;
             $(this).after("<div class='formError' style='text-align:left'>This field is required.</div>");
         }
     });
     
-    if (!valueExists)
+    if (!valueExists && requiredExist)
     {
         alert("You have not filled all of the required fields.");
         submit = false;
