@@ -719,17 +719,22 @@ function updateSpawn(categoryID, host)
 {
     var value = $('#spawn_'+categoryID).val();
     
-    $.ajax({
-        url: host+"ajaxHandler.php",
-        data:"action=save_spawn_input&categoryID=" + categoryID + "&value="+value,
-        dataType: "text",
-        success: function(data, textStatus, jqXHR){
-            location.reload();
-        },
-        error:function(err){
-            //alert(err);
-        }
-    });
+    var r = confirm ("All unsaved data will be lost, are you sure you want to continue?")
+    
+    if (r == true)
+    {
+        $.ajax({
+            url: host+"ajaxHandler.php",
+            data:"action=save_spawn_input&categoryID=" + categoryID + "&value="+value,
+            dataType: "text",
+            success: function(data, textStatus, jqXHR){
+                location.reload();
+            },
+            error:function(err){
+                //alert(err);
+            }
+        });
+    }
 }
 
 function uploadImage(projectID, userID, answerID, spawnID, host, type)

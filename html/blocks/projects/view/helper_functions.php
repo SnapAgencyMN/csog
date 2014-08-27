@@ -35,7 +35,7 @@ function printAnswer($answer, $type, $value=null)
                     $value = "";
             
             echo "
-                <input div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\", $otherID)' type='radio' name='radio_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' value='{$answer['label']}' class='form_question' $value />
+                <input div_type='$type' onclick='updateRow({$answer['questionID']}, \"$type\", $otherID)' type='radio' name='radio_".$type."_{$answer['questionID']}' id='".$type."_{$answer['id']}' value=\"{$answer['label']}\" class='form_question' $value />
                 <label for='".$type."_{$answer['id']}' class='form_question'>{$answer['label']}</label>
             ";
             break;

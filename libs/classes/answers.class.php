@@ -36,7 +36,7 @@ class Answers {
     
     public function getDetailsByLabel($label, $questionID)
     {
-        $results = $this->answersTable->fetchAll(" WHERE `label` = '$label' AND `questionID` = $questionID");
+        $results = $this->answersTable->fetchAll(" WHERE `label` = \"$label\" AND `questionID` = $questionID");
         
         return $results;
     }
