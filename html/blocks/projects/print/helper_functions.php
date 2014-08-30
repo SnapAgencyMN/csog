@@ -125,7 +125,7 @@ function printQuestion($question, $spawnID)
                     }
                 }
 		elseif ($child['default'] == 1)
-		    printAnswers($answer, $spawnID, 0);
+		    printAnswers($child, $spawnID, 0);
             }
         }
     }

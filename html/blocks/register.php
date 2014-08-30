@@ -122,7 +122,7 @@ if(!$mail->Send())
       <div id="registerFormConfirmPassword"><label>Confirm password: *</label><input type="password" name="passwordConfirm" maxlength="80" class="requiredForm" /></div>
       <div id="registerFormConfirmPassword"><label>I have read the Disclaimer and agree to the terms. *</label><input type="checkbox" name="disclaimer" id="disclaimer" class="requiredForm" /></div>
       <input type="hidden" name="registersubmit" value="1" />
-      <div><button class='form-button' onclick="javascript:window.location.href='<?php echo WS_URL;?>disclaimer/';">Disclaimer</button></div>
+      <div><button class='form-button' onclick="javascipt:openInNewTab('<?php echo WS_URL;?>disclaimer/')">Disclaimer</button></div>
       <br />
       <div><input style = 'width:83px' type="submit" value="Register" id="login_submit" class="form-button" /></div>
     </form><br />

@@ -43,7 +43,8 @@ if ($action == "save_form")
       || ($_FILES["file"]["type"] == "image/tiff")
       || ($_FILES["file"]["type"] == "image/tiff-fx")
       || ($_FILES["file"]["type"] == "image/png"))
-      && ($_FILES["file"]["size"] < 1058576 )) //1 Megabyte max
+    )
+      //&& ($_FILES["file"]["size"] < 1058576 )) //1 Megabyte max
       //&& in_array($extension, $allowedExts))
     {
         if ($_FILES["file"]["error"] > 0)
