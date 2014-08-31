@@ -70,7 +70,7 @@ function printAnswer($answer, $type, $value=null)
                 elseif ($answer['default'] == 1)
                     $value = WS_URL."media/uploads/defaults/{$answer['id']}";
                 else
-                    $value = "";
+                    $value = WS_URL."media/site-images/noimg.jpg";
             }
             $rnd = rand(1, 1000000);
             
