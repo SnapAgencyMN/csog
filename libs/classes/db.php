@@ -13,24 +13,32 @@ class Db{
 		$this->open_connection($dbInfo);
 		$this->magic_quotes_active = get_magic_quotes_gpc();
 		self::$real_escape_string_exists = function_exists("mysqli_real_escape_string");
-		@mysqli_query("SET NAMES 'utf8'");
+		//mysqli_query("SET NAMES 'utf8'");
+                ini_set('mssql.charset', 'UTF-8');
 	}
 	
 	public function open_connection($dbInfo){
+            /*
 		self::$connection = mysqli_connect($dbInfo['host'],$dbInfo['user'],$dbInfo['pass']);
 		if (!self::$connection) {
-			die("Database connection failed: " . mysqli_error());
+			die("Database connection failed: " . sqlsrv_errors());
 		}else{
 			$db_select = mysqli_select_db(self::$connection, $dbInfo['name']);
 			if (!$db_select) {
-				die("Database selection failed: " . mysqli_error());
+				die("Database selection failed: " . sqlsrv_errors());
 			}
 		}
+             */
+            $connectionInfo = array( "Database"=>$dbInfo['name'], "UID"=>$dbInfo['user'], "PWD"=>$dbInfo['pass']);
+            self::$connection = sqlsrv_connect( $dbInfo['host'], $connectionInfo);
+            if (!self::$connection) {
+                die("Database connection failed: " . sqlsrv_errors());
+            }
 	}
 	
 	public function close_connection(){
 		if(isset(self::$conneciton)){
-			mysqli_close(self::$conneciton);
+			sqlsrv_close(self::$conneciton);
 			unset(self::$conneciton);
 		}	
 	}
@@ -38,12 +46,12 @@ class Db{
 	public static function query($sql,$returnObject=false){
 		
 		self::$last_query=$lastQuery=$sql;
-		$results= mysqli_query(self::$connection, $sql);
+		$results= sqlsrv_query(self::$connection, $sql);
 		self::confirm_query($results);
 				
 		if($returnObject==true){			
 			$resultArray=array();			
-			while ($result=mysqli_fetch_array($results)) {
+			while ($result=sqlsrv_fetch_array($results, SQLSRV_FETCH_ASSOC)) {
 				$resultArray[]=$result;	
 			}				
 			if(count($resultArray)==1){
@@ -67,7 +75,7 @@ class Db{
 	private static function confirm_query($result){
 		if(!$result){			
 			$output= "WOOOHOO, we don't know where did you get this address from but it certainly does not exist in this website.";
-			$output= "Database query failed:".mysqli_error(self::$connection) . "<br/><br/>";
+			$output= "Database query failed:".sqlsrv_errors(self::$connection) . "<br/><br/>";
 			$output.= "Last SQL query: ". self::$last_query;
                         print_r($output);
 			Session::message($output,'error');
@@ -90,20 +98,20 @@ class Db{
 	
 	public static function fetch_array($result_set){
 		if($result_set){
-			return mysqli_fetch_array($result_set);
+			return sqlsrv_fetch_array($result_set, SQLSRV_FETCH_ASSOC);
 		}	
 	}
 	
 	public function fetchAll($result_set){
 		$results=array();
-		while ($row = mysqli_fetch_row($result_set)) {
+		while ($row = sqlsrv_fetch($result_set)) {
 		    $results[]=current($row);
 		}		
 		return $results;
 	}
 	
 	public static function fetch($result_set){
-		return mysqli_fetch_array($result_set);
+		return sqlsrv_fetch_array($result_set);
 	}
 	
 	public function get_all_tables(){	
@@ -118,19 +126,21 @@ class Db{
 	}
 	
 	public function num_rows($result_set){
-		return mysqli_num_rows($result_set);
+		return sqlsrv_num_rows($result_set);
 	}
 	
 	public static function insert_id(){
-		return mysqli_insert_id(self::$connection);
+            $sql = "SELECT SCOPE_IDENTITY();";
+            $result = self::query($sql);
+		return sqlsrv_get_field($result);
 	}
 	
 	public static function affected_rows(){
-		return mysqli_affected_rows(self::$connection);
+		return sqlsrv_rows_affected(self::$connection);
 	}
 	
 	public function mysql_current_db() {
-	    $r = mysqli_query("SELECT DATABASE()") or die(mysqli_error());
+	    $r = mysqli_query("SELECT DATABASE()") or die(sqlsrv_errors());
 	    return mysqli_result($r,0);
 	}
 
