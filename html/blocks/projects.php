@@ -14,16 +14,19 @@ if (!isset($answersClass))
 $projectID = getParameterNumber("projectID");
 
 require_once("projects/view/actions.php");
+date_default_timezone_set('Australia/Sydney');
 
 if (isset($_POST['deleteConfirm']) && $_POST['deleteConfirm'] == 1)
 {
   $sql = "SELECT id FROM projects WHERE id = ".$_POST['projectID']." && users_id = ". $_SESSION['USER']['ID'];
-  $result = $database->query($sql);
-  if($result->num_rows == 1)
+  //$result = $database->query($sql);
+  $result = sqlsrv_query($database, $sql);
+
+  if(sqlsrv_has_rows($result))
   {
-    $delete = $result->fetch_assoc();
+    $delete = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
     $sql = "DELETE FROM projects WHERE id = ". $delete['id'];
-    $database->query($sql);
+    sqlsrv_query($database, $sql);
   }
 }
 
@@ -84,11 +87,11 @@ if (isset($_POST['createProjectSubmit']) && $_POST['createProjectSubmit'] == 1)
       $image = $_POST['defaultFile'];
     }
     $sql = "UPDATE projects SET name='$projectName', date='$date', parcelIDNumber='$parcelIDNumber', gps='$gps', latitude='$latitude', longitude='$longitude', systemStreetAddress='$systemStreetAddress', webAddress='$webAddress', other='$other', mailingAddress='$mailingAddress', file='$image', projectAddress='$projectAddress', city='$city', state='$state', zip='$zip', contact_name='$contact_name',contact_phone='$contact_phone',contact_address='$contact_address',contact_city='$contact_city',contact_state='$contact_state',contact_zip='$contact_zip',easement_desc='$easement_description', contact_email='$contact_email', easement='$easement' WHERE id=".$_POST['editProjectSubmit'];
-    $database->query($sql);
+    sqlsrv_query($database,$sql);
   } else
   {
     $sql = "INSERT INTO projects (name, date, parcelIDNumber, gps, latitude, longitude, systemStreetAddress, webAddress, other, mailingAddress, users_id, file, projectAddress, city, state, zip, easement_desc, contact_phone, contact_name, contact_address, contact_city, contact_state, contact_zip, contact_email, easement) VALUES ('$projectName','$date','$parcelIDNumber','$gps','$latitude','$longitude','$systemStreetAddress','$webAddress','$other','$mailingAddress','$userID','$image','$projectAddress','$city','$state','$zip','$easement_description','$contact_phone','$contact_name','$contact_address','$contact_city','$contact_state','$contact_zip','$contact_email','$easement')";
-    $database->query($sql);
+    sqlsrv_query($database,$sql);
   }
 
 }
@@ -115,15 +118,17 @@ if (isset($_POST['createProjectSubmit']) && $_POST['createProjectSubmit'] == 1)
   <br />
 <?php
 $sql = "SELECT * FROM projects WHERE users_id = '".$_SESSION['USER']['ID']."'";
-$DBresult = $database->query($sql);
+//$DBresult = $database->query($sql);
+$statement = sqlsrv_query($database, $sql);
 
-if ($DBresult->num_rows)
-{
+//if ($DBresult->num_rows)
+if (sqlsrv_has_rows($statement)) 
+{ 
   ?>
   <h2>Your CSOG projects are:</h2>
   <ul>
   <?php 
-  while ($projectData = $DBresult->fetch_assoc())
+  while ($projectData = sqlsrv_fetch_array($statement, SQLSRV_FETCH_ASSOC))
   {
     if( $projectData['name'] != '' ){
       $projectName = $projectData['name'];
@@ -154,7 +159,7 @@ if ($DBresult->num_rows)
     //echo '   | <a href="' . WS_URL . 'projects/clone/'.$projectData['id'].'/">Clone</a> | <a href="' . WS_URL . 'projects/edit/'.$projectData['id'].'/">Edit</a> | <a href="' . WS_URL . 'projects/delete/' . $projectData['id'] . '/">Delete</a></li>';
   }
   ?>
-  </ul>
+  </ul> 
   <?php
 } else {
   echo '<h2>You have no projects.</h2>';

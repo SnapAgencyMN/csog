@@ -9,6 +9,7 @@ class DbObject{
 	public static $db;
 	public static $session;
 	public $instantiate=true;
+        public $limit = 0;
 	
 	public function __construct($db, $table_name=null,$instantiate=true){		
 		$class_name=get_called_class();
@@ -22,20 +23,29 @@ class DbObject{
 	
 	public function fetchAll($condition){	
 		$class_name=get_called_class();	
-		return self::find_by_sql("SELECT * FROM ".$this->table_name.' '.$condition);		
+                if ($this->limit > 0)
+                    $sql = "SELECT top {$this->limit} * FROM ".$this->table_name.' '.$condition;
+                else
+                    $sql = "SELECT * FROM ".$this->table_name.' '.$condition;
+                    
+		return self::find_by_sql($sql);		
 	}
 	
 	public function find_by_id($id=0){
 		$class_name=get_called_class();		
-		$result_array=$this->find_by_sql("SELECT * FROM ".$this->table_name." WHERE id = ".Db::escape_value($id)." LIMIT 1");
+		$result_array=$this->find_by_sql("SELECT top 1 * FROM ".$this->table_name." WHERE id = ".Db::escape_value($id));
 		return !empty($result_array) ? array_shift($result_array) : false;	
 	}
 	
 	public function find_by_attribute($row,$value='',$limit=''){
 		$class_name=get_called_class();
 		$table_name= $this->table_name;	
-		$query="SELECT * FROM ".$table_name." WHERE {$row} = '".Db::escape_value($value)."'";
-		if(!empty($limit) && is_numeric($limit)) $query.=' LIMIT '.$limit;
+		if(!empty($limit) && is_numeric($limit)) {
+                    $query="SELECT top $limit * FROM ".$table_name." WHERE {$row} = '".Db::escape_value($value)."'";
+                }
+                else
+                    $query="SELECT * FROM ".$table_name." WHERE {$row} = '".Db::escape_value($value)."'";
+
 		$result_array=$this->find_by_sql($query);
 		return $result_array;
 	}	
@@ -137,8 +147,8 @@ class DbObject{
 		$sql = "UPDATE ".$this->table_name." SET ";
 		$sql .= join(", ", $attribute_pairs);
 		$sql .= " WHERE id=". Db::escape_value($this->data['id']);
-                Db::query($sql);				
-	 	return (Db::affected_rows() == 1) ? true : false;
+                $statement = Db::query($sql);
+	 	return (Db::affected_rows($statement) == 1) ? true : false;
 	}
         
         public function updateSection() {
@@ -153,16 +163,17 @@ class DbObject{
 		$sql = "UPDATE ".$this->table_name." SET ";
 		$sql .= join(", ", $attribute_pairs);
 		$sql .= " WHERE sectionID=". Db::escape_value($this->data['sectionID']);
-                Db::query($sql);				
-	 	return (Db::affected_rows() == 1) ? true : false;
+                $statement = Db::query($sql);				
+	 	return (Db::affected_rows($statement) == 1) ? true : false;
 	}
 
 	public function delete() {		
-	  $sql = "DELETE FROM ".$this->table_name;
+	  //$sql = "DELETE FROM ".$this->table_name;
+	  $sql = "DELETE top(1) FROM ".$this->table_name;
 	  $sql .= " WHERE id=". Db::escape_value($this->data['id']);
-	  $sql .= " LIMIT 1";
-	  Db::query($sql);
-	  return (Db::affected_rows() == 1) ? true : false;
+	  //$sql .= " LIMIT 1";
+	  $statement = Db::query($sql);
+	  return (Db::affected_rows($statement) == 1) ? true : false;
 		// NB: After deleting, the instance of User still 
 		// exists, even though the database entry does not.
 		// This can be useful, as in:
@@ -172,11 +183,12 @@ class DbObject{
 	}
         
         public function deleteSection() {		
-	  $sql = "DELETE FROM ".$this->table_name;
+	  //$sql = "DELETE FROM ".$this->table_name;
+	  $sql = "DELETE top(1) FROM ".$this->table_name;
 	  $sql .= " WHERE sectionID=". Db::escape_value($this->data['sectionID']);
-	  $sql .= " LIMIT 1";
-	  Db::query($sql);
-	  return (Db::affected_rows() == 1) ? true : false;
+	  //$sql .= " LIMIT 1";
+	  $statement = Db::query($sql);
+	  return (Db::affected_rows($statement) == 1) ? true : false;
 		// NB: After deleting, the instance of User still 
 		// exists, even though the database entry does not.
 		// This can be useful, as in:

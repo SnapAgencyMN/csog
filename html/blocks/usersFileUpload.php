@@ -43,7 +43,7 @@ if ($action == "save_form")
         
         move_uploaded_file($_FILES["file"]["tmp_name"],FS_PATH . "media/uploads/" . $fname.".$extension");
 
-        $sql = "INSERT INTO `temp_images` (`imageName`) VALUES ('$fname.$extension') ON DUPLICATE KEY UPDATE `imageName` = '$fname.$extension'";
+        $sql = "INSERT INTO `temp_images` (`imageName`) VALUES ('$fname.$extension') ";
         $id = Db::query($sql);
     }
     else

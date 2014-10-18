@@ -75,7 +75,7 @@ include(FS_PATH . "php/page.php");
             include($page);
         }
         ?>
-        <?php if ($path[1] != "admin" ) {?><img id="droplet" src="media/site-images/droplet.png" /><?php } ?>
+        <?php if ($path[1] != "admin" ) {?><img id="droplet" src="/media/site-images/droplet.png" /><?php } ?>
     </div>
 </div>
 </div>

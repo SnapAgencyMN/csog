@@ -11,7 +11,8 @@ In addition, every question can be a parent and store a number of children quest
  */
 class Questions {
     
-    private $orderStr = "ORDER BY `order`";
+    //private $orderStr = "ORDER BY `order`";
+    private $orderStr = "ORDER BY [order]";
     
     /**
      * @param   DbObject   $db
@@ -56,7 +57,9 @@ class Questions {
     {
         if (!empty($title) && $categoryID > 0)
         {
+            $this->questionsTable->limit = 1;
             $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `title` = '$title' {$this->orderStr} LIMIT 1");
+            $this->questionsTable->limit = 0;
             
             return $questions[0];
         }
@@ -82,7 +85,8 @@ class Questions {
         $this->questionsTable->data['hint'] = $hint;
         $this->questionsTable->data['categoryID'] = $categoryID;
         $this->questionsTable->data['type'] = $type;
-        $this->questionsTable->data['`order`'] = $order;
+        //$this->questionsTable->data['`order`'] = $order;
+        $this->questionsTable->data['[order]'] = $order;
         $this->questionsTable->data['`required`'] = $required;
         $otherAnswersExist = false;
         if ($questionID > 0)

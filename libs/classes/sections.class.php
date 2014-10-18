@@ -12,7 +12,8 @@ User selects a dynamic section from the left hand-side menu. The page does not h
  */
 class Sections {
     
-    private $orderStr = "ORDER BY `order`";
+    //private $orderStr = "ORDER BY `order`";
+    private $orderStr = "ORDER BY [order]";
     
     /**
      * @param   DbObject   $db
@@ -99,10 +100,27 @@ class Sections {
     {
         
         if ($userID >0 && $sectionID >0 && $parentID >0)
-        {            
-            $sql = "INSERT INTO `{$this->sections_mapping_table}` (`userID`, `sectionID`, `parentID`) VALUES ($userID, $sectionID, $parentID) ON DUPLICATE KEY UPDATE `sectionID`=$sectionID, `parentID`=$parentID ";
+        {           
+            try
+            {
+                $selectSQL = "SELECT * FROM {$this->sections_mapping_table} WHERE sectionID = $sectionID AND userID = $userID";
+                $id = $this->db->query($selectSQL);
+            }
+            catch (Exception $e)
+            {
+                $id = 0;
+            }
             
-            $this->db->query($sql);
+            if ($id > 0)
+            {
+                $sql = "UPDATE {$this->sections_mapping_table} SET parentID = '$parentID' WHERE id = $id";
+            }
+            else
+            {
+                $sql = "INSERT INTO `{$this->sections_mapping_table}` (`userID`, `sectionID`, `parentID`) VALUES ($userID, $sectionID, $parentID) ";
+
+                $this->db->query($sql);
+            }
         }
     }
     
@@ -132,7 +150,8 @@ class Sections {
         $this->sectionsTable->data['title'] = $title;
         $this->sectionsTable->data['description'] = $description;
         $this->sectionsTable->data['parentID'] = $parentID;
-        $this->sectionsTable->data['`order`'] = $order;
+        $this->sectionsTable->data['[order]'] = $order;
+        //$this->sectionsTable->data['`order`'] = $order;
 
         $this->sectionsTable->data['type'] = $parentID > 0 ? "child" : $type;
 
@@ -201,7 +220,10 @@ class Sections {
     
     public function isLastSection($sectionID)
     {
-        $lastSection = $this->sectionsTable->fetchAll("WHERE `type` = 'standalone' ORDER BY `order` DESC LIMIT 1");
+        //$lastSection = $this->sectionsTable->fetchAll("WHERE `type` = 'standalone' ORDER BY `order` DESC LIMIT 1");
+        $this->sectionsTable->limit = 1;
+        $lastSection = $this->sectionsTable->fetchAll("WHERE `type` = 'standalone' ORDER BY [order] DESC");
+        $this->sectionsTable->limit = 0;
         //print_r($lastSection);
         if ($lastSection[0]['sectionID'] == $sectionID)
             return true;
@@ -214,7 +236,8 @@ class Sections {
         $i = 0;
         $nextSectionID = 0;
         
-        $sql = "SELECT * FROM `{$this->table_name}` WHERE `type` != 'child' ORDER BY `order`";
+        //$sql = "SELECT * FROM `{$this->table_name}` WHERE `type` != 'child' ORDER BY `order`";
+        $sql = "SELECT * FROM `{$this->table_name}` WHERE `type` != 'child' ORDER BY [order]";
         $topLevelSections = $this->sectionsTable->find_by_sql($sql);
         
         foreach ($topLevelSections as $section)

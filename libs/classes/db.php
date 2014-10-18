@@ -44,7 +44,11 @@ class Db{
 	}
 
 	public static function query($sql,$returnObject=false){
-		
+		//MSSQL specific hacks
+                $sql = str_replace("`", "", $sql);
+                //$sql = str_replace("label", "[label]", $sql);
+                $sql = str_replace('"',"'", $sql);
+
 		self::$last_query=$lastQuery=$sql;
 		$results= sqlsrv_query(self::$connection, $sql);
 		self::confirm_query($results);
@@ -75,7 +79,7 @@ class Db{
 	private static function confirm_query($result){
 		if(!$result){			
 			$output= "WOOOHOO, we don't know where did you get this address from but it certainly does not exist in this website.";
-			$output= "Database query failed:".sqlsrv_errors(self::$connection) . "<br/><br/>";
+			$output= "Database query failed: <pre>".print_r(sqlsrv_errors()) . "</pre><br/><br/>";
 			$output.= "Last SQL query: ". self::$last_query;
                         print_r($output);
 			Session::message($output,'error');
@@ -132,11 +136,11 @@ class Db{
 	public static function insert_id(){
             $sql = "SELECT SCOPE_IDENTITY();";
             $result = self::query($sql);
-		return sqlsrv_get_field($result);
+            return sqlsrv_get_field($result, 0);
 	}
 	
-	public static function affected_rows(){
-		return sqlsrv_rows_affected(self::$connection);
+	public static function affected_rows($statement){
+		return sqlsrv_rows_affected($statement);
 	}
 	
 	public function mysql_current_db() {

@@ -13,7 +13,8 @@ Answers are the last element in the tree. They are used to prompt user for an in
  */
 class Answers {
     
-    private $orderStr = "ORDER BY `order`";
+    //private $orderStr = "ORDER BY `order`";
+    private $orderStr = "ORDER BY [order]";
     
     /**
      * @param   DbObject   $db
@@ -92,7 +93,8 @@ class Answers {
         $this->answersTable->data['pdfOutput'] = $pdf;
         $this->answersTable->data['parentID'] = $parentID;
         $this->answersTable->data['questionID'] = $questionID;
-        $this->answersTable->data['`order`'] = $order;
+        //$this->answersTable->data['`order`'] = $order;
+        $this->answersTable->data['[order]'] = $order;
         $this->answersTable->data['`default`'] = $default;
 
         if ($answerID > 0)
@@ -161,10 +163,37 @@ class Answers {
         if (!empty($value))
         {
             $value = $this->db->escape($value);
-            $sql = "INSERT INTO `{$this->answers_mapping_table_name}` (`userID`, `projectID`,  `answerID`, `spawn_sequenceID`, `other_sequenceID`, `value`) VALUES ($userID, $projectID, $answerID, $spawn_sequenceID, $other_sequenceID, \"$value\") ON DUPLICATE KEY UPDATE `value`=\"$value\"";
+            try
+            {
+                $selectSQL = "SELECT id FROM {$this->answers_mapping_table_name} WHERE userID = $userID AND projectID = $projectID AND answerID = $answerID AND spawn_sequenceID = $spawn_sequenceID "
+                        . "AND other_sequenceID = $other_sequenceID;";
+                $resource = $this->db->query($selectSQL);
+                $result = sqlsrv_fetch_array($resource, SQLSRV_FETCH_ASSOC);
+                /*
+                print_r($result);
+                $id = $result['id'];
+                echo "ID IS: ";
+                print_r($id);
+                die();
+                 * 
+                 */
+            }
+            catch (Exception $e)
+            {
+                $id = 0;
+            }
+            
+            if (@$id > 0)
+            {
+                $sql = "UPDATE {$this->answers_mapping_table_name} SET value = '$value' WHERE id = $id";
+            }
+            else
+            {
+                $sql = "INSERT INTO `{$this->answers_mapping_table_name}` (`userID`, `projectID`,  `answerID`, `spawn_sequenceID`, `other_sequenceID`, `value`) VALUES ($userID, $projectID, $answerID, $spawn_sequenceID, $other_sequenceID, \"$value\")";
 
-            $id = $this->answersMappingTable->insert_by_sql($sql);
-
+                $id = $this->answersMappingTable->insert_by_sql($sql);
+            }
+            
             return $id;
         }
     }

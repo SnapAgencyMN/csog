@@ -18,7 +18,8 @@ If a user hits a spawned category, he is presented with a select drop down/input
  */
 class Categories {
     
-    private $orderStr = "ORDER BY `order`";
+    //private $orderStr = "ORDER BY `order`";
+    private $orderStr = "ORDER BY [order]";
     
     /**
      * @param   DbObject   $db
@@ -73,9 +74,26 @@ class Categories {
     {
         if ($categoryID >0 && $userID > 0)
         {
-           $sql = "INSERT INTO `{$this->categories_mapping_table}` (`categoryID`, `userID`, `number`) VALUES ($categoryID, $userID, $value) ON DUPLICATE KEY UPDATE `number` = $value";
+            try
+            {
+                $selectSQL = "SELECT * FROM {$this->categories_mapping_table} WHERE categoryID = $categoryID AND userID = $userID";
+                $id = $this->db->query($selectSQL);
+            }
+            catch (Exception $e)
+            {
+                $id = 0;
+            }
+            
+            if ($id > 0)
+            {
+                $sql = "UPDATE {$this->categories_mapping_table} SET number = '$value' WHERE id = $id";
+            }
+            else
+            {
+                $sql = "INSERT INTO `{$this->categories_mapping_table}` (`categoryID`, `userID`, `number`) VALUES ($categoryID, $userID, $value)";
            
-           $this->db->query($sql);
+                $this->db->query($sql);
+            }
         }
     }
     
@@ -85,7 +103,8 @@ class Categories {
         $this->categoriesTable->data['sectionID'] = $sectionID;
         $this->categoriesTable->data['type'] = $type;
         $this->categoriesTable->data['spawn_box_label'] = $spawn_label;
-        $this->categoriesTable->data['`order`'] = $order;
+        //$this->categoriesTable->data['`order`'] = $order;
+        $this->categoriesTable->data['[order]'] = $order;
 
         if ($categoryID > 0)
         {

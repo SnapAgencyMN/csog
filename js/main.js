@@ -577,7 +577,7 @@ function submitForm(id)
         }
     });
     
-    if (!valueExists && requiredExist)
+    if (requiredExist)
     {
         alert("You have not filled all of the required fields.");
         submit = false;

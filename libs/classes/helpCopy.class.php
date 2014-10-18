@@ -5,7 +5,8 @@
  */
 class HelpCopy {
     
-    private $orderStr = "ORDER BY `order`";
+    private $orderStr = "ORDER BY [order]";
+    //private $orderStr = "ORDER BY `order`";
     
     /**
      * @param   DbObject   $db
@@ -19,7 +20,8 @@ class HelpCopy {
    
     public function listAll()
     {
-        $entries = $this->copyTextTable->fetchAll("ORDER BY `order`");
+        //$entries = $this->copyTextTable->fetchAll("ORDER BY `order`");
+        $entries = $this->copyTextTable->fetchAll("ORDER BY [order]");
         
         return $entries;
     }
@@ -38,7 +40,8 @@ class HelpCopy {
         $this->copyTextTable->clear_data();
         $this->copyTextTable->data['title'] = $title;
         $this->copyTextTable->data['body'] = $body;
-        $this->copyTextTable->data['`order`'] = $order;
+        //$this->copyTextTable->data['`order`'] = $order;
+        $this->copyTextTable->data['[order]'] = $order;
 
         if ($copyID > 0)
         {
