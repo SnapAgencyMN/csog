@@ -150,6 +150,7 @@ function echoCategory($category, $type='normal')
         {            
             $answers = $answersClass->listParentAnswers($question['id']);
 
+            $checkBoxID = 0;
             foreach ($answers as $answer)
             {
                 if ($answer['type'] == 'checkbox')

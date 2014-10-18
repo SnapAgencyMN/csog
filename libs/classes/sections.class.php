@@ -98,13 +98,15 @@ class Sections {
     
     public function addUserSection ($userID, $sectionID, $parentID)
     {
-        
+        $id = -1;
         if ($userID >0 && $sectionID >0 && $parentID >0)
         {           
             try
             {
-                $selectSQL = "SELECT * FROM {$this->sections_mapping_table} WHERE sectionID = $sectionID AND userID = $userID";
-                $id = $this->db->query($selectSQL);
+                $selectSQL = "SELECT sectionID FROM {$this->sections_mapping_table} WHERE sectionID = $sectionID AND userID = $userID";
+                $resource = $this->db->query($selectSQL);
+                $result = sqlsrv_fetch_array($resource, SQLSRV_FETCH_ASSOC);
+                $id = $result['sectionID'];
             }
             catch (Exception $e)
             {
@@ -118,9 +120,8 @@ class Sections {
             else
             {
                 $sql = "INSERT INTO `{$this->sections_mapping_table}` (`userID`, `sectionID`, `parentID`) VALUES ($userID, $sectionID, $parentID) ";
-
-                $this->db->query($sql);
             }
+            $this->db->query($sql);
         }
     }
     

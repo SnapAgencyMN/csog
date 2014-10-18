@@ -57,9 +57,9 @@ class Categories {
             $sql = "SELECT `number` FROM {$this->categories_mapping_table} WHERE `categoryID` = $categoryID AND `userID` = $userID";
             
             $result = $this->db->query($sql, true);
-            
+
             if (!empty($result))
-                return $result[0];
+                return $result[0]['number'];
         }
     }
     
@@ -77,23 +77,24 @@ class Categories {
             try
             {
                 $selectSQL = "SELECT * FROM {$this->categories_mapping_table} WHERE categoryID = $categoryID AND userID = $userID";
-                $id = $this->db->query($selectSQL);
+                $resource = $this->db->query($selectSQL);
+                $result = sqlsrv_fetch_array($resource, SQLSRV_FETCH_ASSOC);
             }
             catch (Exception $e)
             {
-                $id = 0;
+                $result = "";
             }
             
-            if ($id > 0)
+            if (!empty($result))
             {
-                $sql = "UPDATE {$this->categories_mapping_table} SET number = '$value' WHERE id = $id";
+                $sql = "UPDATE {$this->categories_mapping_table} SET number = '$value' WHERE categoryID = $categoryID AND userID = $userID";
             }
             else
             {
-                $sql = "INSERT INTO `{$this->categories_mapping_table}` (`categoryID`, `userID`, `number`) VALUES ($categoryID, $userID, $value)";
-           
-                $this->db->query($sql);
+                $sql = "INSERT INTO `{$this->categories_mapping_table}` (`categoryID`, `userID`, `number`) VALUES ($categoryID, $userID, $value)";           
             }
+            $this->db->query($sql);
+
         }
     }
     

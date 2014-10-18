@@ -160,6 +160,7 @@ class Answers {
     
     public function saveUserAnswer($userID, $projectID, $answerID, $value, $spawn_sequenceID = 0, $other_sequenceID = 0)
     {
+        $id = -1;
         if (!empty($value))
         {
             $value = $this->db->escape($value);
@@ -169,23 +170,17 @@ class Answers {
                         . "AND other_sequenceID = $other_sequenceID;";
                 $resource = $this->db->query($selectSQL);
                 $result = sqlsrv_fetch_array($resource, SQLSRV_FETCH_ASSOC);
-                /*
-                print_r($result);
                 $id = $result['id'];
-                echo "ID IS: ";
-                print_r($id);
-                die();
-                 * 
-                 */
             }
             catch (Exception $e)
             {
                 $id = 0;
             }
             
-            if (@$id > 0)
+            if ($id > 0)
             {
                 $sql = "UPDATE {$this->answers_mapping_table_name} SET value = '$value' WHERE id = $id";
+                $this->db->query($sql);
             }
             else
             {
