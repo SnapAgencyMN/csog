@@ -4,61 +4,61 @@
     if($_POST['name'] != "")
     {
       $sql = "UPDATE users SET name = '".$_POST['name']."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
       $_SESSION['USER']['Name'] = $_POST['name'];
     }
     if($_POST['companyName'] != "")
     {
       $sql = "UPDATE users SET company_name = '".$_POST['companyName']."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
       $_SESSION['USER']['CompanyName'] = $_POST['companyName'];
     }
     if($_POST['phoneNumber'] != "")
     {
       $sql = "UPDATE users SET phone_number = '".$_POST['phoneNumber']."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
     }
     if($_POST['website'] != "")
     {
       $sql = "UPDATE users SET website = '".$_POST['website']."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
     }
     if($_POST['mailingAddress'] != "")
     {
       $sql = "UPDATE users SET mailing_address = '".$_POST['mailingAddress']."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
     }
     if($_POST['city'] != "")
     {
       $sql = "UPDATE users SET city = '".$_POST['city']."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
     }
     if($_POST['state'] != "")
     {
       $sql = "UPDATE users SET state = '".$_POST['state']."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
     }
     if($_POST['zip'] != "")
     {
       $sql = "UPDATE users SET zip = '".$_POST['zip']."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
     }
     if(isset($_POST['verbose']))
     {
       $sql = "UPDATE users SET verbose = 'true' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
       $_SESSION['USER']['Verbose'] = true;
     } else
     {
       $sql = "UPDATE users SET verbose = 'false' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
       $_SESSION['USER']['Verbose'] = false;
     }
     
     if($_POST['logoImage'] != "")
     {
       $sql = "UPDATE users SET company_logo = '".$_POST['logoImage']."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
     }
 
   }
@@ -68,14 +68,14 @@
     if($_POST['password'] != "" && $_POST['password'] == $_POST['passwordConfirm'])
     {
       $sql = "UPDATE users SET password = '".sha1($_POST['password'])."' WHERE id = ".$_SESSION['USER']['ID'];
-      $database->query($sql);
+      $statement = sqlsrv_query($database, $sql);
     }
   }
 
 
   $sql = "SELECT phone_number, mailing_address, city, state, zip, website, name, email, company_name, company_logo,verbose FROM users WHERE id = " . $_SESSION['USER']['ID'];
-  $result = $database->query($sql);
-  $userInfo = $result->fetch_assoc();
+  $statement = sqlsrv_query($database, $sql);
+  $userInfo = sqlsrv_fetch_array($statement, SQLSRV_FETCH_ASSOC);
   
   if (!empty($userInfo['phone_number']))
   {

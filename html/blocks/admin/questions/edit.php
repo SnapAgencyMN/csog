@@ -64,7 +64,7 @@
         else
             $action = "display-all";
     }
-    
+
     if ($action == "display-all")
     {
         $categories = $categoriesClass->listCategories($sectionID);

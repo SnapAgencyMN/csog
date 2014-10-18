@@ -22,11 +22,11 @@ if(isset($_POST['registersubmit']) && $_POST['registersubmit'] == "1")
   $image = $_POST['logoImage'];
 
   // Check if the user already exist
-  $username = $database->real_escape_string($username);
-  $verifySQL = "SELECT * FROM users WHERE username = \"$username\"";
+  $username = addslashes($username);
+  $verifySQL = "SELECT * FROM users WHERE username = '$username'";
 
-  $result = $database->query($verifySQL);
-  if(!empty($result) && $result->num_rows >= 1)
+  $result = sqlsrv_query($database, $verifySQL);
+  if(sqlsrv_has_rows($result))
     {
         echo "
             <h2>This username already exists.</h2>
@@ -36,7 +36,7 @@ if(isset($_POST['registersubmit']) && $_POST['registersubmit'] == "1")
     else
     {
         $sql = "INSERT INTO users (name,company_name,email,website,mailing_address,city,state,zip,phone_number,username,password,verify,company_logo) values ('$name','$company_name','$email','$website','$mailingAddress','$city','$state','$zip','$phoneNumber','$username','$password','$verify','$image')";
-        $database->query($sql);
+        sqlsrv_query($database, $sql);
 ?>
   <h2>Check Your Email To Activate Your Account</h2>
   <p>You must activate your account before you can begin using it.</p>

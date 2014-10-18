@@ -6,6 +6,7 @@ require_once(__DIR__."/../../libs/utils.php");
 require_once(__DIR__."/../../libs/classes/answers.class.php");
 require_once(__DIR__."/../../libs/classes/db.php");
 require_once(__DIR__."/../../libs/classes/dbObj.php");
+session_save_path(__DIR__.DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."..".DIRECTORY_SEPARATOR."temp");
 session_start();
 $dbInfo = array(
         "user" => DB_USER,

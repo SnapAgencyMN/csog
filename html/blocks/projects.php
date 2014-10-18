@@ -18,11 +18,11 @@ date_default_timezone_set('Australia/Sydney');
 
 if (isset($_POST['deleteConfirm']) && $_POST['deleteConfirm'] == 1)
 {
-  $sql = "SELECT id FROM projects WHERE id = ".$_POST['projectID']." && users_id = ". $_SESSION['USER']['ID'];
-  //$result = $database->query($sql);
+  $sql = "SELECT * FROM projects WHERE id = ".$_POST['projectID']." AND users_id = ". $_SESSION['USER']['ID'];
+//$result = $database->query($sql);
   $result = sqlsrv_query($database, $sql);
-
-  if(sqlsrv_has_rows($result))
+  
+  if(@sqlsrv_has_rows($result))
   {
     $delete = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
     $sql = "DELETE FROM projects WHERE id = ". $delete['id'];

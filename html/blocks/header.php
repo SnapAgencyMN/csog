@@ -44,7 +44,7 @@
             <?php
             if($path[1] == "projects" && @$path[2] == "view")
             {
-              $sql = "SELECT name FROM projects WHERE id = ".$path[3]." && users_id = ".$_SESSION['USER']['ID'];
+              $sql = "SELECT name FROM projects WHERE id = ".$path[3]." AND users_id = ".$_SESSION['USER']['ID'];
               $result = sqlsrv_query($database,$sql);
               if(@sqlsrv_has_rows($result))
               {

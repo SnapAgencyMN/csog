@@ -2,12 +2,12 @@
 
 if(isset($projectID))
 {
-  $sql = "SELECT * FROM projects WHERE ID = $projectID && users_id = ". $_SESSION['USER']['ID'];
-  $result = $database->query($sql);
-  if($result->num_rows >= 1)
+  $sql = "SELECT * FROM projects WHERE ID = $projectID AND users_id = ". $_SESSION['USER']['ID'];
+  $statement = sqlsrv_query($database, $sql);
+  if (sqlsrv_has_rows($statement))
   {
     $title = "Edit Project Description";
-    $PData = $result->fetch_assoc();
+    $PData = sqlsrv_fetch_array($statement, SQLSRV_FETCH_ASSOC);
   } else
   {
     $title = "Create a New Project";
@@ -16,8 +16,8 @@ if(isset($projectID))
 }
 
 $sql = "SELECT name, email, phone_number, mailing_address FROM users WHERE id = " . $_SESSION['USER']['ID'];
-$result = $database->query($sql);
-$userInfo = $result->fetch_assoc();
+$statement = sqlsrv_query($database, $sql);
+$userInfo = sqlsrv_fetch_array($statement, SQLSRV_FETCH_ASSOC);
 
 if (!empty($PData['contact_phone']))
 {

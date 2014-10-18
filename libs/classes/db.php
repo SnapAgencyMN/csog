@@ -134,9 +134,10 @@ class Db{
 	}
 	
 	public static function insert_id(){
-            $sql = "SELECT SCOPE_IDENTITY();";
+            $sql = "SELECT SCOPE_IDENTITY() as id;";
             $result = self::query($sql);
-            return sqlsrv_get_field($result, 0);
+            $resultArr = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
+            return $resultArr['id'];
 	}
 	
 	public static function affected_rows($statement){
