@@ -2,10 +2,10 @@
 
 //----------Header----------------
 $sql = "SELECT * FROM projects WHERE id = $projectID";
-$result = $database->query($sql);
-if($result->num_rows >= 1)
+$result = sqlsrv_query($database, $sql);
+if(sqlsrv_has_rows($result))
 {
-  $answers = $result->fetch_assoc();
+  $answers = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
   $html = "";
   $html = "<div style='color:#5e3220;'>";
   $html .= "Project name: " . $answers['name'] . "<br /> ";
@@ -28,10 +28,10 @@ $times["Cover"] = microtime(true);
 //----------Cover Page------------
 
 $sql = "SELECT * FROM projects WHERE id = $projectID";
-$result = $database->query($sql);
-if($result->num_rows >= 1)
+$result = sqlsrv_query($database, $sql);
+if(sqlsrv_has_rows($result))
 {
-  $answers = $result->fetch_assoc();
+  $answers = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
   $html = "";
   $html .= "<div style='padding-top:100px;'>";
   $html .= "<img src='/media/uploads/{$answers['file']}'>";

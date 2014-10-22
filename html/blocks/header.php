@@ -22,7 +22,7 @@
   <body>
     <div id="header_wrapper">
       <div id="header_inner">
-        <span id="header_title"><a href="<?php if($_SESSION['USER']['LoggedIn'] == true) { ?>/projects"><?php } else { ?>/"><?php } ?>Community Septic System Owner's Guide Tool</a></span>
+          <div class="headerLogo"><span id="header_title"><a href="<?php if($_SESSION['USER']['LoggedIn'] == true) { ?>/projects"><?php } else { ?>/"><?php } ?>Community Septic System Owner's Guide Tool</a></span></div>
         <ul id="header_nav">
             <?php if(@$_SESSION['USER']['LoggedIn'] == true) { ?>
             <li <?php if( strstr($_SERVER['REQUEST_URI'], 'account') ) { echo "class=active"; } ?>><a href="<?php echo WS_URL; ?>account/edit">Your Account</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>
@@ -37,6 +37,7 @@
           </li>
         </ul>
         <div id="headerLinks">
+            <!--
           <div id="disclaimerLink">
             <?php
               $projectOk = "";
@@ -59,7 +60,7 @@
             }
 */
             ?><br />
-          </div>
+          </div>-->
           <div id="headerInfo">
             <?php
               if(@$_SESSION['USER']['Name'] != "")

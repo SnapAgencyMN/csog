@@ -63,13 +63,11 @@ $mail = new PHPMailer();
 $mail->IsSMTP();
 $mail->CharSet = 'UTF-8';
 
-$mail->Host       = "rsb31.rhostbh.com"; // SMTP server example
+$mail->Host       = "relay.tc.umn.edu"; // SMTP server example
 $mail->SMTPSecure = "ssl";
 $mail->SMTPDebug  = 0;                     // enables SMTP debug information (for testing)
 $mail->SMTPAuth   = true;                  // enable SMTP authentication
 $mail->Port       = 465;                    // set the SMTP port for the GMAIL server
-$mail->Username   = "snap@carney.com"; // SMTP account username example
-$mail->Password   = "6014Spenser";        // SMTP account password example
 
 $mail->From = "noreply@".substr(WS_URL,7,-1);
 $mail->FromName = "CSOG";

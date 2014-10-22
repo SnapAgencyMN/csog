@@ -65,8 +65,11 @@ class Categories {
     
     public function getDetailsByTitle($sectionID, $title)
     {
-        $result = $this->categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID AND `title` = '$title' {$this->orderStr} LIMIT 1");
-
+        //$result = $this->categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID AND `title` = '$title' {$this->orderStr} LIMIT 1");
+        $this->categoriesTable->limit = 1;
+        $result = $this->categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID AND `title` = '$title' {$this->orderStr} ");
+        $this->categoriesTable->limit = 0;
+        
         return $result[0];
     }
     

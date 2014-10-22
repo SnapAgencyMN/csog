@@ -100,6 +100,7 @@ p
 #header_wrapper
 {
   background:url(../media/site-images/header_bg.png);
+  background-position: 50% 0%;
   font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
   font-weight:600;
   min-height:210px;
@@ -541,7 +542,9 @@ ol#category_list
 #headerInfo
 {
   margin-right:130px;
-  float:right;
+  float:left;
+  position: relative;
+  bottom: 11px;]
 }
 .activePage 
 {
@@ -694,13 +697,18 @@ ul.square li
 {
     color: red;
 }
-
+/*
 .active
 {
     background-image: url(/img/active.jpg);
     background-repeat: no-repeat;
     background-position-y: 54%;
     height:100%;
+}
+*/
+
+.active a{
+    color: #f26522;
 }
 
 #asterisk
@@ -717,4 +725,12 @@ ul.square li
 #contact-form-projects input[type=textbox]
 {
 	min-width:200px;
+}
+
+.headerLogo
+{
+    height:50px;
+    z-index:10;
+    background-image: url('../media/site-images/header_logo.png');
+    background-position: 50% 0%;
 }

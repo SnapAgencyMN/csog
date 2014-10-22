@@ -58,7 +58,8 @@ class Questions {
         if (!empty($title) && $categoryID > 0)
         {
             $this->questionsTable->limit = 1;
-            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `title` = '$title' {$this->orderStr} LIMIT 1");
+            //$questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `title` = '$title' {$this->orderStr} LIMIT 1");
+            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `title` = '$title' {$this->orderStr} ");
             $this->questionsTable->limit = 0;
             
             return $questions[0];
