@@ -22,7 +22,7 @@ if (isset($_POST['deleteConfirm']) && $_POST['deleteConfirm'] == 1)
 //$result = $database->query($sql);
   $result = sqlsrv_query($database, $sql);
   
-  if(@sqlsrv_has_rows($result))
+  if(sqlsrv_has_rows($result))
   {
     $delete = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
     $sql = "DELETE FROM projects WHERE id = ". $delete['id'];
@@ -90,7 +90,7 @@ if (isset($_POST['createProjectSubmit']) && $_POST['createProjectSubmit'] == 1)
     sqlsrv_query($database,$sql);
   } else
   {
-    $sql = "INSERT INTO projects (name, date, parcelIDNumber, gps, latitude, longitude, systemStreetAddress, webAddress, other, mailingAddress, users_id, file, projectAddress, city, state, zip, easement_desc, contact_phone, contact_name, contact_address, contact_city, contact_state, contact_zip, contact_email, easement) VALUES ('$projectName','$date','$parcelIDNumber','$gps','$latitude','$longitude','$systemStreetAddress','$webAddress','$other','$mailingAddress','$userID','$image','$projectAddress','$city','$state','$zip','$easement_description','$contact_phone','$contact_name','$contact_address','$contact_city','$contact_state','$contact_zip','$contact_email','$easement')";
+    $sql = "INSERT INTO projects (name, date, parcelIDNumber, gps, latitude, longitude, systemStreetAddress, webAddress, other, mailingAddress, users_id, [file], projectAddress, city, state, zip, easement_desc, contact_phone, contact_name, contact_address, contact_city, contact_state, contact_zip, contact_email, easement) VALUES ('$projectName','$date','$parcelIDNumber','$gps','$latitude','$longitude','$systemStreetAddress','$webAddress','$other','$mailingAddress','$userID','$image','$projectAddress','$city','$state','$zip','$easement_description','$contact_phone','$contact_name','$contact_address','$contact_city','$contact_state','$contact_zip','$contact_email','$easement')";
     sqlsrv_query($database,$sql);
   }
 
