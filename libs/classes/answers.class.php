@@ -95,7 +95,8 @@ class Answers {
         $this->answersTable->data['questionID'] = $questionID;
         //$this->answersTable->data['`order`'] = $order;
         $this->answersTable->data['[order]'] = $order;
-        $this->answersTable->data['`default`'] = $default;
+        $this->answersTable->data['[default]'] = $default;
+        //$this->answersTable->data['`default`'] = $default;
 
         if ($answerID > 0)
         {

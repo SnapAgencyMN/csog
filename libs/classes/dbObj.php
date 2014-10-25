@@ -142,6 +142,9 @@ class DbObject{
 		}	
 		$attribute_pairs = array();
 		foreach($this->data as $key => $value) {
+                    if ($key == "id")
+                        continue;
+                    
 			$attribute_pairs[] = "{$key}='{$value}'";
 		}		
 		$sql = "UPDATE ".$this->table_name." SET ";
@@ -158,6 +161,9 @@ class DbObject{
 		}	
 		$attribute_pairs = array();
 		foreach($this->data as $key => $value) {
+                        if ($key == "sectionID")
+                            continue;
+                    
 			$attribute_pairs[] = "{$key}='{$value}'";
 		}		
 		$sql = "UPDATE ".$this->table_name." SET ";
