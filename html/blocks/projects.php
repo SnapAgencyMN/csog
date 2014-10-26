@@ -143,7 +143,7 @@ if (sqlsrv_has_rows($statement))
     {
       $projectDate = "Never Edited";
     } else {
-      $projectDate = date("d/m/Y", strtotime($projectDate));
+      $projectDate = date("m/d/Y", strtotime($projectDate));
     } 
 
     echo '<li><p><b>' . $projectName . ' (' . $projectDate . ')</b></p>' ;

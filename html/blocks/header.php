@@ -11,7 +11,7 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="<?php echo WS_URL; ?>js/jquery.json-2.4.min.js"></script>
-    <script src="<?php echo WS_URL; ?>js/main.js"></script> 
+    <script src="<?php echo WS_URL; ?>js/main.js?rnd=1"></script> 
     <script src="<?php echo WS_URL; ?>js/jquery.formalize.min.js"></script> 
     <script src="<?php echo WS_URL; ?>js/lightbox-2.6.min.js"></script> 
 
