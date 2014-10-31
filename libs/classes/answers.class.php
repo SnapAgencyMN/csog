@@ -189,7 +189,7 @@ class Answers {
 
                 $id = $this->answersMappingTable->insert_by_sql($sql);
             }
-            
+
             return $id;
         }
     }

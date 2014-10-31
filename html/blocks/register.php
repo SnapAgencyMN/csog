@@ -22,7 +22,8 @@ if(isset($_POST['registersubmit']) && $_POST['registersubmit'] == "1")
   $image = $_POST['logoImage'];
 
   // Check if the user already exist
-  $username = addslashes($username);
+  //$username = addslashes($username);
+  $username = str_replace("'", "''", $username);
   $verifySQL = "SELECT * FROM users WHERE username = '$username'";
 
   $result = sqlsrv_query($database, $verifySQL);
@@ -35,8 +36,9 @@ if(isset($_POST['registersubmit']) && $_POST['registersubmit'] == "1")
     }
     else
     {
-        $sql = "INSERT INTO users (name,company_name,email,website,mailing_address,city,state,zip,phone_number,username,password,verify,company_logo) values ('$name','$company_name','$email','$website','$mailingAddress','$city','$state','$zip','$phoneNumber','$username','$password','$verify','$image')";
-        sqlsrv_query($database, $sql);
+        $sql = "INSERT INTO users (name,company_name,email,website,mailing_address,city,state,zip,phone_number,username,password,verify,company_logo,verbose, level,password_verify) values ('$name','$company_name','$email','$website','$mailingAddress','$city','$state','$zip','$phoneNumber','$username','$password','$verify','$image',0, '','')";
+        $result = sqlsrv_query($database, $sql);
+
 ?>
   <h2>Check Your Email To Activate Your Account</h2>
   <p>You must activate your account before you can begin using it.</p>
@@ -64,10 +66,10 @@ $mail->IsSMTP();
 $mail->CharSet = 'UTF-8';
 
 $mail->Host       = "relay.tc.umn.edu"; // SMTP server example
-$mail->SMTPSecure = "ssl";
+//$mail->SMTPSecure = "ssl";
 $mail->SMTPDebug  = 0;                     // enables SMTP debug information (for testing)
-$mail->SMTPAuth   = true;                  // enable SMTP authentication
-$mail->Port       = 465;                    // set the SMTP port for the GMAIL server
+//$mail->SMTPAuth   = true;                  // enable SMTP authentication
+//$mail->Port       = 465;                    // set the SMTP port for the GMAIL server
 
 $mail->From = "noreply@".substr(WS_URL,7,-1);
 $mail->FromName = "CSOG";

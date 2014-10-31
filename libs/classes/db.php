@@ -52,7 +52,7 @@ class Db{
 		self::$last_query=$lastQuery=$sql;
 		$results= sqlsrv_query(self::$connection, $sql);
 		self::confirm_query($results);
-				
+                
 		if($returnObject==true){			
 			$resultArray=array();			
 			while ($result=sqlsrv_fetch_array($results, SQLSRV_FETCH_ASSOC)) {
@@ -89,15 +89,17 @@ class Db{
         public function escape($value){		
 		if(self::$real_escape_string_exists){ 
 			return mysqli_real_escape_string(self::$connection, $value); 
-		}	    
-		return addslashes($value);	
+		}	
+                //return addslashes($value);	
+		return str_replace("'", "''", $value);	
 	}
         
 	public static function escape_value($value){		
 		if(self::$real_escape_string_exists){ 
 			return mysqli_real_escape_string(self::$connection, $value); 
 		}	    
-		return addslashes($value);	
+		//return addslashes($value);	
+		return str_replace("'", "''", $value);	
 	}
 	
 	public static function fetch_array($result_set){

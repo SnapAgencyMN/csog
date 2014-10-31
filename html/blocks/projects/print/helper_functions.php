@@ -70,9 +70,9 @@ function printQuestion($question, $spawnID)
 
     $answers = $answersClass->listParentAnswers($question['id']);
 
-    $currentQID = "";
+    $currentQID = "";   
     foreach ($answers as $answer)
-    {
+    {   
         $values = $answersClass->getUserAnswers($userID, $projectID, $answer['id'], $spawnID);
         if (!empty($values) || ($answer['type'] == "static" && $spawnID < 1))
         {
@@ -104,7 +104,15 @@ function printQuestion($question, $spawnID)
             }
         }
 	elseif ($answer['default'] == 1)
-		printAnswers($answer, $spawnID, 0);
+        {
+            // check if answers on the same level exist
+            foreach ($answers as $a)
+            {
+                $v = $answersClass->getUserAnswers($userID, $projectID, $a['id']);
+                if (!empty($v))
+                    printAnswers($answer, $spawnID, 0);
+            }
+        }
 
         $childrenAnswers = $answersClass->listChildren($answer['id']);
 
@@ -125,9 +133,15 @@ function printQuestion($question, $spawnID)
                     }
                 }
 		elseif ($child['default'] == 1)
-		    printAnswers($child, $spawnID, 0);
+                {
+                    // Verify that parent answer is checked
+                    $parentAnswer = $answersClass->getUserAnswers($userID, $projectID, $answer['id'], $spawnID, 0);
+
+                    if (!empty($parentAnswer))
+                        printAnswers($child, $spawnID, 0);
+                }
             }
-        }
+        } 
     }
 }
 
@@ -138,9 +152,9 @@ function printAnswers($answer, $spawnID, $otherID)
     $pdfOutput = $answer['pdfOutput'];
     $value = "";
     $imageAssigned = false;
-
+    
     preg_match_all("/%ID=[0-9]+%/", $pdfOutput, $ids);
-
+    
     if (count($ids[0]) > 0 )
     {
         foreach ($ids[0] as $id)
@@ -149,6 +163,12 @@ function printAnswers($answer, $spawnID, $otherID)
             $answerID = trim($id_arr[1], "%");
             $id_value = $answersClass->getUserAnswers($userID, $projectID, $answerID, $spawnID, $otherID);
 
+            if ($answerID = $answer['id'])
+            {
+                $pdfOutput = str_replace($id, "%SELF%", $pdfOutput);
+                break;
+            }
+            
             $value = $id_value[0]['value'];
 
             if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif") ||strstr($value, ".tiff"))
@@ -204,6 +224,7 @@ function printAnswers($answer, $spawnID, $otherID)
         }
     }
 
+    /*
     preg_match_all("/@<.*>@/", $pdfOutput, $defaultImages);
     if(count($defaultImages[0]) > 0)
     {
@@ -219,6 +240,7 @@ function printAnswers($answer, $spawnID, $otherID)
             $pdfOutput = str_replace($defaultImages[0][0], "", $pdfOutput);
         }
     }
+    */
 
     $html .= "<div class='content'>".$pdfOutput."</div>";
 }

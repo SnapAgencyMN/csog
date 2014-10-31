@@ -99,8 +99,9 @@ p
 /* HEADER ELEMENTS */
 #header_wrapper
 {
-  background:url(../media/site-images/header_bg.png);
-  background-position: 50% 0%;
+  background:url(../media/site-images/header_bg.png?3);
+  background-position: 50% -2px;
+  background-repeat: no-repeat;
   font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
   font-weight:600;
   min-height:210px;
@@ -713,7 +714,7 @@ ul.square li
 
 #asterisk
 {
-	margin: 10px 285px 10px 0; 
+	margin: -14px 285px 10px 0; 
 	font-size: 17px; 
 	text-align: right;
 }
@@ -733,4 +734,4 @@ ul.square li
     z-index:10;
     background-image: url('../media/site-images/header_logo.png');
     background-position: 50% 0%;
-}
+} 

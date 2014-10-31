@@ -1,13 +1,13 @@
 <?php
 
 $sql = "SELECT * FROM users WHERE verify = '$verifyCode'";
-$DBresult = $database->query($sql);
+$DBresult = sqlsrv_query($database, $sql);
 
-if ($DBresult->num_rows >= 1 && $verifyCode != "")
+if (sqlsrv_has_rows($DBresult) && $verifyCode != "")
 {
-  $userInfo = $DBresult->fetch_assoc();
+  $userInfo = sqlsrv_fetch_array($DBresult, SQLSRV_FETCH_ASSOC);
   $sql = "UPDATE users SET level = 1, verify = '' WHERE id = ". $userInfo['id'];
-  $database->query($sql);
+  sqlsrv_query($database, $sql);
   ?>
 
   <h2>Email Verification</h2>

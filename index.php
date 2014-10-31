@@ -61,8 +61,11 @@ if (!$database) {
 
 $loginError = "";
 if (isset($_POST['user']) && isset($_POST['pass'])) {
-    $user = addslashes($_POST['user']);
-    $pass = addslashes(sha1($_POST['pass']));
+    //$user = addslashes($_POST['user']);
+    $user = str_replace("'", "''", $_POST['user']);
+    
+    //$pass = addslashes(sha1($_POST['pass']));
+    $pass = str_replace("'", "''", sha1($_POST['pass']));
 
     $sql = "SELECT * FROM users WHERE username = '$user' AND password = '$pass' AND level > 0";
     $statement = sqlsrv_query($database, $sql);

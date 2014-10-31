@@ -25,7 +25,8 @@ function printAnswer($answer, $type, $value=null)
                 . "type='text' "
                 . "name='$namePrefix"."text_".$type."_{$answer['id']}' "
                 . "id='".$namePrefix.$type."_{$answer['id']}' "
-                . "value='$value' $questionType class='textbox form_question' />";
+                . "value=\"" . str_replace('"','&quot;',$value) . "\" $questionType class='textbox form_question' />";
+                //original: "value='$value' $questionType class='textbox form_question' />";
                 
             break;
         case "radio":

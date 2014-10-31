@@ -3,8 +3,8 @@
 if($verifyCode != "")
 {
   $sql = "SELECT id FROM users WHERE password_verify = '$verifyCode'";
-  $result = $database->query($sql);
-  if($result->num_rows == 1)
+  $result = sqlsrv_query($database, $sql);
+  if(sqlsrv_has_rows($result))
   {
     ?>
 
