@@ -25,7 +25,7 @@ if($result->num_rows >= 1)
     $key  = $database->real_escape_string($key);
     $value = $database->real_escape_string($value);
 
-    $sql_value .= "$pre `$key`='$value'";
+    $sql_value .= "$pre $key='$value'";
     $pre = ",";
 
   }
@@ -46,7 +46,7 @@ if($result->num_rows >= 1)
       $_POST[$key] = $database->real_escape_string($_POST[$key]);
       continue;
     }
-    $fields .= "$pre `$key`";
+    $fields .= "$pre $key";
     $values .= "$pre '$value'";
     $pre = ",";
   }

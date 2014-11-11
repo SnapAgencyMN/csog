@@ -38,7 +38,7 @@ class HelpCopy {
     public function saveCopy($title, $body, $order, $copyID = 0)
     {
         $this->copyTextTable->clear_data();
-        $this->copyTextTable->data['title'] = $title;
+        $this->copyTextTable->data['title'] = str_replace("'", "''", $title);
         $this->copyTextTable->data['body'] = $body;
         //$this->copyTextTable->data['`order`'] = $order;
         $this->copyTextTable->data['[order]'] = $order;

@@ -17,20 +17,22 @@ class Projects {
     
     public function search($zip, $name, $parcelID)
     {
+        $name = str_replace("'", "''", $name);
+        
         $condition = "";
         if (!empty($zip))
         {
-            $condition .= "`zip` = '$zip' ";
+            $condition .= "zip = '$zip' ";
         }
         
         if (!empty($name))
         {
-            $condition .= "AND `name` = '$name' ";
+            $condition .= "AND name = '$name' ";
         }
         
         if (!empty($parcelID))
         {
-            $condition .= "AND `parcelIDNumber` = '$parcelID' ";
+            $condition .= "AND parcelIDNumber = '$parcelID' ";
         }
         
         $condition = ltrim($condition, "AND");

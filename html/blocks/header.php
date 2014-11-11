@@ -75,8 +75,7 @@
           </div>
         </div>
         <?php
-            
-            if($path[1] == "register" || ($path[1] == "projects" && @$path[2] == "view") || $path[1] == "account" )
+            if(($path[1] == "register" && @$_REQUEST['registersubmit'] != 1) || ($path[1] == "projects" && @$path[2] == "view") || $path[1] == "account" )
             { 
                 echo '<div id="asterisk">Entries marked * are required fields.</div>';
             }

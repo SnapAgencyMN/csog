@@ -45,9 +45,9 @@ class Db{
 
 	public static function query($sql,$returnObject=false){
 		//MSSQL specific hacks
-                $sql = str_replace("`", "", $sql);
+                //$sql = str_replace("`", "", $sql);
                 //$sql = str_replace("label", "[label]", $sql);
-                $sql = str_replace('"',"'", $sql);
+                //$sql = str_replace('"',"'", $sql);
 
 		self::$last_query=$lastQuery=$sql;
 		$results= sqlsrv_query(self::$connection, $sql);

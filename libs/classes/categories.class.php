@@ -18,7 +18,7 @@ If a user hits a spawned category, he is presented with a select drop down/input
  */
 class Categories {
     
-    //private $orderStr = "ORDER BY `order`";
+    //private $orderStr = "ORDER BY order";
     private $orderStr = "ORDER BY [order]";
     
     /**
@@ -44,7 +44,7 @@ class Categories {
     {
         if ($sectionID > 0)
         {
-            $categories = $this->categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID {$this->orderStr}");
+            $categories = $this->categoriesTable->fetchAll(" WHERE sectionID = $sectionID {$this->orderStr}");
             
             return $categories;
         }
@@ -54,7 +54,7 @@ class Categories {
     {
         if ($userID > 0 && $categoryID > 0)
         {
-            $sql = "SELECT `number` FROM {$this->categories_mapping_table} WHERE `categoryID` = $categoryID AND `userID` = $userID";
+            $sql = "SELECT number FROM {$this->categories_mapping_table} WHERE categoryID = $categoryID AND userID = $userID";
             
             $result = $this->db->query($sql, true);
 
@@ -65,9 +65,10 @@ class Categories {
     
     public function getDetailsByTitle($sectionID, $title)
     {
-        //$result = $this->categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID AND `title` = '$title' {$this->orderStr} LIMIT 1");
+        $title = str_replace("'", "''", $title);
+        //$result = $this->categoriesTable->fetchAll(" WHERE sectionID = $sectionID AND title = '$title' {$this->orderStr} LIMIT 1");
         $this->categoriesTable->limit = 1;
-        $result = $this->categoriesTable->fetchAll(" WHERE `sectionID` = $sectionID AND `title` = '$title' {$this->orderStr} ");
+        $result = $this->categoriesTable->fetchAll(" WHERE sectionID = $sectionID AND title = '$title' {$this->orderStr} ");
         $this->categoriesTable->limit = 0;
         
         return $result[0];
@@ -94,7 +95,7 @@ class Categories {
             }
             else
             {
-                $sql = "INSERT INTO `{$this->categories_mapping_table}` (`categoryID`, `userID`, `number`) VALUES ($categoryID, $userID, $value)";           
+                $sql = "INSERT INTO {$this->categories_mapping_table} (categoryID, userID, number) VALUES ($categoryID, $userID, $value)";           
             }
             $this->db->query($sql);
 
@@ -103,11 +104,11 @@ class Categories {
     
     public function saveCategory($title, $sectionID, $type, $spawn_label, $order, $categoryID = 0)
     {
-        $this->categoriesTable->data['title'] = $title;
+        $this->categoriesTable->data['title'] = str_replace("'", "''", $title);
         $this->categoriesTable->data['sectionID'] = $sectionID;
         $this->categoriesTable->data['type'] = $type;
-        $this->categoriesTable->data['spawn_box_label'] = $spawn_label;
-        //$this->categoriesTable->data['`order`'] = $order;
+        $this->categoriesTable->data['spawn_box_label'] = str_replace("'", "''", $spawn_label);
+        //$this->categoriesTable->data['order'] = $order;
         $this->categoriesTable->data['[order]'] = $order;
 
         if ($categoryID > 0)

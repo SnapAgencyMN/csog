@@ -43,7 +43,7 @@ if ($action == "load_user_image")
     
     if ($id != "0")
     {
-        $sql = "SELECT * FROM `temp_images` WHERE `imageName` LIKE '$id%'";
+        $sql = "SELECT * FROM temp_images WHERE imageName LIKE '$id%'";
         $tempDetails = Db::query($sql); 
         $tmpArray = Db::fetch_array($tempDetails);
 

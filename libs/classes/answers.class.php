@@ -13,7 +13,7 @@ Answers are the last element in the tree. They are used to prompt user for an in
  */
 class Answers {
     
-    //private $orderStr = "ORDER BY `order`";
+    //private $orderStr = "ORDER BY order";
     private $orderStr = "ORDER BY [order]";
     
     /**
@@ -37,7 +37,8 @@ class Answers {
     
     public function getDetailsByLabel($label, $questionID)
     {
-        $results = $this->answersTable->fetchAll(" WHERE `label` = \"$label\" AND `questionID` = $questionID");
+        $label = str_replace("'", "''", $label);
+        $results = $this->answersTable->fetchAll(" WHERE label = '$label' AND questionID = $questionID");
         
         return $results;
     }
@@ -48,9 +49,9 @@ class Answers {
         {
             $suffix = "";
             if (!empty($type))
-                $suffix .= "AND `type` = '$type' ";
+                $suffix .= "AND type = '$type' ";
             
-            $answers = $this->answersTable->fetchAll(" WHERE `questionID` = $questionID $suffix {$this->orderStr}");
+            $answers = $this->answersTable->fetchAll(" WHERE questionID = $questionID $suffix {$this->orderStr}");
             
             return $answers;
         }
@@ -60,7 +61,7 @@ class Answers {
     {
         if ($questionID > 0)
         {
-            $answers = $this->answersTable->fetchAll(" WHERE `questionID` = $questionID AND `parentID` = 0 {$this->orderStr}");
+            $answers = $this->answersTable->fetchAll(" WHERE questionID = $questionID AND parentID = 0 {$this->orderStr}");
             
             return $answers;
         }
@@ -70,7 +71,7 @@ class Answers {
     {
         if ($answerID > 0)
         {
-            $answers = $this->answersTable->fetchAll(" WHERE `parentID` = $answerID {$this->orderStr}");
+            $answers = $this->answersTable->fetchAll(" WHERE parentID = $answerID {$this->orderStr}");
             
             return $answers;
         }
@@ -93,10 +94,10 @@ class Answers {
         $this->answersTable->data['pdfOutput'] = $pdf;
         $this->answersTable->data['parentID'] = $parentID;
         $this->answersTable->data['questionID'] = $questionID;
-        //$this->answersTable->data['`order`'] = $order;
+        //$this->answersTable->data['order'] = $order;
         $this->answersTable->data['[order]'] = $order;
         $this->answersTable->data['[default]'] = $default;
-        //$this->answersTable->data['`default`'] = $default;
+        //$this->answersTable->data['default'] = $default;
 
         if ($answerID > 0)
         {
@@ -150,9 +151,9 @@ class Answers {
         {
             $otherSQL = "";
             if ($otherID > 0)
-                $otherSQL = "AND `other_sequenceID` = $otherID";
+                $otherSQL = "AND other_sequenceID = $otherID";
 
-            $values = $this->answersMappingTable->fetchAll(" WHERE `projectID` = $projectID AND `userID`=$userID AND `answerID` = $answerID AND `spawn_sequenceID` = $spawnID $otherSQL ORDER BY `other_sequenceID`");
+            $values = $this->answersMappingTable->fetchAll(" WHERE projectID = $projectID AND userID=$userID AND answerID = $answerID AND spawn_sequenceID = $spawnID $otherSQL ORDER BY other_sequenceID");
             return $values;
         }
         else
@@ -185,7 +186,7 @@ class Answers {
             }
             else
             {
-                $sql = "INSERT INTO `{$this->answers_mapping_table_name}` (`userID`, `projectID`,  `answerID`, `spawn_sequenceID`, `other_sequenceID`, `value`) VALUES ($userID, $projectID, $answerID, $spawn_sequenceID, $other_sequenceID, \"$value\")";
+                $sql = "INSERT INTO {$this->answers_mapping_table_name} (userID, projectID,  answerID, spawn_sequenceID, other_sequenceID, value) VALUES ($userID, $projectID, $answerID, $spawn_sequenceID, $other_sequenceID, '$value')";
 
                 $id = $this->answersMappingTable->insert_by_sql($sql);
             }
@@ -196,7 +197,7 @@ class Answers {
     
     public function clearAll($userID, $projectID, $answerID)
     {
-        $ids = $this->answersMappingTable->fetchAll(" WHERE `projectID` = $projectID AND `userID` = $userID AND `answerID` = $answerID ");
+        $ids = $this->answersMappingTable->fetchAll(" WHERE projectID = $projectID AND userID = $userID AND answerID = $answerID ");
         
         foreach ($ids as $id)
         {

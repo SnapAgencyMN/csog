@@ -7,19 +7,19 @@ if(isset($_SESSION['USER']['LoggedIn']) && $_SESSION['USER']['LoggedIn'] = true)
 
 if(isset($_POST['registersubmit']) && $_POST['registersubmit'] == "1")
 {
-  $name = $_POST['name'];
-  $company_name = $_POST['companyName'];
-  $email = $_POST['email'];
-  $username = $_POST['username'];
-  $password = sha1($_POST['password']);
-  $verify = sha1($username . time());
-  $mailingAddress = $_POST['mailingAddress'];
-  $city = $_POST['city'];
-  $state = $_POST['state'];
-  $zip = $_POST['zip'];
-  $website = $_POST['website'];
-  $phoneNumber = $_POST['phoneNumber'];
-  $image = $_POST['logoImage'];
+  @$name = $_POST['name'];
+  @$company_name = $_POST['companyName'];
+  @$email = $_POST['email'];
+  @$username = $_POST['username'];
+  @$password = sha1($_POST['password']);
+  @$verify = sha1($username . time());
+  @$mailingAddress = $_POST['mailingAddress'];
+  @$city = $_POST['city'];
+  @$state = $_POST['state'];
+  @$zip = $_POST['zip'];
+  @$website = $_POST['website'];
+  @$phoneNumber = $_POST['phoneNumber'];
+  @$image = $_POST['logoImage'];
 
   // Check if the user already exist
   //$username = addslashes($username);

@@ -11,7 +11,7 @@ In addition, every question can be a parent and store a number of children quest
  */
 class Questions {
     
-    //private $orderStr = "ORDER BY `order`";
+    //private $orderStr = "ORDER BY order";
     private $orderStr = "ORDER BY [order]";
     
     /**
@@ -37,7 +37,7 @@ class Questions {
     {
         if ($categoryID > 0)
         {
-            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID {$this->orderStr}");
+            $questions = $this->questionsTable->fetchAll(" WHERE categoryID = $categoryID {$this->orderStr}");
             
             return $questions;
         }
@@ -47,7 +47,7 @@ class Questions {
     {
         if ($categoryID > 0)
         {
-            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `type`='$type' {$this->orderStr}");
+            $questions = $this->questionsTable->fetchAll(" WHERE categoryID = $categoryID AND type='$type' {$this->orderStr}");
             
             return $questions;
         }
@@ -58,8 +58,8 @@ class Questions {
         if (!empty($title) && $categoryID > 0)
         {
             $this->questionsTable->limit = 1;
-            //$questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `title` = '$title' {$this->orderStr} LIMIT 1");
-            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `title` = '$title' {$this->orderStr} ");
+            //$questions = $this->questionsTable->fetchAll(" WHERE categoryID = $categoryID AND title = '$title' {$this->orderStr} LIMIT 1");
+            $questions = $this->questionsTable->fetchAll(" WHERE categoryID = $categoryID AND title = '$title' {$this->orderStr} ");
             $this->questionsTable->limit = 0;
             
             return $questions[0];
@@ -70,7 +70,7 @@ class Questions {
     {
         if (!empty($title) && $categoryID > 0)
         {
-            $questions = $this->questionsTable->fetchAll(" WHERE `categoryID` = $categoryID AND `title` = '$title' {$this->orderStr}");
+            $questions = $this->questionsTable->fetchAll(" WHERE categoryID = $categoryID AND title = '$title' {$this->orderStr}");
             
             return $questions;
         }
@@ -83,12 +83,12 @@ class Questions {
 
         $this->questionsTable->clear_data();
         $this->questionsTable->data['title'] = $title;
-        $this->questionsTable->data['hint'] = $hint;
+        $this->questionsTable->data['hint'] = str_replace("'", "''", $hint);
         $this->questionsTable->data['categoryID'] = $categoryID;
         $this->questionsTable->data['type'] = $type;
-        //$this->questionsTable->data['`order`'] = $order;
+        //$this->questionsTable->data['order'] = $order;
         $this->questionsTable->data['[order]'] = $order;
-        $this->questionsTable->data['`required`'] = $required;
+        $this->questionsTable->data['required'] = $required;
         $otherAnswersExist = false;
         if ($questionID > 0)
         {

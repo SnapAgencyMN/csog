@@ -12,7 +12,7 @@ User selects a dynamic section from the left hand-side menu. The page does not h
  */
 class Sections {
     
-    //private $orderStr = "ORDER BY `order`";
+    //private $orderStr = "ORDER BY order";
     private $orderStr = "ORDER BY [order]";
     
     /**
@@ -28,9 +28,36 @@ class Sections {
     
     public function listTopSections()
     {
-        $sections = $this->sectionsTable->fetchAll("WHERE `type` != 'child' {$this->orderStr}");
+        $sections = $this->sectionsTable->fetchAll("WHERE type != 'child' {$this->orderStr}");
         
         return $sections;
+    }
+    
+    public function listAllSections()
+    {
+        $returnArr = array();
+        
+        $topLevelSections = $this->listTopSections();
+        
+        foreach ($topLevelSections as $section)
+        {
+            if ($section['type'] == 'standalone')
+                $returnArr[] = $section;
+            elseif ($section['type'] == "parent")
+            {
+                $returnArr[] = $section;
+                $children = $this->listChildrenSections($section['sectionID']);
+                
+                foreach ($children as $child)
+                {
+                    $returnArr[] = $child;
+                }
+            }
+        }
+        
+        ///$sections = $this->sectionsTable->fetchAll("WHERE type != 'parent' {$this->orderStr} ");
+        
+        return $returnArr;
     }
     
     public function listNonParentSections()
@@ -54,7 +81,7 @@ class Sections {
             }
         }
         
-        ///$sections = $this->sectionsTable->fetchAll("WHERE `type` != 'parent' {$this->orderStr} ");
+        ///$sections = $this->sectionsTable->fetchAll("WHERE type != 'parent' {$this->orderStr} ");
         
         return $returnArr;
     }
@@ -70,7 +97,7 @@ class Sections {
     
     public function listParentSections()
     {
-        $parents = $this->sectionsTable->find_by_attribute("`type`", 'parent');
+        $parents = $this->sectionsTable->find_by_attribute("type", 'parent');
         
         return $parents;
 
@@ -80,7 +107,7 @@ class Sections {
     {   
         if ($parentID > 0 && $userID > 0)
         {
-            $sql = "SELECT sectionID FROM `{$this->sections_mapping_table}` WHERE `parentID`=$parentID AND `userID`=$userID";
+            $sql = "SELECT sectionID FROM {$this->sections_mapping_table} WHERE parentID=$parentID AND userID=$userID";
             $sections = $this->sectionsMappingTable->find_by_sql($sql);
             
             return $sections;
@@ -119,7 +146,7 @@ class Sections {
             }
             else
             {
-                $sql = "INSERT INTO `{$this->sections_mapping_table}` (`userID`, `sectionID`, `parentID`) VALUES ($userID, $sectionID, $parentID) ";
+                $sql = "INSERT INTO {$this->sections_mapping_table} (userID, sectionID, parentID) VALUES ($userID, $sectionID, $parentID) ";
             }
             $this->db->query($sql);
         }
@@ -129,7 +156,7 @@ class Sections {
     {
         if ($userID >0 && $sectionID >0 && $parentID >0)
         {            
-            $sql = "DELETE FROM `{$this->sections_mapping_table}` WHERE `userID` = $userID AND `sectionID` = $sectionID AND `parentID` = $parentID";
+            $sql = "DELETE FROM {$this->sections_mapping_table} WHERE userID = $userID AND sectionID = $sectionID AND parentID = $parentID";
             
             $this->db->query($sql);
         }
@@ -140,7 +167,7 @@ class Sections {
     {
         if ($userID > 0 && $parentID >0)
         {
-            $sql = "DELETE FROM `{$this->sections_mapping_table}` WHERE `parentID`=$parentID AND `userID`=$userID";
+            $sql = "DELETE FROM {$this->sections_mapping_table} WHERE parentID=$parentID AND userID=$userID";
             
             $this->db->query($sql);
         }
@@ -148,11 +175,11 @@ class Sections {
     
     public function saveSection($title, $description, $order, $parentID=0, $type="", $sectionID =0)
     {
-        $this->sectionsTable->data['title'] = $title;
-        $this->sectionsTable->data['description'] = $description;
+        $this->sectionsTable->data['title'] = str_replace("'", "''", $title);
+        $this->sectionsTable->data['description'] = str_replace("'", "''", $description);
         $this->sectionsTable->data['parentID'] = $parentID;
         $this->sectionsTable->data['[order]'] = $order;
-        //$this->sectionsTable->data['`order`'] = $order;
+        //$this->sectionsTable->data['order'] = $order;
 
         $this->sectionsTable->data['type'] = $parentID > 0 ? "child" : $type;
 
@@ -191,7 +218,7 @@ class Sections {
     public function getNextSectionID($currentSectionID, $userID)
     {
         $check = false;
-        $sections = $this->listNonParentSections();
+        $sections = $this->listAllSections();
         
         foreach ($sections as $section)
         {
@@ -221,9 +248,9 @@ class Sections {
     
     public function isLastSection($sectionID)
     {
-        //$lastSection = $this->sectionsTable->fetchAll("WHERE `type` = 'standalone' ORDER BY `order` DESC LIMIT 1");
+        //$lastSection = $this->sectionsTable->fetchAll("WHERE type = 'standalone' ORDER BY order DESC LIMIT 1");
         $this->sectionsTable->limit = 1;
-        $lastSection = $this->sectionsTable->fetchAll("WHERE `type` = 'standalone' ORDER BY [order] DESC");
+        $lastSection = $this->sectionsTable->fetchAll("WHERE type = 'standalone' ORDER BY [order] DESC");
         $this->sectionsTable->limit = 0;
         //print_r($lastSection);
         if ($lastSection[0]['sectionID'] == $sectionID)
@@ -237,8 +264,8 @@ class Sections {
         $i = 0;
         $nextSectionID = 0;
         
-        //$sql = "SELECT * FROM `{$this->table_name}` WHERE `type` != 'child' ORDER BY `order`";
-        $sql = "SELECT * FROM `{$this->table_name}` WHERE `type` != 'child' ORDER BY [order]";
+        //$sql = "SELECT * FROM {$this->table_name} WHERE type != 'child' ORDER BY order";
+        $sql = "SELECT * FROM {$this->table_name} WHERE type != 'child' ORDER BY [order]";
         $topLevelSections = $this->sectionsTable->find_by_sql($sql);
         
         foreach ($topLevelSections as $section)
