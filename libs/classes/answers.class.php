@@ -149,6 +149,7 @@ class Answers {
     {
         if ($answerID > 0)
         {
+            $this->answersMappingTable->limit = 1;
             $otherSQL = "";
             if ($otherID > 0)
                 $otherSQL = "AND other_sequenceID = $otherID";
@@ -168,14 +169,15 @@ class Answers {
             $value = $this->db->escape($value);
             try
             {
-                $selectSQL = "SELECT id FROM {$this->answers_mapping_table_name} WHERE userID = $userID AND projectID = $projectID AND answerID = $answerID AND spawn_sequenceID = $spawn_sequenceID "
-                        . "AND other_sequenceID = $other_sequenceID;";
-                $resource = $this->db->query($selectSQL);
-                $result = sqlsrv_fetch_array($resource, SQLSRV_FETCH_ASSOC);
-                $id = $result['id'];
+                $currentAnswer = $this->getUserAnswers($userID, $projectID, $answerID, $spawn_sequenceID, $other_sequenceID);
+                if (!empty($currentAnswer))
+                    $id = $currentAnswer[0]['id'];
+                else
+                    $id = 0;
             }
             catch (Exception $e)
             {
+                //echo $e->getTraceAsString();
                 $id = 0;
             }
             

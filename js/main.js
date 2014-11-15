@@ -719,7 +719,8 @@ function updateSpawn(categoryID, host)
 {
     var value = $('#spawn_'+categoryID).val();
     
-    var r = confirm ("All unsaved data will be lost, are you sure you want to continue?")
+    var r = true;
+    //var r = confirm ("All unsaved data will be lost, are you sure you want to continue?")
     
     if (r == true)
     {
@@ -728,7 +729,8 @@ function updateSpawn(categoryID, host)
             data:"action=save_spawn_input&categoryID=" + categoryID + "&value="+value,
             dataType: "text",
             success: function(data, textStatus, jqXHR){
-                location.reload();
+                $("#mainPage").attr("action", window.location.href);
+                submitForm("mainPage");
             },
             error:function(err){
                 //alert(err);

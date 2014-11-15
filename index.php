@@ -11,6 +11,8 @@ require_once("libs".DIRECTORY_SEPARATOR."classes".DIRECTORY_SEPARATOR."answers.c
 require_once("libs".DIRECTORY_SEPARATOR."classes".DIRECTORY_SEPARATOR."helpCopy.class.php");
 require_once("libs".DIRECTORY_SEPARATOR."classes".DIRECTORY_SEPARATOR."projects.class.php");
 require_once("libs".DIRECTORY_SEPARATOR."phpmailer".DIRECTORY_SEPARATOR."PHPMailerAutoload.php");
+ini_set('max_execution_time', 120);
+
 session_save_path(__DIR__."".DIRECTORY_SEPARATOR."temp");
 
 if (DEBUG) {

@@ -66,11 +66,14 @@ function printCategory ($category, $spawnID = -1)
 
 function printQuestion($question, $spawnID)
 {
-    global $answersClass, $userID, $projectID, $html;
+    debug("Printing out question = {$question['id']}");
 
+    global $answersClass, $userID, $projectID, $html;
+    
     $answers = $answersClass->listParentAnswers($question['id']);
 
     $currentQID = "";   
+    debug("Answers are ".print_r($answers,true));
     foreach ($answers as $answer)
     {   
         $values = $answersClass->getUserAnswers($userID, $projectID, $answer['id'], $spawnID);
@@ -87,6 +90,7 @@ function printQuestion($question, $spawnID)
                     default:
                         break;
                 }
+                debug ("Option 1");
                 printAnswers($answer, $spawnID, 1);
             }
             else
@@ -97,9 +101,17 @@ function printQuestion($question, $spawnID)
                     $html .= "<h4>{$question['title']}</h4>";
                 }
             }
-
+/*
+            if (count($values) > 1)
+            {
+                debug("COUNT OF VALUES IS ".count($values));
+                debug("VALUES FOR THIS ANSWER ARE ".print_r($values,true));
+                die();
+            }
+*/            
             for ($i=0; $i<count($values); $i++)
             {
+                debug ("Option 2");
                 printAnswers($answer, $spawnID, $i);
             }
         }
@@ -110,7 +122,10 @@ function printQuestion($question, $spawnID)
             {
                 $v = $answersClass->getUserAnswers($userID, $projectID, $a['id']);
                 if (!empty($v))
+                {
                     printAnswers($answer, $spawnID, 0);
+                    debug ("Option 3");
+                }
             }
         }
 
@@ -125,11 +140,14 @@ function printQuestion($question, $spawnID)
                 if (!empty($child_values) || $child['type'] == "static")
                 {
                     if ($child['type'] == "static") // since values array is empty, triggering one print manually.
+                    {
                         printAnswers($answer, $spawnID, 1);
-
+                        debug ("Option 4");
+                    }
                     for ($i=0; $i<count($child_values); $i++)
                     {
                         printAnswers($child, $spawnID, $i);
+                        debug ("Option 5");
                     }
                 }
 		elseif ($child['default'] == 1)
@@ -138,7 +156,10 @@ function printQuestion($question, $spawnID)
                     $parentAnswer = $answersClass->getUserAnswers($userID, $projectID, $answer['id'], $spawnID, 0);
 
                     if (!empty($parentAnswer))
+                    {
                         printAnswers($child, $spawnID, 0);
+                        debug ("Option 6");
+                    }
                 }
             }
         } 
@@ -147,6 +168,9 @@ function printQuestion($question, $spawnID)
 
 function printAnswers($answer, $spawnID, $otherID)
 {
+    ini_set("display_errors", 1);
+    debug("Printing out answer = {$answer['id']}");
+
     global $html, $answersClass, $userID, $projectID;
     @session_start();
     $pdfOutput = $answer['pdfOutput'];
@@ -173,7 +197,7 @@ function printAnswers($answer, $spawnID, $otherID)
 
             if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif") ||strstr($value, ".tiff"))
             {
-                $value = "<img src='/media/uploads/$value' /><br />";
+                $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/$value' /><br />";
 		$imageAssigned = true;
             }
 
@@ -196,18 +220,18 @@ function printAnswers($answer, $spawnID, $otherID)
 	    {
 		if ($_SESSION['USER']['Admin'] == 1)
 		{
-		    $value = "<img src='/media/uploads/defaults/{$answer['id']}' /><br />";
+		    $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/defaults/{$answer['id']}' /><br />";
 		}
 		elseif (!empty($value))
 		{
 			if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
 			{
-			    $value = "<img src='/media/uploads/$value' /><br />";
+			    $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/$value' /><br />";
             		}
 		}
   		else
 		{
-		    $value = "<img src='/media/uploads/defaults/{$answer['id']}' /><br />";
+		    $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/defaults/{$answer['id']}' /><br />";
 		}
 		$imageAssigned = true;
             }
@@ -215,7 +239,7 @@ function printAnswers($answer, $spawnID, $otherID)
 	    {
 		if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
             	{
-                    $value = "<img src='/media/uploads/$value' /><br />";
+                    $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/$value' /><br />";
 		    $imageAssigned = true;
             	}
             }
@@ -251,4 +275,13 @@ function rome($N)
     for($a=5,$b=$s='';$N;$b++,$a^=7)
             for($o=$N%$a,$N=$N/$a^0;$o--;$s=$c[$o>2?$b+$N-($N&=-2)+$o=1:$b].$s);
     return $s;
+}
+
+function debug($m)
+{
+    return false;
+    $date = date("Y-m-d H:i:s");
+    $message = "[$date] $m";
+    echo "$message<br />";
+    error_log("$message\n");
 }

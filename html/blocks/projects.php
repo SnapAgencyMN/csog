@@ -80,7 +80,7 @@ if (isset($_POST['createProjectSubmit']) && $_POST['createProjectSubmit'] == 1)
       $image = $filenamesave;
     }
   }
-  if(isset($_POST['editProjectSubmit']) && $_POST['editProjectSubmit'] != 0)
+  if(isset($_POST['editProjectSubmit']) && $_POST['editProjectSubmit'] > 0)
   {
     if($image == "")
     {
@@ -90,8 +90,8 @@ if (isset($_POST['createProjectSubmit']) && $_POST['createProjectSubmit'] == 1)
   } else
   {
     $sql = "INSERT INTO projects (name, date, parcelIDNumber, gps, latitude, longitude, systemStreetAddress, webAddress, other, mailingAddress, users_id, [file], projectAddress, city, state, zip, easement_desc, contact_phone, contact_name, contact_address, contact_city, contact_state, contact_zip, contact_email, easement) VALUES ('$projectName','$date','$parcelIDNumber','$gps','$latitude','$longitude','$systemStreetAddress','$webAddress','$other','$mailingAddress','$userID','$image','$projectAddress','$city','$state','$zip','$easement_description','$contact_phone','$contact_name','$contact_address','$contact_city','$contact_state','$contact_zip','$contact_email','$easement')";
-    sqlsrv_query($database,$sql);
   }
+  sqlsrv_query($database,$sql);
 
 }
 

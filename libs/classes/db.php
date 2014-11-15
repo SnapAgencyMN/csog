@@ -7,16 +7,49 @@ class Db{
 	private $magic_quotes_active;
 	private static $real_escape_string_exists;
 	private $dbInfo;
-	
+	private static $simpleProfile = false;
+        
+        private static $queryCount;
+        private static $totalQueryTime;
+        private static $createdTime;
+        
 	function __construct($dbInfo){
 		$this->dbInfo=$dbInfo;
 		$this->open_connection($dbInfo);
 		$this->magic_quotes_active = get_magic_quotes_gpc();
 		self::$real_escape_string_exists = function_exists("mysqli_real_escape_string");
+                
+                if(self::$simpleProfile)
+                    self::$createdTime=microtime(true);
+                
 		//mysqli_query("SET NAMES 'utf8'");
                 ini_set('mssql.charset', 'UTF-8');
 	}
 	
+        function __destruct()
+        {
+            // Calculate simple query profile
+            if(self::$simpleProfile)
+            {
+                $now = microtime(true);
+                $diff = round($now - self::$createdTime,3);
+                if(PHP_SAPI==="cli")
+                {
+                    $self = $_SERVER['PHP_SELF'];
+                    $d = '['.date("Y-m-d H:i:s").'] ';
+                }
+                else
+                {
+                    $self = "http://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}";
+                    $d = '';
+                }
+                
+                $peakMem = memory_get_peak_usage(true);
+                $peakMem = round($peakMem/1024);
+                
+                error_log("{$d}DBTool Profile: num queries=".self::$queryCount." queryTime=".round(self::$totalQueryTime,3)." objTime=$diff peakMem={$peakMem}kB - for $self  ");
+            }  
+        }
 	public function open_connection($dbInfo){
             /*
 		self::$connection = mysqli_connect($dbInfo['host'],$dbInfo['user'],$dbInfo['pass']);
@@ -50,6 +83,10 @@ class Db{
                 //$sql = str_replace('"',"'", $sql);
 
 		self::$last_query=$lastQuery=$sql;
+                
+                if(self::$simpleProfile)
+                    $qStart = microtime(true);
+                
 		$results= sqlsrv_query(self::$connection, $sql);
 		self::confirm_query($results);
                 
@@ -72,7 +109,18 @@ class Db{
 				}
 			}			
 			return $resultArray;			
-		}				
+		}
+                
+                if(self::$simpleProfile)
+                {
+                    $qEnd = microtime(true);
+                    $diff = $qEnd - $qStart;
+                    //error_log($diff."\n");
+                    self::$totalQueryTime += $diff;
+                }
+                
+                self::$queryCount += 1;
+
 		return $results;			
 	}
 	

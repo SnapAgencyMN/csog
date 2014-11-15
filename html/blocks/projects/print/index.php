@@ -23,7 +23,7 @@ $css .= "h4 {color:#5e3229; margin-bottom:10px;margin-top:0px;}\n";
 $css .= "h3 {color:#5e3229; margin-bottom:10px;margin-top:0px;}\n";
 $css .= "h2 {color:#5e3229; margin-bottom:10px;margin-top:0px;}\n";
 $css .= "h1 {color:#5e3229; margin-bottom:10px;margin-top:0px;}\n";
-$css .= "img {max-width: 800px; max-height:600px; width:80%;margin-left:10%;}\n";
+$css .= "img {max-width: 400px; max-height:300px; width:80%;margin-left:10%;}\n";
 $css .= "div {page-break-inside: avoid;}\n";
 $css .= ".content { margin-left:30px; margin-top:0px; margin-bottom:10px;}\n";
 $css .= ".pdfImg { width:500px;}\n";
@@ -63,6 +63,6 @@ foreach ($times as $time)
     
 }
  * 
- */
+*/
 $mpdf->Output();
 
