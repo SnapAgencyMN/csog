@@ -46,4 +46,4 @@ foreach ($sections as $section)
     $times["Section $secN finish"] = microtime(true); 
     $i++;
     
-}
+    }

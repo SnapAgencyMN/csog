@@ -176,21 +176,21 @@ function printAnswers($answer, $spawnID, $otherID)
     $pdfOutput = $answer['pdfOutput'];
     $value = "";
     $imageAssigned = false;
-    
+      
     preg_match_all("/%ID=[0-9]+%/", $pdfOutput, $ids);
-    
+      
     if (count($ids[0]) > 0 )
-    {
+    { 
         foreach ($ids[0] as $id)
         {
             $id_arr = explode("=", $id);
             $answerID = trim($id_arr[1], "%");
             $id_value = $answersClass->getUserAnswers($userID, $projectID, $answerID, $spawnID, $otherID);
 
-            if ($answerID = $answer['id'])
+            if ($answerID == $answer['id'])
             {
                 $pdfOutput = str_replace($id, "%SELF%", $pdfOutput);
-                break;
+                continue;
             }
             
             $value = $id_value[0]['value'];
