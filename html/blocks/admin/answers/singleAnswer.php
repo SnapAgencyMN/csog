@@ -32,6 +32,29 @@
         {
             $imageDefault = "<label for='default'>Has default image</label><input $default style = 'margin-top: 10px;' type='checkbox' name='default' id='default' value='1' />
                 <br />";
+            
+            $captionsChecked = "";
+            $captionID = "";
+            $displayInput = "display:none;";
+            if(strstr($pdfOutput, "<div class='imgCaption'>"))
+            {
+                $captionsChecked = "checked='checked'";
+                $displayInput = "";
+                
+                preg_match_all("/%ID=[0-9]+%/", $pdfOutput, $ids);
+                
+                foreach ($ids[0] as $id)
+                {
+                    $id_arr = explode("=", $id);
+                    $captionID = trim($id_arr[1], "%");
+                }
+
+            }
+            
+            $captionsBox = "<label for='captionsBox' style='min-width:109px'>Has caption:</label>"
+                    . "<input $captionsChecked style = 'margin-top: 10px;' onchange='toggleCaptionsInput()' type='checkbox' name='captionsBoxEnabled' id='captionsBox' value='1' />"
+                    . "<input id='imageCaptionsAnswerID' name='imageCaptionsAnswerID' onchange='validateDigitalInput(this)' style = 'margin-left:10px; $displayInput' type='text' placeholder='Captions AnswerID (Digits only)' value='$captionID'/>"
+                    . "<br />";
         }
         
         switch ($info['type'])
@@ -137,6 +160,9 @@
                 </table>
                 <div id='defaultImageInput'>
                     $imageDefault
+                </div>
+                <div id='captionsBoxInput'>
+                    $captionsBox
                 </div>
                 <input style = 'margin-top: 10px;' type='submit' value='Submit' />
                 <input type='hidden' name='action' value='save-answer' />

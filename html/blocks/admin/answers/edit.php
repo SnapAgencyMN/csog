@@ -24,6 +24,28 @@
             $default = getParameterNumber("default");
             $parentID = getParameterNumber('parentID');
             
+            if ($type == "image")
+            {
+                $captionsHTML = "";
+                $imageCaptionID = getParameterString("imageCaptionsAnswerID");
+                if (getParameterNumber("captionsBoxEnabled") == 1)
+                {
+                    $captionsHTML = "<div class='imgCaption'>%ID=$imageCaptionID%</div>";
+                    
+                    if (strstr($pdf, $captionsHTML) === false)
+                    {
+                        $pdf .= "<br />$captionsHTML";
+                    }
+                }
+                else {
+                    if (strstr($pdf, "<div class='imgCaption'>"))
+                    {
+                        $pdf = substr($pdf, 0, strpos($pdf, "<div class='imgCaption'>"));
+                        $pdf = trim($pdf, "<br />");
+                    }
+                }
+            }
+            
             $answersClass->saveAnswer($label, $type, $pdf, $parentID, $questionID, $order, $default, $answerID);
         }
         if ($action == "delete-answer")

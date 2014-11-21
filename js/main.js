@@ -803,3 +803,24 @@ function checkPhoneNumber(elem)
         alert("Invalid phone number. Valid format is (xxx) xxx-xxxx");
     }
 }
+
+function toggleCaptionsInput()
+{
+    var input = document.getElementById('imageCaptionsAnswerID');
+    if (input.style.display != "none")
+        input.style.display = "none";
+    else
+        input.style.display = "inline-block";
+}
+
+function validateDigitalInput(elem)
+{
+    
+    var digitalValue = elem.value;
+    var digitalRegex = /^\d+$/;
+    
+    if (digitalValue.match(digitalRegex) == null)
+    {
+        alert("Invalid value. Only digits are allowed");
+    }
+}
