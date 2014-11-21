@@ -12,6 +12,7 @@
     $imageSelected = "";
     $unknownSelected = "";
     $staticSelected = "";
+    $phoneSelected = "";
 
     $idHTMLHeader = "";
     $idHTMLValue = "";
@@ -53,6 +54,8 @@
             case "static":
                 $staticSelected = "selected='selected'";
                 break;
+            case "phone":
+                $phoneSelected = "selected='selected'";
         }
         
         $idHTMLHeader = "<th scope='col'>ID</th>";
@@ -74,6 +77,7 @@
             <option $imageSelected value='image'>Image</option>
             <option $unknownSelected value='unknown'>Unknown</option>
             <option $staticSelected value='static'>Static PDF</option>
+            <option $phoneSelected value='phone'>Phone number</option>
         </select>
     ";
     

@@ -16,14 +16,25 @@ function printAnswer($answer, $type, $value=null)
     switch ($answer['type'])
     {   
         case "text":
-            
+        case "phone":    
             $value = empty($value[0]['value']) ? "" : $value[0]['value'];
+            
+            if ($answer['type'] == "phone")
+            {
+                $placeholder = "placeholder='(xxx) xxx-xxxx'";
+                $validityCheck = "checkPhoneNumber(this);";
+            }
+            else
+            {
+                $placeholder = "placeholder='{$answer['label']}'";
+                $validityCheck = "";
+            }
             echo "
-                <input placeholder='{$answer['label']}' "
+                <input $placeholder "
                 . "div_type='$type' "
-                . "onblur='updateRow({$answer['questionID']}, \"$type\", $otherID)' "
+                . "onblur='updateRow({$answer['questionID']}, \"$type\", $otherID);  $validityCheck'"
                 . "type='text' "
-                . "name='$namePrefix"."text_".$type."_{$answer['id']}' "
+                . "name='$namePrefix"."{$answer['type']}_".$type."_{$answer['id']}' "
                 . "id='".$namePrefix.$type."_{$answer['id']}' "
                 . "value=\"" . str_replace('"','&quot;',$value) . "\" $questionType class='textbox form_question' />";
                 //original: "value='$value' $questionType class='textbox form_question' />";

@@ -45,7 +45,22 @@ foreach ($_POST as $key => $value)
         else
         {
             $formattedValue['answerID'] = end($keyArr);
-            $formattedValue['value'] = $value;
+            
+            if ($inputType == "phone")
+            {
+                $ph = $value;
+                $ph = str_replace("-", "", $ph);
+                $ph = str_replace("–", "", $ph);
+                $ph = str_replace(" ", "", $ph);
+                $ph = str_replace("(", "", $ph);
+                $ph = str_replace(")", "", $ph);
+
+                $phoneNumber = "(".$ph[0].$ph[1].$ph[2].") ".$ph[3].$ph[4].$ph[5]."-".$ph[6].$ph[7].$ph[8].$ph[9]; 
+                
+                $formattedValue['value'] = $phoneNumber;
+            }
+            else
+                $formattedValue['value'] = $value;
         }
         
         // CLEAR USER CHECKBOXES FOR SECTION

@@ -792,3 +792,14 @@ function openInNewTab(url) {
   var win = window.open(url, '_blank');
   win.focus();
 }
+
+function checkPhoneNumber(elem)
+{
+    var phoneRegex = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+    var phoneNumber = elem.value;
+
+    if (phoneNumber.match(phoneRegex) == null)
+    {
+        alert("Invalid phone number. Valid format is (xxx) xxx-xxxx");
+    }
+}
