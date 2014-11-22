@@ -5,20 +5,33 @@ $sql = "SELECT * FROM projects WHERE id = $projectID";
 $result = sqlsrv_query($database, $sql);
 if(sqlsrv_has_rows($result))
 {
+  $date = date("M d, Y");
+    
   $answers = sqlsrv_fetch_array($result, SQLSRV_FETCH_ASSOC);
   $html = "";
-  $html = "<div style='color:#5e3220;'>";
-  $html .= "Project name: " . $answers['name'] . "<br /> ";
-  $html .= "Project address: " . $answers['systemStreetAddress'] . "<br />";
-  $html .= "<div style='border-bottom:1px solid #5e3229;width:34%;height:5px;min-height:5px;'></div>";
-  //$html .= '<img src="/media/site-images/pdfheader-dash.png" />';
-  $html .= $answers['date'];
+  $html = "<div style='color:#5e3220; width: 45%; float:left;margin-left:0'>";
+  $html .= $answers['name'] . "<br /> ";
+  $html .= $answers['systemStreetAddress'];
+  $html .= "<div style='border-bottom:1px solid #187471;width:60%;height:5px;min-height:5px;'></div>";
   $html .= "</div>";
+  //$html .= '<img src="/media/site-images/pdfheader-dash.png" />';
+  //$html .= $answers['date'];
+  
+  $html .= "<div style='color:#5e3220; float:right; width:25%'><br />";
+  $html .= "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$date". "<br />";
+  $html .= "<div style='margin-left:25px;border-bottom:1px solid #187471;width:70%;height:5px;min-height:5px;'></div>";
+
+  $html .= "</div>";
+
+  //echo $html; die();
   $mpdf->setHTMLHeader($html);
 }
 
-$mpdf->setHTMLFooter('<div style="color:#5e3229">'.$answers['name'].'<img style="margin-left:0;width:700px;" src="/media/site-images/footer-image2.png" /><span float="right">{PAGENO}</span></div> ');
 
+
+$footer = '<div style="color:#5e3229"><img style="margin-left:0;width:90%;" src="/media/site-images/footer-3.png" /><span float="right">{PAGENO}</span></div> ';
+//echo $footer; die();
+$mpdf->setHTMLFooter($footer);
 
 $html = "";
 $mpdf->WriteHTML($html,2);
