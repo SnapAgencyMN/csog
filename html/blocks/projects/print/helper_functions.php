@@ -7,7 +7,7 @@ function printSection($section)
     $html .= "<h2>{$section['title']}</h2>";
 
     $categories = $categoriesClass->listCategories($section['sectionID']);
-
+    
     foreach ($categories as $category)
     {
         switch ($category['type'])

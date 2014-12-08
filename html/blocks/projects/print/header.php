@@ -58,7 +58,8 @@ if(sqlsrv_has_rows($result))
   $html .= "<div style='padding-top:100px;'>";
   //$fileContent = file_get_contents(WS_URL."media/uploads/{$answers['file']}");
   //$html .= "<img src='data:image/png;base64,".base64_encode($fileContent)."'>";
-  $html .= "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/{$answers['file']}'>";
+  $html .= "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/{$answers['file']}'> <br /><br />";
+  $html .= "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/{$answers['coverFile']}'><br /><br />";
   //$html .= "<img src='data:image/png;base64,".base64_encode("http://webapps3.cfans.umn.edu/media/uploads/141482739154548d7fa6df7.png")."'>";
   $html .= "<h1>" . $answers['name'] . "</h1>";
   $html .= "<p>This owner's manual is customized to your septic system. It is designed to help you understand your system well enough to perform basic owner maintenance and know when you need service.</p>";

@@ -12,6 +12,7 @@ require_once("libs".DIRECTORY_SEPARATOR."classes".DIRECTORY_SEPARATOR."helpCopy.
 require_once("libs".DIRECTORY_SEPARATOR."classes".DIRECTORY_SEPARATOR."projects.class.php");
 require_once("libs".DIRECTORY_SEPARATOR."phpmailer".DIRECTORY_SEPARATOR."PHPMailerAutoload.php");
 ini_set('max_execution_time', 120);
+date_default_timezone_set('America/Chicago');
 
 session_save_path(__DIR__."".DIRECTORY_SEPARATOR."temp");
 
@@ -62,6 +63,20 @@ if (!$database) {
 }
 
 $loginError = "";
+
+if (!isset($_SESSION['USER']))
+{
+    // Instantiating session object so no warning are thrown
+    $_SESSION['USER']['LoggedIn'] = "";
+    $_SESSION['USER']['Admin'] = "";
+    $_SESSION['USER']['Verbose'] = "";
+    $_SESSION['USER']['Username'] = "";
+    $_SESSION['USER']['ID'] = "";
+    $_SESSION['USER']['Name'] = "";
+    $_SESSION['USER']['Email'] = "";
+    $_SESSION['USER']['CompanyName'] = "";
+}
+
 if (isset($_POST['user']) && isset($_POST['pass'])) {
     //$user = addslashes($_POST['user']);
     $user = str_replace("'", "''", $_POST['user']);

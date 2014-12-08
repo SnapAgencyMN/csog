@@ -35,8 +35,15 @@ if (!empty($PData['contact_phone']))
 <label for="projectName">Project name: * </label><input type="text" class='requiredForm' name="projectName" id="newProjectName" <?php if(isset($PData) && $PData['name'] != "") { echo "value='".$PData['name']."'"; }?>></br>
 <?php if (@$PData['file'] != "") { ?><a href="<?php echo WS_URL . "media/uploads/" . $PData['file']; ?>" data-lightbox="image-logo"><img src="<?php echo WS_URL . "media/uploads/" . $PData['file']; ?>" class="imageLightboxLink registerProject"></a></br> <?php } ?>
 <label for="projectLogo">Project logo: </label><input type="file" name="projectLogo">File formats accepted: jpg, jpeg, gif, png</br>
-<label for="date">Current date: *</label><input type="date" class='requiredForm' id='newProjectDate' name="date" <?php if(isset($PData) && $PData['date'] != "") { echo "value='".$PData['date']."'"; }?>></br>
-<br />
+<?php if (@$PData['coverFile'] != "") { ?><a href="<?php echo WS_URL . "media/uploads/" . $PData['coverFile']; ?>" data-lightbox="image-logo"><img src="<?php echo WS_URL . "media/uploads/" . $PData['coverFile']; ?>" class="imageLightboxLink registerProject"></a></br> <?php } ?>
+<label for="coverImage" class="left">
+    <span class="left" style="margin-right:10px;"> Cover Image: </span>
+    <div class="question_set_row_hint left">
+        <img src="<?php echo WS_URL; ?>media/hint.png" alt="Hint" title="This default image will appear on the cover page of the manual, or you can provide an image of your own">
+    </div>
+</label>
+<input type="file" class="left" name="coverImage">File formats accepted: jpg, jpeg, gif, png</br>
+<br /><br />
 <h3>System location</h3>
 <label for="systemStreetAddress">Street address:</label> <input type="text" name="systemStreetAddress" <?php if(isset($PData) && $PData['systemStreetAddress'] != "") { echo "value='".$PData['systemStreetAddress']."'"; }?>></br>
 <label for="projectCity">City: *</label> <input type="text" class='requiredForm' id='newProjectCity' name="projectCity" <?php if(isset($PData) && $PData['city'] != "") { echo "value='".$PData['city']."'"; }?>></br>
@@ -81,6 +88,7 @@ Is there a recorded easement for access to perform service or periodic inspectio
 <input type="hidden" name="createProjectSubmit" value="1">
 <?php if(isset($PData)) { ?><input type="hidden" name="editProjectSubmit" value="<?php echo $projectID; ?>"><?php } ?>
 <?php if(isset($PData)) { ?><input type="hidden" name="defaultFile" <?php if($PData['file'] != "") { echo "value='".$PData['file']."'"; }?>><?php } ?>
+<input type="hidden" name="defaultCoverFile" <?php if(!empty($PData['coverFile'])) { echo "value='".$PData['coverFile']."'"; } else {echo "DEFAULT FILE";}?>>
 <input type="submit" class="form-button" value="Submit">
 </form>
 </br>

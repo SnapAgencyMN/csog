@@ -20,9 +20,9 @@
 
   </head>
   <body>
-    <div id="header_wrapper">
+    <div id="header_wrapper"> 
       <div id="header_inner">
-          <div class="headerLogo"><span id="header_title"><a href="<?php if($_SESSION['USER']['LoggedIn'] == true) { ?>/projects"><?php } else { ?>/"><?php } ?>Community Septic System Owner's Guide Tool</a></span></div>
+          <div class="headerLogo"><span id="header_title"><a href="<?php if($_SESSION['USER']['LoggedIn'] == true) { ?>/projects"><?php } else { ?>/"><?php } ?>Community Septic System Owner's Guide Tool</a></span></div> 
         <ul id="header_nav">
             <?php if(@$_SESSION['USER']['LoggedIn'] == true) { ?>
             <li <?php if( strstr($_SERVER['REQUEST_URI'], 'account') ) { echo "class=active"; } ?>><a href="<?php echo WS_URL; ?>account/edit">Your Account</a>&nbsp;&nbsp;|&nbsp;&nbsp;</li>

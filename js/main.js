@@ -363,11 +363,6 @@ $(function() {
       $('#newProjectName').after("<div class='formError'>This field is required.</div>");
       errors = 1;
     }
-    if($.trim(values['date']) == "")
-    {
-      $('#newProjectDate').after("<div class='formError'>This field is required.</div>");
-      errors = 1;
-    }
     if($.trim(values['projectCity']) == "")
     {
       $('#newProjectCity').after("<div class='formError'>This field is required.</div>");
