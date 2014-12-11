@@ -41,8 +41,8 @@ foreach ($sections as $section)
     $romeNumber = rome($i);
     
     $mpdf->Bookmark("$romeNumber. {$section['title']}", 0);
-    $mpdf->WriteHTML($html,2);
     $mpdf->AddPage();
+    $mpdf->WriteHTML($html,2);
     $times["Section $secN finish"] = microtime(true); 
     $i++;
     

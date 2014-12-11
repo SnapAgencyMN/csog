@@ -107,10 +107,12 @@ if (isset($_POST['createProjectSubmit']) && $_POST['createProjectSubmit'] == 1)
   $currentDate = date("m/d/Y H:i:s");
   if(isset($_POST['editProjectSubmit']) && $_POST['editProjectSubmit'] > 0)
   {
-    if($image == "")
-    {
-      $image = $_POST['defaultFile'];
-    }
+    if(empty($image))
+        $image = $_POST['defaultFile'];
+    
+    //if (empty($cover))
+        $cover = $_POST['defaultCoverFile'];//"defaults/defaultCover.jpg";//
+    
     $sql = "UPDATE projects SET coverFile='$cover', name='$projectName', date='$currentDate', parcelIDNumber='$parcelIDNumber', gps='$gps', latitude='$latitude', longitude='$longitude', systemStreetAddress='$systemStreetAddress', webAddress='$webAddress', other='$other', mailingAddress='$mailingAddress', [file]='$image', projectAddress='$projectAddress', city='$city', state='$state', zip='$zip', contact_name='$contact_name',contact_phone='$contact_phone',contact_address='$contact_address',contact_city='$contact_city',contact_state='$contact_state',contact_zip='$contact_zip',easement_desc='$easement_description', contact_email='$contact_email', easement='$easement' WHERE id=".$_POST['editProjectSubmit'];
   } else
   {

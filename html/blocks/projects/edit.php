@@ -88,7 +88,7 @@ Is there a recorded easement for access to perform service or periodic inspectio
 <input type="hidden" name="createProjectSubmit" value="1">
 <?php if(isset($PData)) { ?><input type="hidden" name="editProjectSubmit" value="<?php echo $projectID; ?>"><?php } ?>
 <?php if(isset($PData)) { ?><input type="hidden" name="defaultFile" <?php if($PData['file'] != "") { echo "value='".$PData['file']."'"; }?>><?php } ?>
-<input type="hidden" name="defaultCoverFile" <?php if(!empty($PData['coverFile'])) { echo "value='".$PData['coverFile']."'"; } else {echo "DEFAULT FILE";}?>>
+<input type="hidden" name="defaultCoverFile" <?php if(!empty($PData['coverFile'])) { echo "value='".$PData['coverFile']."'"; } else {echo "value='defaults/defaultCover.jpg'";}?>>
 <input type="submit" class="form-button" value="Submit">
 </form>
 </br>
