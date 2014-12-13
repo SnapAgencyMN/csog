@@ -264,7 +264,7 @@ function echoCategory($category, $type='normal')
             $answers = $answersClass->listAnswers($question['id']);
             echo "<div class='question_set_row_field'>";
             foreach ($answers as $answer)
-            {
+            {   
                 $value = $answersClass->getUserAnswers($_SESSION['USER']['ID'], $projectID, $answer['id'], $spawnID);
                 $divSuffix = "";
                 $divClass = "";

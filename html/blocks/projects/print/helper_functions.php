@@ -8,8 +8,18 @@ function printSection($section)
 
     $categories = $categoriesClass->listCategories($section['sectionID']);
     
+    $first = true;
     foreach ($categories as $category)
-    {
+    {   
+        if ($category['title'] != "Operation & Maintenance")
+        {
+            // Creating new page for every category of certain sections
+            if (in_array($section['sectionID'], array(7, 8)) && !$first)
+                $html.="<pagebreak />";
+            elseif ($first)
+                $first = false;
+        }
+        
         switch ($category['type'])
         {
             case "normal":
@@ -61,7 +71,7 @@ function printCategory ($category, $spawnID = -1)
                 printQuestion($question, $spawnID);
                 break;
         }
-    }
+    }    
 }
 
 function printQuestion($question, $spawnID)

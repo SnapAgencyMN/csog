@@ -17,6 +17,8 @@
     $idHTMLHeader = "";
     $idHTMLValue = "";
     
+    $captionsBox = "";
+    
     if (@$answerID > 0)
     {
         $info = $answersClass->getDetails($answerID);
