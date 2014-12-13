@@ -103,13 +103,17 @@ class Sections {
 
     }
     
-    public function listChlidrenSectionsForUser($parentID, $userID)
+    public function listChlidrenSectionsForUser($parentID, $userID, $projectID = 0)
     {   
         if ($parentID > 0 && $userID > 0)
         {
-            $sql = "SELECT sectionID FROM {$this->sections_mapping_table} WHERE parentID=$parentID AND userID=$userID";
-            $sections = $this->sectionsMappingTable->find_by_sql($sql);
+            $suffix = "";
+            if ($projectID > 0)
+                $suffix = "AND projectID = $projectID";
             
+            $sql = "SELECT sectionID FROM {$this->sections_mapping_table} WHERE parentID=$parentID AND userID=$userID $suffix";
+            $sections = $this->sectionsMappingTable->find_by_sql($sql);
+
             return $sections;
         }
     }
@@ -123,14 +127,14 @@ class Sections {
         return $details[0];
     }
     
-    public function addUserSection ($userID, $sectionID, $parentID)
+    public function addUserSection ($userID, $sectionID, $parentID, $projectID)
     {
         $id = -1;
         if ($userID >0 && $sectionID >0 && $parentID >0)
         {           
             try
             {
-                $selectSQL = "SELECT sectionID FROM {$this->sections_mapping_table} WHERE sectionID = $sectionID AND userID = $userID";
+                $selectSQL = "SELECT sectionID FROM {$this->sections_mapping_table} WHERE sectionID = $sectionID AND userID = $userID AND projectID = $projectID";
                 $resource = $this->db->query($selectSQL);
                 $result = sqlsrv_fetch_array($resource, SQLSRV_FETCH_ASSOC);
                 $id = $result['sectionID'];
@@ -146,17 +150,17 @@ class Sections {
             }
             else
             {
-                $sql = "INSERT INTO {$this->sections_mapping_table} (userID, sectionID, parentID) VALUES ($userID, $sectionID, $parentID) ";
+                $sql = "INSERT INTO {$this->sections_mapping_table} (userID, sectionID, parentID, projectID) VALUES ($userID, $sectionID, $parentID, $projectID) ";
             }
             $this->db->query($sql);
         }
     }
     
-    public function deleteUserSection ($userID, $sectionID, $parentID)
+    public function deleteUserSection ($userID, $sectionID, $parentID, $projectID)
     {
         if ($userID >0 && $sectionID >0 && $parentID >0)
         {            
-            $sql = "DELETE FROM {$this->sections_mapping_table} WHERE userID = $userID AND sectionID = $sectionID AND parentID = $parentID";
+            $sql = "DELETE FROM {$this->sections_mapping_table} WHERE userID = $userID AND sectionID = $sectionID AND parentID = $parentID AND projectID = $projectID";
             
             $this->db->query($sql);
         }

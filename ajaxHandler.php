@@ -114,9 +114,9 @@ if ($action == "save_user_section")
     $projectID = getParameterNumber("projectID");
     
     if ($toggle == "on")
-        $sectionsClass->addUserSection ($_SESSION['USER']['ID'], $sectionID, $parentID);
+        $sectionsClass->addUserSection ($_SESSION['USER']['ID'], $sectionID, $parentID,$projectID);
     else
-        $sectionsClass->deleteUserSection ($_SESSION['USER']['ID'], $sectionID, $parentID);
+        $sectionsClass->deleteUserSection ($_SESSION['USER']['ID'], $sectionID, $parentID,$projectID);
     
     $sections = $sectionsClass->listChlidrenSectionsForUser($parentID, $_SESSION["USER"]["ID"]);
     

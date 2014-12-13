@@ -50,11 +50,15 @@ class Categories {
         }
     }
     
-    public function getNumberOfSpawnBoxesForUser($categoryID, $userID)
+    public function getNumberOfSpawnBoxesForUser($categoryID, $userID, $projectID=0)
     {
         if ($userID > 0 && $categoryID > 0)
         {
-            $sql = "SELECT number FROM {$this->categories_mapping_table} WHERE categoryID = $categoryID AND userID = $userID";
+            $suffix = "";
+            if ($projectID > 0)
+                $suffix = "AND projectID = $projectID";
+            
+            $sql = "SELECT number FROM {$this->categories_mapping_table} WHERE categoryID = $categoryID AND userID = $userID $suffix";
             
             $result = $this->db->query($sql, true);
 
@@ -74,13 +78,13 @@ class Categories {
         return $result[0];
     }
     
-    public function saveSpawnNumber($categoryID, $userID, $value)
+    public function saveSpawnNumber($categoryID, $userID, $value, $projectID)
     {
         if ($categoryID >0 && $userID > 0)
         {
             try
             {
-                $selectSQL = "SELECT * FROM {$this->categories_mapping_table} WHERE categoryID = $categoryID AND userID = $userID";
+                $selectSQL = "SELECT * FROM {$this->categories_mapping_table} WHERE categoryID = $categoryID AND userID = $userID AND projectID=$projectID";
                 $resource = $this->db->query($selectSQL);
                 $result = sqlsrv_fetch_array($resource, SQLSRV_FETCH_ASSOC);
             }
@@ -91,11 +95,11 @@ class Categories {
             
             if (!empty($result))
             {
-                $sql = "UPDATE {$this->categories_mapping_table} SET number = '$value' WHERE categoryID = $categoryID AND userID = $userID";
+                $sql = "UPDATE {$this->categories_mapping_table} SET number = '$value' WHERE categoryID = $categoryID AND userID = $userID AND projectID=$projectID";
             }
             else
             {
-                $sql = "INSERT INTO {$this->categories_mapping_table} (categoryID, userID, number) VALUES ($categoryID, $userID, $value)";           
+                $sql = "INSERT INTO {$this->categories_mapping_table} (categoryID, userID, number, projectID) VALUES ($categoryID, $userID, $value, $projectID)";           
             }
             $this->db->query($sql);
 
