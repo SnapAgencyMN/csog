@@ -3,7 +3,7 @@
 function printSection($section)
 {
     global $categoriesClass, $userID, $html;
-
+    
     $html .= "<h2>{$section['title']}</h2>";
 
     $categories = $categoriesClass->listCategories($section['sectionID']);
@@ -188,11 +188,18 @@ function printQuestion($question, $spawnID)
             }
         } 
     }
+    /*
+    if ($question['id'] == 391)
+    {
+        echo $html;
+        die();
+        
+    }
+     */
 }
 
 function printAnswers($answer, $spawnID, $otherID)
 {
-    ini_set("display_errors", 1);
     debug("Printing out answer = {$answer['id']}");
 
     global $html, $answersClass, $userID, $projectID;
@@ -201,6 +208,7 @@ function printAnswers($answer, $spawnID, $otherID)
     $value = "";
     $imageAssigned = false;
       
+    debug("PDF OUTPUT IS $pdfOutput");
     preg_match_all("/%ID=[0-9]+%/", $pdfOutput, $ids);
       
     if (count($ids[0]) > 0 )
@@ -242,32 +250,37 @@ function printAnswers($answer, $spawnID, $otherID)
 
 	    if ($answer['type'] == 'image' && $answer['default'] == 1)
 	    {
+                debug("Default image exist");
 		if ($_SESSION['USER']['Admin'] == 1)
 		{
+                    debug('Option 1');
 		    $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/defaults/{$answer['id']}' /><br />";
 		}
 		elseif (!empty($value))
 		{
-			if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
-			{
-			    $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/$value' /><br />";
-            		}
+                    debug('Option 2');
+                    if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
+                    {
+                        $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/$value' /><br />";
+                    }
 		}
   		else
 		{
+                    debug('Option 3');
 		    $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/defaults/{$answer['id']}' /><br />";
 		}
 		$imageAssigned = true;
             }
 	    else
 	    {
+                debug("No default image exist");
 		if (strstr($value, ".jpg") || strstr($value, ".jpeg") ||strstr($value, ".png") ||strstr($value, ".gif"))
             	{
                     $value = "<img style='border-style: solid; border-width: 1px;' src='/media/uploads/$value' /><br />";
 		    $imageAssigned = true;
             	}
             }
-
+            debug("End value is $value");
             $pdfOutput = str_replace("%SELF%", $value, $pdfOutput);
         }
     }

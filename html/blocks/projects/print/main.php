@@ -31,8 +31,14 @@ foreach ($sections as $section)
         case "parent":
             $html .= "<h2>{$section['title']}</h2>";
             $children = $sectionsClass->listChlidrenSectionsForUser($section['sectionID'], $userID);
+            $first = true;
             foreach ($children as $child)
             {
+                if (!$first)
+                    $html.="<pagebreak />";
+                elseif ($first)
+                    $first = false;
+                
                 $sect = $sectionsClass->getDetails($child['sectionID']);
                 printSection($sect);
             }
@@ -46,4 +52,4 @@ foreach ($sections as $section)
     $times["Section $secN finish"] = microtime(true); 
     $i++;
     
-    }
+}
