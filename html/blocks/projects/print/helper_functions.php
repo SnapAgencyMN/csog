@@ -80,6 +80,7 @@ function printQuestion($question, $spawnID)
 
     global $answersClass, $userID, $projectID, $html;
     
+    $titlePritned = false;
     $answers = $answersClass->listParentAnswers($question['id']);
 
     $currentQID = "";   
@@ -95,7 +96,11 @@ function printQuestion($question, $spawnID)
                 {
                     //Hack to enable print of certaing titles
                     case "O&M expense":
-                        $html .= "<h4>{$question['title']}</h4>";
+                        if (!$titlePritned)
+                        {
+                            $html .= "<h4>{$question['title']}</h4>";
+                            $titlePritned = true;
+                        }
                         break;
                     default:
                         break;
@@ -108,7 +113,11 @@ function printQuestion($question, $spawnID)
                 if (empty($currentQID))
                 {
                     $currentQID = $question['id'];
-                    $html .= "<h4>{$question['title']}</h4>";
+                    if (!$titlePritned)
+                    {
+                        $html .= "<h4>{$question['title']}</h4>";
+                        $titlePritned = true;
+                    }
                 }
             }
 /*
@@ -127,6 +136,11 @@ function printQuestion($question, $spawnID)
         }
 	elseif ($answer['default'] == 1)
         {
+            if (!$titlePritned)
+            {
+                $html .= "<h4>{$question['title']}</h4>";
+                $titlePritned = true;
+            }
             // check if answers on the same level exist
             foreach ($answers as $a)
             {
@@ -292,6 +306,6 @@ function debug($m)
     return false;
     $date = date("Y-m-d H:i:s");
     $message = "[$date] $m";
-    echo "$message<br />";
+    echo "<pre>$message</pre><br />";
     error_log("$message\n");
 }
