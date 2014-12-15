@@ -819,3 +819,13 @@ function validateDigitalInput(elem)
         alert("Invalid value. Only digits are allowed");
     }
 }
+
+function changeSection(url)
+{
+    var confirm = window.confirm("Be sure that you’ve saved your work on this page.");
+    
+    if (confirm)
+    {
+        window.location.href = url;
+    }
+}

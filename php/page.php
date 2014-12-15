@@ -47,7 +47,7 @@ if ($_SESSION['USER']['LoggedIn'] == true) {
             $page = FS_PATH . HTML_BLOCKS_DIR . "register.php";
             break;
         case "projects":
-            switch ($path[2]) {
+            switch (@$path[2]) {
                 case "search":
                     $page = FS_PATH . HTML_BLOCKS_DIR . "projects/search.php";
                     break;

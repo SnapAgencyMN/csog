@@ -58,7 +58,7 @@
         
         echo "
             <li>
-                <a $selected href='".WS_URL."projects/view/$projectID/{$section['sectionID']}'>{$section['title']}</a>
+                <a $selected href='#' onclick='changeSection(\"".WS_URL."projects/view/$projectID/{$section['sectionID']}\")'>{$section['title']}</a>
             </li>
         ";
     }

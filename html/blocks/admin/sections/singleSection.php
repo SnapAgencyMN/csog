@@ -58,7 +58,7 @@
                 $selected = "";
                 if ($parentID > 0 )
                 {
-                    if ($parentID = $section['sectionID'])
+                    if ($parentID == $section['sectionID'])
                     {
                         $selected = "selected='selected'";
                     }
